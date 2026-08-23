@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice of the River</title>
+<!-- Canvas Gauges library:
+     On ESP32: loaded from LittleFS (/gauge.min.js)
+     On Mac/browser testing: falls back to CDN automatically -->
+<script>
+(function() {
+  var localScript = document.createElement('script');
+  localScript.src = '/gauge.min.js';
+  localScript.onerror = function() {
+    // Local file not available (e.g. testing on Mac) — load from CDN
+    var cdnScript = document.createElement('script');
+    cdnScript.src = 'https://cdn.jsdelivr.net/npm/canvas-gauges@2.1.7/gauge.min.js';
+    document.head.appendChild(cdnScript);
+  };
+  document.head.appendChild(localScript);
+})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- Live sensor connection status badge -->
+  <div id="connectionStatus" class="cs-connecting">
+    <div class="cs-dot"></div>
+    <span class="cs-label">Connecting…</span>
+  </div>
+
+  <div id="titleBar"><h1>Voice of the River</h1></div>
+
+  <div id="main">
+    <!-- LEFT: water area contains canvas + scale + gauges + type bar -->
+    <div id="waterArea">
+      <div id="waterWrap"><canvas id="waterCanvas"></canvas></div>
+      <div id="scaleCol" title="Water depth scale in feet — calibrated dynamically so the orange surface marker always aligns with the current depth sensor reading. The ruler extends above and below the animated water surface."><canvas id="scaleCanvas"></canvas></div>
+      <div id="gaugeOverlay"><!-- gauges built by JS --></div>
+      <div id="gaugeTypeBar">
+        <span id="gaugeTypeLabel" title="Switch between radial (speedometer-style) and linear (thermometer-style) gauge display for the sensor readings overlaid on the water canvas.">Gauge Type</span>
+        <button class="gtbtn active" data-gauge-type="radial-full" title="Display sensor gauges as circular radial dials with a 270° sweep — like a speedometer. Best for at-a-glance reading.">⬤ Speedometer</button>
+        <button class="gtbtn" data-gauge-type="linear-vertical" title="Display sensor gauges as vertical linear bars — like a thermometer. Best for comparing multiple sensors side by side.">▮ Thermometer</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: info panel -->
+    <div id="infoPanel">
+      <!-- Traffic light + sensor data side by side -->
+      <div id="sensorBlock">
+        <div id="trafficLight">
+          <div id="tlHousing" title="Traffic light status indicator: Green = Normal (WFD Good/High), Amber = Caution (WFD Moderate), Red = Alert (WFD Poor/Bad). The active bulb blinks to draw attention.">
+            <div class="tl-bulb off-red"   id="tl-red"></div>
+            <div class="tl-bulb off-amber" id="tl-amber"></div>
+            <div class="tl-bulb off-green" id="tl-green"></div>
+          </div>
+        </div>
+        <div id="sensorData">
+          <div id="sensorTitle">Select a gauge</div>
+          <div id="sensorValue"><span id="sensorNum">—</span><span id="sensorUnit"></span></div>
+          <div id="sensorStatus" class="status-good" style="display:none"></div>
+        </div>
+      </div>
+
+      <!-- Ranges -->
+      <div id="rangesBlock">
+        <div id="rangesTitle" title="Healthy, caution and alert ranges for the currently selected sensor parameter, calibrated to EU Water Framework Directive physico-chemical standards and EPA Ireland thresholds.">Ranges</div>
+        <div class="range-row">
+          <div class="range-dot" style="background:#30e880"></div>
+          <div class="range-name">Normal</div>
+          <div class="range-vals" id="range-good" title="WFD Good/High status range — readings in this band indicate a healthy or reference-condition water body.">—</div>
+        </div>
+        <div class="range-row">
+          <div class="range-dot" style="background:#f0a830"></div>
+          <div class="range-name">Caution</div>
+          <div class="range-vals" id="range-warn" title="WFD Moderate status range — readings here indicate significant human influence. Operational monitoring and remediation action are triggered at this level.">—</div>
+        </div>
+        <div class="range-row">
+          <div class="range-dot" style="background:#f04848"></div>
+          <div class="range-name">Alert</div>
+          <div class="range-vals" id="range-bad" title="WFD Poor or Bad status — readings outside the caution band indicate major or severe ecological deviation. Urgent investigation is required.">Outside caution</div>
+        </div>
+      </div>
+
+      <!-- Entity section -->
+      <div id="entitySection">
+        <div id="entityCanvasWrap">
+          <canvas id="entityCanvas"></canvas>
+          <div id="entityLabel" title="The currently active entity reporter. Each entity monitors a subset of sensors and provides narrative interpretations of those readings in ecological and regulatory context.">Swan reporting</div>
+        </div>
+        <div id="entityScrollZone">
+        <div id="narrativeWrap">
+          <p id="narrativeText"><strong>The Swan speaks:</strong> I glide the surface and feel every shift — the warmth beneath my feet, the clarity of my reflection, the rise and fall of the water's embrace. These are the stories I carry.</p>
+        </div>
+        <!-- WFD status bar — full-width, visually attached above entity buttons -->
+        <div id="wfdStatusBar" class="wfd-bar-high">
+          <span id="wfdStatusText">WFD Status: High — Unpolluted reference condition</span>
+        </div>
+        <div id="entityBar">
+          <button class="ebtn active" data-entity="swan" id="ebtn-swan" title="Swan — monitors Temperature, Turbidity and Water Depth. Mute Swans (Cygnus olor) are sensitive to thermal stress, reduced water clarity and abnormal water levels, making them a reliable waterfowl biodiversity indicator.">
+            <span class="ebtn-icon">🦢</span>Swan
+          </button>
+          <button class="ebtn" data-entity="otter" id="ebtn-otter" title="Otter — monitors Total Dissolved Solids (TDS) and Electrical Conductivity (EC). The Eurasian Otter (Lutra lutra) is an Annex II protected species under the EU Habitats Directive, sensitive to ionic pollution that depletes its fish prey base.">
+            <span class="ebtn-icon">🦦</span>Otter
+          </button>
+          <button class="ebtn" data-entity="lily" id="ebtn-lily" title="Lily — monitors Water Acidity (pH). The White Water Lily (Nymphaea alba) is a pH-sensitive aquatic macrophyte and a key WFD biological quality element. Its presence and health indicate balanced water chemistry.">
+            <span class="ebtn-icon lily-icon">🌸</span>Lily
+          </button>
+        </div><!-- end entityBar -->
+        </div><!-- end entityScrollZone -->
+      </div><!-- end entitySection -->
+    </div><!-- end infoPanel -->
+  </div><!-- end main -->
+
+  <!-- Bottom bar -->
+  <div id="botBar">
+    <button class="bbtn" data-action="mode-past" title="View historical sensor readings on an interactive timeline. Drag the card left to travel back in time.">📅 Past Conditions</button>
+    <button class="bbtn active" data-action="mode-present" title="View live sensor readings from the river station in real time via the connected sensor gateway.">📡 Present Condition</button>
+    <button class="bbtn" data-action="mode-ideal" title="View the pristine reference condition for this river — the WFD High ecological status benchmark with no human influence.">🌿 Ideal Condition</button>
+    <button class="bbtn" data-action="mode-api" title="Integrate publicly available environmental data from external repositories such as the EPA Open Data API or Met Éireann.">🔌 Public API Data</button>
+    <button class="bbtn" data-action="wfd-report" id="wfdReportBtn" title="Open the Governance Frameworks Report: EU Water Framework Directive ecological status, UN SDG water indicators, Ireland National Biodiversity Plan proxies, and ESG environmental metrics.">🏛 Governance Frameworks</button>
+    <button class="bbtn" data-action="refresh" id="refreshBtn" title="Manually request a fresh sensor reading from the ESP32 gateway via the /readings endpoint. Live updates also arrive automatically via Server-Sent Events.">⟳ Read Sensors</button>
+  </div>
+
+  <!-- Transparent overlay: clicking outside the timeline closes it -->
+  <div id="tlOverlay" title="Click anywhere here to close the Past Conditions timeline panel"></div>
+
+  <!-- Timeline panel — toggled by Past Conditions button -->
+  <div id="timelinePanel">
+    <div id="tlRulerWrap">
+      <div id="tlRuler"><!-- tick marks injected by JS --></div>
+      <div id="tlNeedle"></div>
+      <button id="tlCloseBtn" title="Close the Past Conditions timeline panel and return to Present Condition view. You can also click anywhere above this panel to dismiss it.">✕ Close History</button>
+    </div>
+    <div id="tlCardArea">
+      <!-- Drag hint — two horizontal arrows beside the card, like a rewind button -->
+      <div id="tlDragHint"
+           title="Drag this card backward to the left to travel back in time through historical sensor readings"
+           aria-label="Drag the card to the left to see history">
+        <span class="tl-hint-arrow">◀</span>
+        <span class="tl-hint-arrow">◀</span>
+      </div>
+      <div id="tlCard">
+        <!-- LEFT: gauge display / draggable face -->
+        <div id="tlCardDisplay">
+          <div id="tlCardTimestamp">—</div>
+          <div id="tlCardGaugeWrap"><!-- mini gauge injected by JS --></div>
+          <!-- Status bar: value+unit on left, Normal/Caution/Alert on right -->
+          <div id="tlCardStatusBar" class="st-good">
+            <div id="tlCardValueRow">
+              <span id="tlCardValue">—</span>
+              <span id="tlCardUnit"></span>
+            </div>
+            <span id="tlCardStatusLabel">—</span>
+          </div>
+        </div>
+        <!-- RIGHT: sensor selector -->
+        <div id="tlCardSelector">
+          <button class="tl-sel-btn active" data-tl-sensor="temperature" title="Show historical Water Temperature readings on the timeline card. The mini gauge displays the interpolated value at the scrubbed timestamp.">Heat</button>
+          <button class="tl-sel-btn" data-tl-sensor="turbidity" title="Show historical Water Clarity (Turbidity in NTU) on the timeline card.">Clarity</button>
+          <button class="tl-sel-btn" data-tl-sensor="ph" title="Show historical Water Acidity (pH) on the timeline card. WFD High status: 6.5–8.5 pH.">Acidity</button>
+          <button class="tl-sel-btn" data-tl-sensor="tds" title="Show historical Total Dissolved Solids (TDS in ppm) on the timeline card. High TDS indicates mineral loading or contamination.">Saltiness</button>
+          <button class="tl-sel-btn" data-tl-sensor="ec" title="Show historical Electrical Conductivity (EC in µS/cm) on the timeline card. WFD Good status for Irish rivers: below 800 µS/cm.">Electricity</button>
+          <button class="tl-sel-btn" data-tl-sensor="level" title="Show historical Water Depth (in feet) on the timeline card. Monitored as a WFD hydromorphological quality element.">Depth</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+// Wait for the gauge library (local or CDN fallback) to fully load
+// before initialising the dashboard script.
+function loadDashboard() {
+  if (typeof RadialGauge !== 'undefined') {
+    var s = document.createElement('script');
+    s.src = 'script.js';
+    document.body.appendChild(s);
+  } else {
+    setTimeout(loadDashboard, 50);
+  }
+}
+loadDashboard();
+</script>
+</body>
+</html>
