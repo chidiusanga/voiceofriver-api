@@ -478,6 +478,7 @@ function sharedGaugeCfg(s, val) {
     units:s.unit, title:'',
     valueBox:true, valueBoxStroke:0,
     animationDuration:800, animationRule:'elastic',
+    animateOnInit: true,
   };
 }
 
