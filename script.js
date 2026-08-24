@@ -1943,7 +1943,7 @@ function applyLiveSensorData(jsonData) {
 function refreshSensors() {
   if (conditionMode === 'ideal') return;
   setConnectionStatus('connecting', 'Reading…');
-  fetch('https://voiceofriver-api.vercel.app/api/latest')
+  fetch('/api/latest')
     .then(function(response) {
       if (!response.ok) throw new Error('HTTP ' + response.status);
       return response.json();
@@ -2006,7 +2006,7 @@ function initSensorSSE() {
 // setTimeout(initSensorSSE, 150);
 setInterval(refreshSensors, 10000);
 setTimeout(function() {
-  fetch('https://voiceofriver-api.vercel.app/api/latest')
+  fetch('/api/latest')
     .then(function(r){ return r.json(); })
     .then(applyLiveSensorData)
     .catch(function(){});
