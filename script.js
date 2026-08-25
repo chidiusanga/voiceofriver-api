@@ -301,15 +301,15 @@ console.log(
    // REPLACED HERE TO MOVE "AWAITING WATER LEVEL DATA" DOWN
 
       wctx.save();
-      const overlayY = WH - 150;
+      const overlayY = WH - 165;
       wctx.fillStyle = 'rgba(180,20,20,.28)';
       wctx.strokeStyle = '#ff8080';
       wctx.lineWidth = 1;
       wctx.beginPath();
-      wctx.roundRect( WW/2 - 180, overlayY, 360, 50, 10);
+      wctx.roundRect( WW/2 - 180, overlayY, 360, 50, 5);
       wctx.fill();
       wctx.beginPath();
-      wctx.roundRect(WW/2 - 180, overlayY, 360, 50, 10);
+      wctx.roundRect(WW/2 - 180, overlayY, 360, 50, 5);
       wctx.stroke();
       wctx.fillStyle = '#ffe0e0';
       wctx.textAlign = 'center';
