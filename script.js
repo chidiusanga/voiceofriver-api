@@ -64,7 +64,7 @@ const SENSORS = {
     // High: <130 ppm (ref. EC <200 µS/cm), Good: <520 ppm, Moderate: <780 ppm
     wfd: { high: 130, good: 520, moderate: 780, poor: 900 },
     good: [30, 520], warn: [0, 780],
-    type: 'radial', majorTicks: ['0','200','400','600','800','1000','1200'],
+    type: 'radial', majorTicks: ['0','200','400','600','800','1000','1200','1500'],
     sim: () => Math.round(60 + Math.random() * 820)
   },
   ec: {
@@ -78,7 +78,7 @@ const SENSORS = {
     // monitoring threshold). Moderate: >800, Poor: >1200, Bad: >1600.
     wfd: { high: 200, good: 800, moderate: 1200, poor: 1600 },
     good: [50, 800], warn: [0, 1200],
-    type: 'radial', majorTicks: ['0','500','1000','1500','2000','2500'],
+    type: 'radial', majorTicks: ['0','500','1000','1500','2000','2500','3000'],
     sim: () => Math.round(80 + Math.random() * 1700)
   },
   level: {
