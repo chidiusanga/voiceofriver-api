@@ -301,7 +301,7 @@ console.log(
    // REPLACED HERE TO MOVE "AWAITING WATER LEVEL DATA" DOWN
 
       wctx.save();
-      const overlayY = WH - 165;
+      const overlayY = WH - 175;
       wctx.fillStyle = 'rgba(180,20,20,.28)';
       wctx.strokeStyle = '#ff8080';
       wctx.lineWidth = 1;
