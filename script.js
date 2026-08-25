@@ -294,7 +294,7 @@ console.log(
       // wctx.fillStyle = '#d8f0ff';
       // wctx.font = 'bold 18px sans-serif';
       // wctx.textAlign = 'center';
-      // wctx.fillText('Awaiting Water Level Data', WW/2, WH/2 - 5);
+      // wctx.fillText('Water Level Sensor Offline', WW/2, WH/2 - 5);
       // wctx.font = '14px sans-serif';
       // wctx.fillText('Displaying default river depth', WW/2, WH/2 + 20);
       // wctx.restore();
