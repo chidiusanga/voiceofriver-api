@@ -107,6 +107,11 @@ const ENTITIES = {
     draw: drawLilyEntity },
 };
 
+// Stop NaN from appearing anywhere
+   function hasValidData(v) {
+   return typeof v === 'number' && !isNaN(v);
+   }
+
 const PRISTINE = { temperature:18, turbidity:2, tds:120, ec:280, ph:7.2, level:8.5 };
 const MAX_DEPTH = 17; // matches sketch scale
 
@@ -637,10 +642,10 @@ const WFD_COLOURS = {
   bad:      { bg: '#7a0a0a', fg: '#e03030', label: 'Bad',      icon: '⬤' },
 };
 
-// Stop NaN from appearing anywhere
-   function hasValidData(v) {
-   return typeof v === 'number' && !isNaN(v);
-   }
+// // Stop NaN from appearing anywhere
+//    function hasValidData(v) {
+//    return typeof v === 'number' && !isNaN(v);
+//    }
 
 // ===== Used this to replace the formatVal function below to replace "NaN°C" beside the traffic light ========
 function formatVal(v, s) {
