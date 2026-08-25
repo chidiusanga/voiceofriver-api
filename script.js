@@ -284,20 +284,39 @@ console.log(
   }
   wctx.globalAlpha=1; wctx.restore();
 
-   if (levelSensorMissing) {
+   if (levelSensorMissing && conditionMode !== 'ideal') {
+      // wctx.save();
+      // wctx.fillStyle = 'rgba(5,20,40,.70)';
+      // wctx.fillRect(WW/2 - 170, WH/2 - 40, 340, 80);
+      // wctx.strokeStyle = '#80d0ff';
+      // wctx.lineWidth = 1;
+      // wctx.strokeRect(WW/2 - 170, WH/2 - 40, 340, 80);
+      // wctx.fillStyle = '#d8f0ff';
+      // wctx.font = 'bold 18px sans-serif';
+      // wctx.textAlign = 'center';
+      // wctx.fillText('Awaiting Water Level Data', WW/2, WH/2 - 5);
+      // wctx.font = '14px sans-serif';
+      // wctx.fillText('Displaying default river depth', WW/2, WH/2 + 20);
+      // wctx.restore();
+   // REPLACED HERE TO MOVE "AWAITING WATER LEVEL DATA" DOWN
+
       wctx.save();
-      wctx.fillStyle = 'rgba(5,20,40,.70)';
-      wctx.fillRect(WW/2 - 170, WH/2 - 40, 340, 80);
-      wctx.strokeStyle = '#80d0ff';
+      const overlayY = WH - 75;
+      wctx.fillStyle = 'rgba(180,20,20,.28)';
+      wctx.strokeStyle = '#ff8080';
       wctx.lineWidth = 1;
-      wctx.strokeRect(WW/2 - 170, WH/2 - 40, 340, 80);
-      wctx.fillStyle = '#d8f0ff';
-      wctx.font = 'bold 18px sans-serif';
+      wctx.beginPath();
+      wctx.roundRect( WW/2 - 180, overlayY, 360, 50, 10);
+      wctx.fill();
+      wctx.beginPath();
+      wctx.roundRect(WW/2 - 180, overlayY, 360, 50, 10);
+      wctx.stroke();
+      wctx.fillStyle = '#ffe0e0';
       wctx.textAlign = 'center';
-      wctx.fillText('Awaiting Water Level Data', WW/2, WH/2 - 5);
-      wctx.font = '14px sans-serif';
-      wctx.fillText('Displaying default river depth', WW/2, WH/2 + 20);
-      wctx.restore();
+      wctx.font = 'bold 16px sans-serif';
+      wctx.fillText('Awaiting Water Level Data', WW/2, overlayY + 20);
+      wctx.font = '12px sans-serif';
+      wctx.fillText('Displaying default river depth', WW/2, overlayY + 38); wctx.restore();
    }
 
   // Fish
@@ -403,6 +422,7 @@ function drawScale() {
 
    const rawLevel = conditionMode === 'ideal' ? PRISTINE.level : currentReadings.level;
    const levelFt = hasValidData(rawLevel) ? rawLevel : PRISTINE.level;
+   const levelDisplayText = hasValidData(rawLevel) ? levelFt.toFixed(1) + 'ft' : 'Waiting for Sensor...';
    // ======================
 
   // ── Pixels-per-foot ─────────────────────────────────────────────
@@ -470,7 +490,8 @@ function drawScale() {
   }
 
   // ── Animated water-surface label ────────────────────────────────
-  const liveText = levelFt.toFixed(1) + 'ft';
+  // const liveText = levelFt.toFixed(1) + 'ft';
+   const liveText = levelDisplayText;
   const labelY   = Math.max(14, Math.min(SH - 4, waveYS));
   // Horizontal line at surface
   sctx.strokeStyle='#e05010'; sctx.lineWidth=2;
@@ -849,17 +870,13 @@ function updateInfoPanel(sensorKey) {
   const statusBadgeEl = document.getElementById('sensorStatus');
 
 //    // Replace "statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label;" below to replace WFD: BAD when data is missing
-// if (!sensorAvailable(sensorKey)) {
-//    statusBadgeEl.textContent =
-//     '● WFD: Status Unknown';
-//    statusBadgeEl.style.background =
-//     'rgba(120,120,120,.25)';
-//    statusBadgeEl.style.color =
-//     '#d0d0d0';
-// } else {
-//    statusBadgeEl.textContent =
-//       wfdInfo.icon + ' WFD: ' + wfdInfo.label;
-// }   
+if (!sensorAvailable(sensorKey)) {
+   statusBadgeEl.textContent = '● WFD: Status Unknown';
+   statusBadgeEl.style.background = 'rgba(120,120,120,.25)';
+   statusBadgeEl.style.color = '#d0d0d0';
+   statusBadgeEl.style.border = '1px solid rgba(220,220,220,.25)';
+  return;
+}  
    
 statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label; 
   statusBadgeEl.style.background = wfdInfo.bg + '40'; // translucent bg
@@ -1251,6 +1268,12 @@ function updateWFDStatusBar(sensorKey) {
   const bar      = document.getElementById('wfdStatusBar');
   const textEl   = document.getElementById('wfdStatusText');
   if (!bar || !textEl) return;
+   
+   if (!sensorAvailable(sensorKey)) {
+      bar.className = 'wfd-bar-unknown';
+      textEl.textContent = 'WFD Status: Unknown — Awaiting sensor observations';
+      return;
+   }
 
   const wfdClass = getWFDStatus(sensorKey);
 
