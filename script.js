@@ -1944,7 +1944,9 @@ function applyLiveSensorData(jsonData) {
 function refreshSensors() {
   if (conditionMode === 'ideal') return;
   setConnectionStatus('connecting', 'Reading…');
-  fetch('/api/latest')
+  fetch('/api/latest?t=' + Date.now(), {
+   cache: 'no-store'
+   })
     .then(function(response) {
       if (!response.ok) throw new Error('HTTP ' + response.status);
       return response.json();
@@ -2007,7 +2009,9 @@ function initSensorSSE() {
 // setTimeout(initSensorSSE, 150);
 setInterval(refreshSensors, 10000);
 setTimeout(function() {
-  fetch('/api/latest')
+  fetch('/api/latest?t=' + Date.now(), {
+   cache: 'no-store'
+   })
     .then(function(r){ return r.json(); })
     .then(applyLiveSensorData)
     .catch(function(){});
