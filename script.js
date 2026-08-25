@@ -645,7 +645,7 @@ const WFD_COLOURS = {
 // ===== Used this to replace the formatVal function below to replace "NaN°C" beside the traffic light ========
 function formatVal(v, s) {
   if (!hasValidData(v)) {
-    return 'Awaiting Data...';
+    return 'Awaiting Data';
   }
   if (v % 1 === 0) {
     return v + ' ' + s.unit;
@@ -772,7 +772,7 @@ function updateInfoPanel(sensorKey) {
   document.getElementById('sensorTitle').textContent = sensorDef.label;
   // Replace large panel reading to prevent NaN
    if (!hasValidData(displayValue)) {
-      document.getElementById('sensorNum').textContent = 'Awaiting Data';
+      document.getElementById('sensorNum').textContent = 'Awaiting Data...';
       document.getElementById('sensorUnit').textContent = '';
 } else {
       document.getElementById('sensorNum').textContent = displayValue % 1 !== 0 ? (displayValue < 100
