@@ -908,6 +908,12 @@ button[title], .bbtn[title], .ebtn[title], .gtbtn[title]{
   outline-offset: 2px;
 }
 
+/* Unknown Status indicator for WFD bar under entity icons */
+.wfd-bar-unknown {
+   background: linear-gradient(90deg, #4a4a4a, #666666);
+   color: #f0f0f0;
+}
+
 /* ── Timeline drag hint — shown until card is first moved ──────────── */
 #tlDragHint{
   position: absolute;
