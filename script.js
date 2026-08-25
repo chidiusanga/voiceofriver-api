@@ -59,7 +59,7 @@ const SENSORS = {
   },
   tds: {
     label: 'Dissolved Solids', friendlyName: 'Saltiness', unit: 'ppm',
-    min: 0, max: 1000,
+    min: 0, max: 1500,
     // WFD: Derived from EC standard (TDS ≈ EC × 0.65 for Irish rivers)
     // High: <130 ppm (ref. EC <200 µS/cm), Good: <520 ppm, Moderate: <780 ppm
     wfd: { high: 130, good: 520, moderate: 780, poor: 900 },
@@ -69,7 +69,7 @@ const SENSORS = {
   },
   ec: {
     label: 'Conductivity', friendlyName: 'Electricity', unit: 'µS/cm',
-    min: 0, max: 2000,
+    min: 0, max: 3000,
     // WFD: UKTAG lake salinity standard — Good: <1000 µS/cm.
     // For rivers, Irish EPA reference data: High-status Irish rivers typically
     // <200 µS/cm (River Avoca surveillance data: mean 3.3 µS/cm = very low,
