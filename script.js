@@ -125,16 +125,16 @@ let entityRafId     = null;
 // waiting for the first real sensor reading from the ESP32.
 // sim() is kept for the timeline's simulated history only.
 
-// ==== Replacing the below because this prints 000 when data is not yet available, which is fake data - 000 is data better no data at all.
-Object.keys(SENSORS).forEach(k => {
-  currentReadings[k] = NaN;
-});
-
-// ==== Replaced with the above because this prints 000 when data is not yet available, which is fake data - 000 is data better no data at all.
+// // ==== Replacing the below because this prints 000 when data is not yet available, which is fake data - 000 is data better no data at all.
 // Object.keys(SENSORS).forEach(k => {
-//   const s = SENSORS[k];
-//   currentReadings[k] = +((s.good[0] + s.good[1]) / 2).toFixed(2);
+//   currentReadings[k] = NaN;
 // });
+
+
+Object.keys(SENSORS).forEach(k => {
+  const s = SENSORS[k];
+  currentReadings[k] = +((s.good[0] + s.good[1]) / 2).toFixed(2);
+});
 
 /* ── Fish ── */
 const FISH_COLORS=[['#f4a942','#e07820'],['#e05050','#a02020'],['#50c0e0','#206080'],['#a0e060','#407020'],['#e0a0e0','#805080'],['#60e0c0','#207060']];
@@ -533,12 +533,6 @@ function buildGaugeOverlay() {
    } else {
      valTag.textContent = formatVal(val, s);
    }
-
-     // Stop NaN from appearing anywhere
-   function hasValidData(v) {
-   return typeof v === 'number' && !isNaN(v);
-   }
-
     bubble.appendChild(labelEl);
     bubble.appendChild(wrapEl);
     bubble.appendChild(valTag);
@@ -642,6 +636,11 @@ const WFD_COLOURS = {
   poor:     { bg: '#7a2800', fg: '#f07030', label: 'Poor',     icon: '⬤' },
   bad:      { bg: '#7a0a0a', fg: '#e03030', label: 'Bad',      icon: '⬤' },
 };
+
+// Stop NaN from appearing anywhere
+   function hasValidData(v) {
+   return typeof v === 'number' && !isNaN(v);
+   }
 
 // ===== Used this to replace the formatVal function below to replace "NaN°C" under the gauges ========
 function formatVal(v, s) {
