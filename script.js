@@ -856,7 +856,7 @@ function updateInfoPanel(sensorKey) {
   document.getElementById('sensorTitle').textContent = sensorDef.label;
   // Replace large panel reading to prevent NaN
    if (!hasValidData(displayValue)) {
-      document.getElementById('sensorNum').textContent = 'Awaiting Data...';
+      document.getElementById('sensorNum').textContent = 'Sensor Offline...';
       document.getElementById('sensorUnit').textContent = '';
 } else {
       document.getElementById('sensorNum').textContent = displayValue % 1 !== 0 ? (displayValue < 100
