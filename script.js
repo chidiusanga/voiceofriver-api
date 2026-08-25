@@ -216,6 +216,17 @@ function surfY(x) {
 
 function drawWater() {
   if (!wctx) return;
+
+console.log(
+  'Water Debug:',
+  'WW=', WW,
+  'WH=', WH,
+  'waterSurfaceFrac=', waterSurfaceFrac,
+  'waterR=', waterR,
+  'waterG=', waterG,
+  'waterB=', waterB
+);
+   
   wctx.clearRect(0, 0, WW, WH);
 
   // Sky
