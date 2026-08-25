@@ -124,10 +124,17 @@ let entityRafId     = null;
 // Initialise with midpoint placeholder values — stable display while
 // waiting for the first real sensor reading from the ESP32.
 // sim() is kept for the timeline's simulated history only.
+
+// ==== Replacing the below because this prints 000 when data is not yet available, which is fake data - 000 is data better no data at all.
 Object.keys(SENSORS).forEach(k => {
-  const s = SENSORS[k];
-  currentReadings[k] = +((s.good[0] + s.good[1]) / 2).toFixed(2);
+  currentReadings[k] = NaN;
 });
+
+// ==== Replaced with the above because this prints 000 when data is not yet available, which is fake data - 000 is data better no data at all.
+// Object.keys(SENSORS).forEach(k => {
+//   const s = SENSORS[k];
+//   currentReadings[k] = +((s.good[0] + s.good[1]) / 2).toFixed(2);
+// });
 
 /* ── Fish ── */
 const FISH_COLORS=[['#f4a942','#e07820'],['#e05050','#a02020'],['#50c0e0','#206080'],['#a0e060','#407020'],['#e0a0e0','#805080'],['#60e0c0','#207060']];
@@ -516,9 +523,21 @@ function buildGaugeOverlay() {
     cvs.id = 'overlay-gauge-'+key;
     wrapEl.appendChild(cvs);
 
-    const valTag = document.createElement('div');
-    valTag.className = 'gauge-value-tag';
-    valTag.textContent = formatVal(val, s);
+
+   const valTag = document.createElement('div');
+   valTag.className = 'gauge-value-tag';
+   
+   // Display text content only if there's a data value, otherwise display "Waiting..." instead of just 000.00 or NaN.
+     if (!hasValidData(val)) {
+     valTag.textContent = 'Waiting...';
+   } else {
+     valTag.textContent = formatVal(val, s);
+   }
+
+     // Stop NaN from appearing anywhere
+   function hasValidData(v) {
+   return typeof v === 'number' && !isNaN(v);
+   }
 
     bubble.appendChild(labelEl);
     bubble.appendChild(wrapEl);
@@ -624,11 +643,24 @@ const WFD_COLOURS = {
   bad:      { bg: '#7a0a0a', fg: '#e03030', label: 'Bad',      icon: '⬤' },
 };
 
+// ===== Used this to replace the formatVal function below to replace "NaN°C" under the gauges ========
 function formatVal(v, s) {
-  if (typeof v!=='number') return v;
-  if (v%1===0) return v+' '+s.unit;
-  return (v<100?v.toFixed(2):v.toFixed(1))+' '+s.unit;
+  if (!hasValidData(v)) {
+    return 'Awaiting Data';
+  }
+  if (v % 1 === 0) {
+    return v + ' ' + s.unit;
+  }
+  return (v < 100 ? v.toFixed(2) : v.toFixed(1))
+    + ' ' + s.unit;
 }
+// ===== Replaced with above to replace "NaN°C" under the gauges ========
+// function formatVal(v, s) {
+//   if (typeof v!=='number') return v;
+//   if (v%1===0) return v+' '+s.unit;
+//   return (v<100?v.toFixed(2):v.toFixed(1))+' '+s.unit;
+// }
+
 
 /* ════════════════════════════════════════════════════
    DYNAMIC NARRATIVE
@@ -642,6 +674,40 @@ function generateNarrative(entityKey, gaugeKey) {
   const fv  = typeof val==='number' && val%1!==0 ? (val<100?val.toFixed(2):val.toFixed(1)) : String(val);
   const voices = {swan:'The Swan speaks', otter:'The Otter speaks', lily:'The Lily speaks'};
   const v = voices[entityKey] || 'The River speaks';
+
+// Friendly Swan/Otter/Lily apology narratives - when data is unavailable
+
+if (!hasValidData(val)) {
+
+  if (entityKey === 'swan') {
+    return `
+    <strong>The Swan speaks:</strong>
+    I'm sorry, but I cannot currently sense this part of the river.<br><br>
+    One or more monitoring instruments are offline or disconnected.<br><br>
+    My human and nonhuman partners are working together to restore the connection.<br><br>
+    Please check back soon.
+    `;
+  }
+
+  if (entityKey === 'otter') {
+    return `
+    <strong>The Otter speaks:</strong>
+    I've been searching for the latest river measurements, but the sensors have gone quiet.<br><br>
+    This does not necessarily mean the river is unhealthy.<br><br>
+    I simply do not yet have enough information to tell its story.
+    `;
+  }
+
+  if (entityKey === 'lily') {
+    return `
+    <strong>The Lily whispers:</strong>
+    The river is resting between conversations.<br><br>
+    Fresh observations have not yet arrived, so I will wait patiently before sharing the next chapter of its story.
+    `;
+  }
+}
+
+   // Resume normal entity narrative - when data is available
   const t = {
     temperature:{
       good:`<strong>${v}:</strong> The warmth beneath me feels just right — <em>${fv}${s.unit}</em>. Under the EU Water Framework Directive's thermal standard for salmonid rivers, temperatures below 20°C represent High ecological status, and below 25°C represent Good status. This reading places the river in that favourable range, supporting the fish communities and invertebrates that the WFD seeks to protect. Ireland's EPA monitors temperature as a key physico-chemical element supporting biological quality. The river is thriving.`,
@@ -705,15 +771,35 @@ function updateInfoPanel(sensorKey) {
   const wfdInfo      = WFD_COLOURS[wfdClass];
 
   document.getElementById('sensorTitle').textContent = sensorDef.label;
-  document.getElementById('sensorNum').textContent =
-    typeof displayValue === 'number' && displayValue % 1 !== 0
-      ? (displayValue < 100 ? displayValue.toFixed(2) : displayValue.toFixed(1))
+  // Replace large panel reading to prevent NaN
+   if (!hasValidData(displayValue)) {
+      document.getElementById('sensorNum').textContent = 'Awaiting Data';
+      document.getElementById('sensorUnit').textContent = '';
+} else {
+      document.getElementById('sensorNum').textContent = displayValue % 1 !== 0 ? (displayValue < 100
+          ? displayValue.toFixed(2)
+          : displayValue.toFixed(1))
       : displayValue;
-  document.getElementById('sensorUnit').textContent = ' ' + sensorDef.unit;
+      document.getElementById('sensorUnit').textContent = ' ' + sensorDef.unit;
+}
 
   // WFD status badge — shows official 5-class label with WFD colour
   const statusBadgeEl = document.getElementById('sensorStatus');
-  statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label;
+
+   // Replace "statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label;" below to replace WFD: BAD when data is missing
+if (!sensorAvailable(sensorKey)) {
+   statusBadgeEl.textContent =
+    '● WFD: Status Unknown';
+   statusBadgeEl.style.background =
+    'rgba(120,120,120,.25)';
+   statusBadgeEl.style.color =
+    '#d0d0d0';
+} else {
+   statusBadgeEl.textContent =
+      wfdInfo.icon + ' WFD: ' + wfdInfo.label;
+}   
+   // statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label;
+   
   statusBadgeEl.style.background = wfdInfo.bg + '40'; // translucent bg
   statusBadgeEl.style.color      = wfdInfo.fg;
   statusBadgeEl.style.border     = '1px solid ' + wfdInfo.fg + '60';
@@ -730,6 +816,18 @@ function updateInfoPanel(sensorKey) {
   updateWFDStatusBar(sensorKey);
   document.getElementById('narrativeText').innerHTML = generateNarrative(activeEntityKey, sensorKey);
 }
+
+// Helper function to replace "WFD: BAD" on dashboard when data is missing
+function sensorAvailable(sensorKey) {
+
+  const val =
+    conditionMode === 'ideal'
+      ? PRISTINE[sensorKey]
+      : currentReadings[sensorKey];
+
+  return hasValidData(val);
+}
+
 
 function selectGauge(key) {
   activeGaugeKey = key;
