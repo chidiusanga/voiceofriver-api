@@ -125,6 +125,7 @@ let gaugeInstances  = {};
 let animClock       = 0;
 let entityAnimClock = 0;
 let entityRafId     = null;
+let levelSensorMissing = false;
 
 // Initialise with midpoint placeholder values — stable display while
 // waiting for the first real sensor reading from the ESP32.
@@ -182,7 +183,13 @@ function resizeWater() {
 function applyReadings() {
   const r = conditionMode === 'ideal' ? PRISTINE : currentReadings;
   const s = SENSORS;
-  const lv = Math.max(0, Math.min(1, (r.level - s.level.min) / (s.level.max - s.level.min)));
+  // const lv = Math.max(0, Math.min(1, (r.level - s.level.min) / (s.level.max - s.level.min)));
+
+const levelValue = hasValidData(r.level) ? r.level : PRISTINE.level;
+const lv = Math.max(0, Math.min(1, (levelValue - s.level.min) / (s.level.max - s.level.min)));
+
+   // =====================
+   
   waterSurfaceFrac = 0.22 + lv * 0.64;
   if (conditionMode === 'ideal') {
     waterR=30; waterG=105; waterB=185; turbOpacity=0; waveAmp=4; return;
@@ -250,6 +257,22 @@ function drawWater() {
     wctx.strokeStyle='#a0d8f0'; wctx.lineWidth=1; wctx.stroke();
   }
   wctx.globalAlpha=1; wctx.restore();
+
+   if (levelSensorMissing) {
+      wctx.save();
+      wctx.fillStyle = 'rgba(5,20,40,.70)';
+      wctx.fillRect(WW/2 - 170, WH/2 - 40, 340, 80);
+      wctx.strokeStyle = '#80d0ff';
+      wctx.lineWidth = 1;
+      wctx.strokeRect(WW/2 - 170, WH/2 - 40, 340, 80);
+      wctx.fillStyle = '#d8f0ff';
+      wctx.font = 'bold 18px sans-serif';
+      wctx.textAlign = 'center';
+      wctx.fillText('Awaiting Water Level Data', WW/2, WH/2 - 5);
+      wctx.font = '14px sans-serif';
+      wctx.fillText('Displaying default river depth', WW/2, WH/2 + 20);
+      wctx.restore();
+   }
 
   // Fish
   const FADE_ZONE = 100; // px from edge over which fish fade in/out
@@ -348,7 +371,13 @@ function drawScale() {
   const waveYS   = waveFrac * SH;          // pixel on scale canvas
 
   // Current depth reading in feet — this is what the surface label shows
-  const levelFt = (conditionMode==='ideal' ? PRISTINE.level : currentReadings.level) || 0;
+   
+   // =================
+  // const levelFt = (conditionMode==='ideal' ? PRISTINE.level : currentReadings.level) || 0;
+
+   const rawLevel = conditionMode === 'ideal' ? PRISTINE.level : currentReadings.level;
+   const levelFt = hasValidData(rawLevel) ? rawLevel : PRISTINE.level;
+   // ======================
 
   // ── Pixels-per-foot ─────────────────────────────────────────────
   // We divide the canvas into two zones at waveYS:
@@ -688,7 +717,10 @@ if (!hasValidData(val)) {
     <strong>The Swan speaks:</strong>
     I'm sorry, but I cannot currently sense this part of the river.<br><br>
     One or more monitoring instruments are offline or disconnected.<br><br>
+    For instance, I cannot currently judge the river's depth because no recent observations have reached me.<br><br>
+    The river is still flowing beneath me, but I do not yet know how high or low the water stands.<br><br>
     My human and nonhuman partners are working together to restore the connection.<br><br>
+    Until then, I will continue watching over the river.
     Please check back soon.
     `;
   }
@@ -2029,7 +2061,9 @@ function applyLiveSensorData(jsonData) {
   var updated = false;
   if (jsonData['Node1_TEMP']       !== undefined) { currentReadings.temperature = parseFloat(jsonData['Node1_TEMP']);       updated = true; }
   if (jsonData['Node1_TURBIDITY']  !== undefined) { currentReadings.turbidity    = parseFloat(jsonData['Node1_TURBIDITY']);  updated = true; }
-  if (jsonData['Node1_WATERLEVEL'] !== undefined) { currentReadings.level        = parseFloat(jsonData['Node1_WATERLEVEL']); updated = true; }
+  // if (jsonData['Node1_WATERLEVEL'] !== undefined) { currentReadings.level        = parseFloat(jsonData['Node1_WATERLEVEL']); updated = true; }
+   if (jsonData['Node1_WATERLEVEL'] !== undefined) {currentReadings.level = parseFloat(jsonData['Node1_WATERLEVEL']); levelSensorMissing = isNaN(currentReadings.level);
+  updated = true;}
   if (jsonData['Node2_TDS']        !== undefined) { currentReadings.tds          = parseFloat(jsonData['Node2_TDS']);        updated = true; }
   if (jsonData['Node2_EC']         !== undefined) { currentReadings.ec           = parseFloat(jsonData['Node2_EC']);         updated = true; }
   if (jsonData['Node3_PH']         !== undefined) { currentReadings.ph           = parseFloat(jsonData['Node3_PH']);         updated = true; }
