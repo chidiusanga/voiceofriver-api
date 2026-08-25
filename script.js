@@ -875,8 +875,12 @@ if (!sensorAvailable(sensorKey)) {
    statusBadgeEl.style.background = 'rgba(120,120,120,.25)';
    statusBadgeEl.style.color = '#d0d0d0';
    statusBadgeEl.style.border = '1px solid rgba(220,220,220,.25)';
-  return;
-}  
+} else {
+   statusBadgeEl.textContent = wfdInfo.icon + ' WFD: ' + wfdInfo.label;
+   statusBadgeEl.style.background = wfdInfo.bg + '40';
+   statusBadgeEl.style.color = wfdInfo.fg;
+   statusBadgeEl.style.border = '1px solid ' + wfdInfo.fg + '60';
+}
    
 statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label; 
   statusBadgeEl.style.background = wfdInfo.bg + '40'; // translucent bg
