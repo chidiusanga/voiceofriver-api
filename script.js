@@ -785,20 +785,20 @@ function updateInfoPanel(sensorKey) {
   // WFD status badge — shows official 5-class label with WFD colour
   const statusBadgeEl = document.getElementById('sensorStatus');
 
-   // Replace "statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label;" below to replace WFD: BAD when data is missing
-if (!sensorAvailable(sensorKey)) {
-   statusBadgeEl.textContent =
-    '● WFD: Status Unknown';
-   statusBadgeEl.style.background =
-    'rgba(120,120,120,.25)';
-   statusBadgeEl.style.color =
-    '#d0d0d0';
-} else {
-   statusBadgeEl.textContent =
-      wfdInfo.icon + ' WFD: ' + wfdInfo.label;
-}   
-   // statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label;
+//    // Replace "statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label;" below to replace WFD: BAD when data is missing
+// if (!sensorAvailable(sensorKey)) {
+//    statusBadgeEl.textContent =
+//     '● WFD: Status Unknown';
+//    statusBadgeEl.style.background =
+//     'rgba(120,120,120,.25)';
+//    statusBadgeEl.style.color =
+//     '#d0d0d0';
+// } else {
+//    statusBadgeEl.textContent =
+//       wfdInfo.icon + ' WFD: ' + wfdInfo.label;
+// }   
    
+statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label; 
   statusBadgeEl.style.background = wfdInfo.bg + '40'; // translucent bg
   statusBadgeEl.style.color      = wfdInfo.fg;
   statusBadgeEl.style.border     = '1px solid ' + wfdInfo.fg + '60';
