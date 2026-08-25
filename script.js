@@ -762,8 +762,8 @@ if (!hasValidData(val)) {
   if (entityKey === 'swan') {
     return `
     <strong>The Swan speaks:</strong>
-    I'm sorry, but I cannot currently sense this part of the river.<br><br>
-    One or more monitoring instruments are offline or disconnected.<br><br>
+    I'm sorry, but I cannot currently sense this part of the river.
+    One or more monitoring instruments are offline or disconnected.
     For instance, I cannot currently judge the river's depth because no recent observations have reached me.<br><br>
     The river is still flowing beneath me, but I do not yet know how high or low the water stands.<br><br>
     My human and nonhuman partners are working together to restore the connection.<br><br>
