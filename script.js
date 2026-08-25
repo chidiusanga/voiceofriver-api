@@ -642,10 +642,10 @@ const WFD_COLOURS = {
    return typeof v === 'number' && !isNaN(v);
    }
 
-// ===== Used this to replace the formatVal function below to replace "NaN°C" under the gauges ========
+// ===== Used this to replace the formatVal function below to replace "NaN°C" beside the traffic light ========
 function formatVal(v, s) {
   if (!hasValidData(v)) {
-    return 'Awaiting Data';
+    return 'Awaiting Data...';
   }
   if (v % 1 === 0) {
     return v + ' ' + s.unit;
