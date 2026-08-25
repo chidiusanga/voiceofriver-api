@@ -59,17 +59,17 @@ const SENSORS = {
   },
   tds: {
     label: 'Dissolved Solids', friendlyName: 'Saltiness', unit: 'ppm',
-    min: 0, max: 1500,
+    min: 0, max: 1400,
     // WFD: Derived from EC standard (TDS ≈ EC × 0.65 for Irish rivers)
     // High: <130 ppm (ref. EC <200 µS/cm), Good: <520 ppm, Moderate: <780 ppm
     wfd: { high: 130, good: 520, moderate: 780, poor: 900 },
     good: [30, 520], warn: [0, 780],
-    type: 'radial', majorTicks: ['0','200','400','600','800','1000','1200','1500'],
+    type: 'radial', majorTicks: ['0','200','400','600','800','1000','1200','1400'],
     sim: () => Math.round(60 + Math.random() * 820)
   },
   ec: {
     label: 'Conductivity', friendlyName: 'Electricity', unit: 'µS/cm',
-    min: 0, max: 3000,
+    min: 0, max: 2500,
     // WFD: UKTAG lake salinity standard — Good: <1000 µS/cm.
     // For rivers, Irish EPA reference data: High-status Irish rivers typically
     // <200 µS/cm (River Avoca surveillance data: mean 3.3 µS/cm = very low,
@@ -78,7 +78,7 @@ const SENSORS = {
     // monitoring threshold). Moderate: >800, Poor: >1200, Bad: >1600.
     wfd: { high: 200, good: 800, moderate: 1200, poor: 1600 },
     good: [50, 800], warn: [0, 1200],
-    type: 'radial', majorTicks: ['0','500','1000','1500','2000','2500','3000'],
+    type: 'radial', majorTicks: ['0','500','1000','1500','2000','2500'],
     sim: () => Math.round(80 + Math.random() * 1700)
   },
   level: {
