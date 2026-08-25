@@ -422,7 +422,7 @@ function drawScale() {
 
    const rawLevel = conditionMode === 'ideal' ? PRISTINE.level : currentReadings.level;
    const levelFt = hasValidData(rawLevel) ? rawLevel : PRISTINE.level;
-   const levelDisplayText = hasValidData(rawLevel) ? levelFt.toFixed(1) + 'ft' : 'Sensor Offline';
+   const levelDisplayText = hasValidData(rawLevel) ? levelFt.toFixed(1) + 'ft' : 'Offline';
    // ======================
 
   // ── Pixels-per-foot ─────────────────────────────────────────────
