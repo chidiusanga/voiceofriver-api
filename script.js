@@ -194,17 +194,32 @@ const lv = Math.max(0, Math.min(1, (levelValue - s.level.min) / (s.level.max - s
   if (conditionMode === 'ideal') {
     waterR=30; waterG=105; waterB=185; turbOpacity=0; waveAmp=4; return;
   }
-  const tf = Math.min(1, r.turbidity / s.turbidity.max);
-  const df = Math.min(1, (r.tds||0) / s.tds.max);
+  // const tf = Math.min(1, r.turbidity / s.turbidity.max);
+   
+   const turbidityValue = hasValidData(r.turbidity) ? r.turbidity : 0;
+   const tf = Math.min(1, turbidityValue / s.turbidity.max);
+   
+  // const df = Math.min(1, (r.tds||0) / s.tds.max);
+
+   const tdsValue = hasValidData(r.tds) ? r.tds : 0;
+   const df = Math.min(1, tdsValue / s.tds.max);
+   
   const cloudiness = tf*.6 + df*.4;
   waterR = Math.round(20 + cloudiness*140);
   waterG = Math.round(105 - cloudiness*70);
   waterB = Math.round(185 - cloudiness*80);
   turbOpacity = cloudiness * 0.55;
-  const tmpN = (r.temperature - s.temperature.min) / (s.temperature.max - s.temperature.min);
+  // const tmpN = (r.temperature - s.temperature.min) / (s.temperature.max - s.temperature.min);
+
+   const temperatureValue = hasValidData(r.temperature) ? r.temperature : PRISTINE.temperature;
+   const tmpN = (temperatureValue - s.temperature.min) / (s.temperature.max - s.temperature.min);
+   
   waterR = Math.min(255, waterR + Math.round(tmpN*60));
   waterB = Math.max(40,  waterB - Math.round(tmpN*60));
-  waveAmp = 3 + Math.min(1, (r.ec||0) / 2000) * 9;
+  // waveAmp = 3 + Math.min(1, (r.ec||0) / 2000) * 9;
+
+   const ecValue = hasValidData(r.ec) ? r.ec : 0;
+   waveAmp = 3 + Math.min(1, ecValue / 2000) * 9;
 }
 
 function surfY(x) {
