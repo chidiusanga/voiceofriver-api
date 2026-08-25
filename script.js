@@ -881,17 +881,14 @@ if (!sensorAvailable(sensorKey)) {
    statusBadgeEl.style.color = wfdInfo.fg;
    statusBadgeEl.style.border = '1px solid ' + wfdInfo.fg + '60';
 }
-// ===== DELETE THIS DEBUGGING CODE
-   console.log(
-  'Badge final text:',
-  statusBadgeEl.textContent
-);
-   // ==== END DEBUG
-   
-statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label; 
-  statusBadgeEl.style.background = wfdInfo.bg + '40'; // translucent bg
-  statusBadgeEl.style.color      = wfdInfo.fg;
-  statusBadgeEl.style.border     = '1px solid ' + wfdInfo.fg + '60';
+
+// ==== DELETE THIS REDUNDANCY
+// statusBadgeEl.textContent   = wfdInfo.icon + ' WFD: ' + wfdInfo.label; 
+//   statusBadgeEl.style.background = wfdInfo.bg + '40'; // translucent bg
+//   statusBadgeEl.style.color      = wfdInfo.fg;
+//   statusBadgeEl.style.border     = '1px solid ' + wfdInfo.fg + '60';
+// ==== END OF REDUNDANCY
+
   statusBadgeEl.style.borderRadius = '8px';
   statusBadgeEl.className        = ''; // clear old class
   statusBadgeEl.style.display    = 'inline-flex';
