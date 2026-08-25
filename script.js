@@ -908,6 +908,8 @@ function sensorAvailable(sensorKey) {
       ? PRISTINE[sensorKey]
       : currentReadings[sensorKey];
 
+   console.log('sensorAvailable:', sensorKey, currentReadings[sensorKey]);
+
   return hasValidData(val);
 }
 
