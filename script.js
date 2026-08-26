@@ -671,6 +671,10 @@ function buildGaugeOverlay() {
 function getWFDStatus(sensorKey) {
   const sensorDef = SENSORS[sensorKey];
   const val       = conditionMode === 'ideal' ? PRISTINE[sensorKey] : currentReadings[sensorKey];
+   
+if (!hasValidData(val)) { // print Unknown when sensors are offline rather than NaN
+   return 'unknown';
+}
   const wfd       = sensorDef.wfd;
   if (!wfd) return 'good'; // fallback for sensors without WFD thresholds
 
@@ -716,6 +720,7 @@ const WFD_COLOURS = {
   moderate: { bg: '#6a5000', fg: '#f0c030', label: 'Moderate', icon: '⬤' },
   poor:     { bg: '#7a2800', fg: '#f07030', label: 'Poor',     icon: '⬤' },
   bad:      { bg: '#7a0a0a', fg: '#e03030', label: 'Bad',      icon: '⬤' },
+  unknown:  {bg: '#444444', fg: '#d0d0d0', label: 'Unknown', icon: '○'},
 };
 
 // // Stop NaN from appearing anywhere
@@ -1240,6 +1245,10 @@ function getOverallWFDStatus() {
   let worstStatus = 'high';
   let worstSensor = null;
   Object.keys(SENSORS).forEach(sensorKey => {
+     if (!sensorAvailable(sensorKey)) {
+    return;
+  }
+  const statusClass = getWFDStatus(sensorKey);
     const statusClass = getWFDStatus(sensorKey);
     if (WFD_STATUS_RANK[statusClass] < WFD_STATUS_RANK[worstStatus]) {
       worstStatus = statusClass;
@@ -1256,8 +1265,18 @@ function countSDG6Compliance() {
     const s = getWFDStatus(k);
     return s === 'high' || s === 'good';
   }).length;
-  const total = Object.keys(SENSORS).length;
-  return { passing, total, pct: Math.round((passing / total) * 100) };
+  // const total = Object.keys(SENSORS).length;
+   
+   const availableSensors = Object.keys(SENSORS) .filter(k => sensorAvailable(k));
+   
+   const passing = availableSensors.filter(k => {
+      const s = getWFDStatus(k);
+      return s === 'high' || s === 'good';
+   }).length;
+   
+   const total = availableSensors.length;
+   
+   return { passing, total, pct: Math.round((passing / total) * 100) };
 }
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -1319,13 +1338,16 @@ function openWFDReport() {
     const sensorDef = SENSORS[key];
     const wfdClass  = getWFDStatus(key);
     const wfdCol    = WFD_COLOURS[wfdClass];
-    const val       = conditionMode === 'ideal' ? PRISTINE[key] : currentReadings[key];
-    const displayVal = typeof val === 'number' && val % 1 !== 0
-      ? (val < 100 ? val.toFixed(2) : val.toFixed(1)) : val;
+    // const val       = conditionMode === 'ideal' ? PRISTINE[key] : currentReadings[key];
+    // const displayVal = typeof val === 'number' && val % 1 !== 0
+    //   ? (val < 100 ? val.toFixed(2) : val.toFixed(1)) : val;
+     
+     const displayVal = hasValidData(val) ? (val % 1 !== 0 ? (val < 100 ? val.toFixed(2) : val.toFixed(1)) : val) : 'Offline';
     return `
       <div class="wfd-param-row">
         <span class="wfd-param-name">${sensorDef.label}</span>
-        <span class="wfd-param-val">${displayVal} ${sensorDef.unit}</span>
+        // <span class="wfd-param-val">${displayVal} ${sensorDef.unit}</span>
+        <span class="wfd-param-val"> ${hasValidData(val) ? displayVal + ' ' + sensorDef.unit  : 'Offline'} </span>
         <span class="wfd-param-status" style="background:${wfdCol.bg}55;color:${wfdCol.fg};border:1px solid ${wfdCol.fg}60" title="WFD Ecological Status: ${wfdCol.label}. ${wfdClass === 'high' ? 'Reference condition — negligible human influence.' : wfdClass === 'good' ? 'Slight deviation from reference conditions. EU 2027 target class.' : wfdClass === 'moderate' ? 'Moderate deviation. Operational monitoring and action required.' : wfdClass === 'poor' ? 'Major deviation. Urgent remediation needed.' : 'Severe alteration. Ecosystem at serious risk.'}">
           ${wfdCol.icon} ${wfdCol.label}
         </span>
