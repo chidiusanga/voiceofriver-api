@@ -188,15 +188,6 @@ function applyReadings() {
 const levelValue = hasValidData(r.level) ? r.level : PRISTINE.level;
 const lv = Math.max(0, Math.min(1, (levelValue - s.level.min) / (s.level.max - s.level.min)));
 
-   // ====== DELETE THIS DEBUG
-console.log(
-  'LEVEL DEBUG',
-  'raw level =', r.level,
-  'levelValue =', levelValue,
-  'lv =', lv,
-  'waterSurfaceFrac =', (0.22 + lv * 0.64)
-);
-
    // =====================
    
   waterSurfaceFrac = 0.22 + lv * 0.64;
