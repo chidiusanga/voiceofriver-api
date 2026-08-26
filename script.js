@@ -1244,27 +1244,30 @@ const WFD_SDG_GOALS = {
 function getOverallWFDStatus() {
   let worstStatus = 'high';
   let worstSensor = null;
+   
   Object.keys(SENSORS).forEach(sensorKey => {
-     if (!sensorAvailable(sensorKey)) {
+  if (!sensorAvailable(sensorKey)) {
     return;
   }
+
   const statusClass = getWFDStatus(sensorKey);
-    const statusClass = getWFDStatus(sensorKey);
-    if (WFD_STATUS_RANK[statusClass] < WFD_STATUS_RANK[worstStatus]) {
-      worstStatus = statusClass;
-      worstSensor = sensorKey;
-    }
-  });
+
+  if (WFD_STATUS_RANK[statusClass] < WFD_STATUS_RANK[worstStatus]) {
+    worstStatus = statusClass;
+    worstSensor = sensorKey;
+  }
+});
   return { status: worstStatus, limitingSensor: worstSensor };
 }
 
 function countSDG6Compliance() {
   // SDG 6.3: proportion of water quality parameters meeting safe thresholds
   // SDG Target: substantially improve water quality globally by 2030
-  const passing  = Object.keys(SENSORS).filter(k => {
-    const s = getWFDStatus(k);
-    return s === 'high' || s === 'good';
-  }).length;
+   
+  // const passing  = Object.keys(SENSORS).filter(k => {
+  //   const s = getWFDStatus(k);
+  //   return s === 'high' || s === 'good';
+  // }).length;
   // const total = Object.keys(SENSORS).length;
    
    const availableSensors = Object.keys(SENSORS) .filter(k => sensorAvailable(k));
@@ -1338,7 +1341,7 @@ function openWFDReport() {
     const sensorDef = SENSORS[key];
     const wfdClass  = getWFDStatus(key);
     const wfdCol    = WFD_COLOURS[wfdClass];
-    // const val       = conditionMode === 'ideal' ? PRISTINE[key] : currentReadings[key];
+    const val       = conditionMode === 'ideal' ? PRISTINE[key] : currentReadings[key];
     // const displayVal = typeof val === 'number' && val % 1 !== 0
     //   ? (val < 100 ? val.toFixed(2) : val.toFixed(1)) : val;
      
@@ -1346,7 +1349,6 @@ function openWFDReport() {
     return `
       <div class="wfd-param-row">
         <span class="wfd-param-name">${sensorDef.label}</span>
-        // <span class="wfd-param-val">${displayVal} ${sensorDef.unit}</span>
         <span class="wfd-param-val"> ${hasValidData(val) ? displayVal + ' ' + sensorDef.unit  : 'Offline'} </span>
         <span class="wfd-param-status" style="background:${wfdCol.bg}55;color:${wfdCol.fg};border:1px solid ${wfdCol.fg}60" title="WFD Ecological Status: ${wfdCol.label}. ${wfdClass === 'high' ? 'Reference condition — negligible human influence.' : wfdClass === 'good' ? 'Slight deviation from reference conditions. EU 2027 target class.' : wfdClass === 'moderate' ? 'Moderate deviation. Operational monitoring and action required.' : wfdClass === 'poor' ? 'Major deviation. Urgent remediation needed.' : 'Severe alteration. Ecosystem at serious risk.'}">
           ${wfdCol.icon} ${wfdCol.label}
