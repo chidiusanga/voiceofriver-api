@@ -1239,22 +1239,35 @@ const WFD_SDG_GOALS = {
 };
 
 function getOverallWFDStatus() {
-  let worstStatus = 'high';
+  let worstStatus = null;
   let worstSensor = null;
-   
+
   Object.keys(SENSORS).forEach(sensorKey => {
-  if (!sensorAvailable(sensorKey)) {
-    return;
+    if (!sensorAvailable(sensorKey)) {
+      return;
+    }
+    const statusClass = getWFDStatus(sensorKey);
+
+    if (
+      worstStatus === null || WFD_STATUS_RANK[statusClass] < WFD_STATUS_RANK[worstStatus]
+    ) {
+      worstStatus = statusClass;
+      worstSensor = sensorKey;
+    }
+  });
+
+  // No live readings available
+  if (worstStatus === null) {
+    return {
+      status: 'unknown',
+      limitingSensor: null
+    };
   }
 
-  const statusClass = getWFDStatus(sensorKey);
-
-  if (WFD_STATUS_RANK[statusClass] < WFD_STATUS_RANK[worstStatus]) {
-    worstStatus = statusClass;
-    worstSensor = sensorKey;
-  }
-});
-  return { status: worstStatus, limitingSensor: worstSensor };
+  return {
+    status: worstStatus,
+    limitingSensor: worstSensor
+  };
 }
 
 function countSDG6Compliance() {
@@ -1389,7 +1402,8 @@ const otterInfo = bioIndicator(otterStatus);
 const lilyInfo  = bioIndicator(lilyStatus);
 
   // Limiting factor note
-  const limitingNote = overall.limitingSensor
+const limitingNote = overall.status === 'unknown'
+    ? 'No live environmental observations available' : overall.limitingSensor
     ? `Limiting factor: <strong>${SENSORS[overall.limitingSensor].label}</strong> (${WFD_COLOURS[getWFDStatus(overall.limitingSensor)].label})`
     : 'All parameters at High status';
 
