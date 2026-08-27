@@ -137,11 +137,6 @@ Object.keys(SENSORS).forEach(k => {
 });
 
 
-Object.keys(SENSORS).forEach(k => {
-  const s = SENSORS[k];
-  currentReadings[k] = +((s.good[0] + s.good[1]) / 2).toFixed(2);
-});
-
 /* ── Fish ── */
 const FISH_COLORS=[['#f4a942','#e07820'],['#e05050','#a02020'],['#50c0e0','#206080'],['#a0e060','#407020'],['#e0a0e0','#805080'],['#60e0c0','#207060']];
 let fishArray=[];
@@ -2271,40 +2266,75 @@ function setConnectionStatus(state, label) {
    This is the ONLY place that knows about Node/sensor naming.
    JSON key names must match the ESP32 firmware exactly.           */
 function applyLiveSensorData(jsonData) {
-   
-   // Set data display timeout if sensors offline for 30 seconds
-   const DATA_TIMEOUT_MS = 30000;
-   if (jsonData.created_at) {
-      const ageMs = Date.now() - new Date(jsonData.created_at).getTime();
-      
-      if (ageMs > DATA_TIMEOUT_MS) {
-         Object.keys(currentReadings).forEach(key => {
-            currentReadings[key] = NaN;
-         });
-         levelSensorMissing = true;
-         setConnectionStatus('error', 'Data Stale');
-         applyReadings();
-         buildGaugeOverlay();
-         updateInfoPanel(activeGaugeKey);
-         return;
-      }
-   }
-   
-  var updated = false;
-  if (jsonData['Node1_TEMP']       !== undefined) { currentReadings.temperature = parseFloat(jsonData['Node1_TEMP']);       updated = true; }
-  if (jsonData['Node1_TURBIDITY']  !== undefined) { currentReadings.turbidity    = parseFloat(jsonData['Node1_TURBIDITY']);  updated = true; }
-  // if (jsonData['Node1_WATERLEVEL'] !== undefined) { currentReadings.level        = parseFloat(jsonData['Node1_WATERLEVEL']); updated = true; }
-   if (jsonData['Node1_WATERLEVEL'] !== undefined) {currentReadings.level = parseFloat(jsonData['Node1_WATERLEVEL']); levelSensorMissing = isNaN(currentReadings.level);
-  updated = true;}
-  if (jsonData['Node2_TDS']        !== undefined) { currentReadings.tds          = parseFloat(jsonData['Node2_TDS']);        updated = true; }
-  if (jsonData['Node2_EC']         !== undefined) { currentReadings.ec           = parseFloat(jsonData['Node2_EC']);         updated = true; }
-  if (jsonData['Node3_PH']         !== undefined) { currentReadings.ph           = parseFloat(jsonData['Node3_PH']);         updated = true; }
 
-  if (updated) {
-    applyReadings();      // update water colour, wave height, turbidity
-    buildGaugeOverlay();  // move gauge needles
-    updateInfoPanel(activeGaugeKey); // update info panel if a gauge is selected
+  const DATA_TIMEOUT_MS = 30000;
+
+  if (jsonData.created_at) {
+
+      const ageMs =
+          Date.now() -
+          new Date(jsonData.created_at).getTime();
+
+      if (ageMs > DATA_TIMEOUT_MS) {
+
+          console.log(
+              'STALE DATA DETECTED',
+              ageMs
+          );
+
+          Object.keys(currentReadings).forEach(key => {
+              currentReadings[key] = NaN;
+          });
+
+          levelSensorMissing = true;
+
+          setConnectionStatus(
+              'error',
+              'Data Stale'
+          );
+
+          applyReadings();
+          buildGaugeOverlay();
+          updateInfoPanel(activeGaugeKey);
+
+          return;
+      }
   }
+
+  currentReadings.temperature = NaN;
+  currentReadings.turbidity   = NaN;
+  currentReadings.level       = NaN;
+  currentReadings.tds         = NaN;
+  currentReadings.ec          = NaN;
+  currentReadings.ph          = NaN;
+
+  if (jsonData.Node1_TEMP != null)
+      currentReadings.temperature =
+          parseFloat(jsonData.Node1_TEMP);
+
+  if (jsonData.Node1_TURBIDITY != null)
+      currentReadings.turbidity =
+          parseFloat(jsonData.Node1_TURBIDITY);
+
+  if (jsonData.Node1_WATERLEVEL != null)
+      currentReadings.level =
+          parseFloat(jsonData.Node1_WATERLEVEL);
+
+  if (jsonData.Node2_TDS != null)
+      currentReadings.tds =
+          parseFloat(jsonData.Node2_TDS);
+
+  if (jsonData.Node2_EC != null)
+      currentReadings.ec =
+          parseFloat(jsonData.Node2_EC);
+
+  if (jsonData.Node3_PH != null)
+      currentReadings.ph =
+          parseFloat(jsonData.Node3_PH);
+
+  applyReadings();
+  buildGaugeOverlay();
+  updateInfoPanel(activeGaugeKey);
 }
 
 /* ── Override refreshSensors to hit the real /readings endpoint ───
@@ -2360,7 +2390,11 @@ function initSensorSSE() {
     try {
       var data = JSON.parse(event.data);
       applyLiveSensorData(data);
-      setConnectionStatus('live', 'Live');
+
+      if (data.created_at &&
+         (Date.now() - new Date(data.created_at).getTime()) <= 30000) {
+         setConnectionStatus('live', 'Live');
+      }
     } catch (parseError) {
       console.warn('SSE parse error:', parseError);
     }
