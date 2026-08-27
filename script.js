@@ -1859,9 +1859,17 @@ init();
     if (tlCardGauge) { try { tlCardGauge.destroy(); } catch(e){} tlCardGauge = null; }
     cardGWrap.innerHTML = '';
 
-    const cvs = document.createElement('canvas');
-    cvs.id = 'tlMiniGaugeCvs';
-    cardGWrap.appendChild(cvs);
+const cvs = document.createElement('canvas');
+cvs.id = 'tlMiniGaugeCvs';
+cardGWrap.appendChild(cvs);
+
+// Display Offline overlay on mini-gauge in timeline if sensors offline
+if (!hasValidData(val)) {
+  const off = document.createElement('div');
+  off.className = 'tl-gauge-offline';
+  off.textContent = 'OFFLINE';
+  cardGWrap.appendChild(off);
+}
 
     // Size gauge to fill the available display area
     const gArea = cardGWrap.getBoundingClientRect();
@@ -1874,6 +1882,7 @@ init();
 
     tlCardGauge = null;
     try {
+       const gaugeValue = hasValidData(val) ? val : s.min;
       tlCardGauge = new RadialGauge({
         renderTo: cvs,
         width: sz, height: sz,
@@ -1896,7 +1905,7 @@ init();
         colorValueTextShadow:'rgba(0,0,0,0)',
         fontNumbersSize:8, fontValueSize:12,
         startAngle:45, ticksAngle:270,
-        minValue:s.min, maxValue:s.max, value:val,
+        minValue:s.min, maxValue:s.max, value:gaugeValue,
         majorTicks:s.majorTicks, minorTicks:2, strokeTicks:true,
         highlights, units:'', title:'',
         valueBox:false,
@@ -1920,8 +1929,28 @@ init();
     const val = valueAt(tlSensorKey, ts);
     const s   = SENSORS[tlSensorKey];
 
-    cardTs.textContent   = fmtTs(ts);
-    cardVal.textContent  = fmtVal(val);
+if (!hasValidData(val)) {
+
+  cardVal.textContent  = 'OFFLINE';
+  cardUnit.textContent = '';
+  const statusBarEl = document.getElementById('tlCardStatusBar');
+  const statusLblEl = document.getElementById('tlCardStatusLabel');
+
+  if (statusBarEl) statusBarEl.className = 'st-unknown';
+
+  if (statusLblEl) statusLblEl.textContent = '● STATUS UNKNOWN';
+} else {
+  cardVal.textContent  = fmtVal(val);
+  cardUnit.textContent = ' ' + s.unit;
+  const stCode = sensorStatusCode(tlSensorKey, val);
+  const stLabel = stCode === 'good' ? '● Normal' : stCode === 'warn' ? '● Caution' : '● Alert';
+  const statusBarEl = document.getElementById('tlCardStatusBar');
+  const statusLblEl = document.getElementById('tlCardStatusLabel');
+  if (statusBarEl) statusBarEl.className = 'st-' + stCode;
+  if (statusLblEl) statusLblEl.textContent = stLabel;
+}
+
+     
     cardUnit.textContent = ' ' + s.unit;
     // Status bar — colour background; value left, label right
     const stCode   = sensorStatusCode(tlSensorKey, val);
