@@ -231,16 +231,6 @@ function surfY(x) {
 
 function drawWater() {
   if (!wctx) return;
-
-console.log(
-  'Water Debug:',
-  'WW=', WW,
-  'WH=', WH,
-  'waterSurfaceFrac=', waterSurfaceFrac,
-  'waterR=', waterR,
-  'waterG=', waterG,
-  'waterB=', waterB
-);
    
   wctx.clearRect(0, 0, WW, WH);
 
@@ -1235,7 +1225,14 @@ function switchEntity(key) {
    quality element. This is the legally mandated classification method.
    Reference: EU Water Framework Directive 2000/60/EC, Annex V §1.4.2
 ════════════════════════════════════════════════════════════════════════ */
-const WFD_STATUS_RANK = { high: 5, good: 4, moderate: 3, poor: 2, bad: 1 };
+const WFD_STATUS_RANK = {
+  unknown: 0,
+  bad: 1,
+  poor: 2,
+  moderate: 3,
+  good: 4,
+  high: 5
+};
 const WFD_SDG_GOALS = {
   temperature: 'SDG 6.3', turbidity: 'SDG 6.6',
   ph: 'SDG 6.3', tds: 'SDG 6.3', ec: 'SDG 6.3', level: 'SDG 6.6'
@@ -1279,7 +1276,7 @@ function countSDG6Compliance() {
    
    const total = availableSensors.length;
    
-   return { passing, total, pct: Math.round((passing / total) * 100) };
+   return {passing, total, pct: total > 0 ? Math.round((passing / total) * 100) : 0};
 }
 
 /* ════════════════════════════════════════════════════════════════════════
@@ -1362,17 +1359,34 @@ function openWFDReport() {
   const sdgColour   = sdg6.pct >= 80 ? '#40e080' : sdg6.pct >= 50 ? '#f0c030' : '#e03030';
 
   // Biodiversity proxy — based on entity sensor status
-  const swanStatus  = ['temperature','turbidity','level'].map(k => getWFDStatus(k));
-  const otterStatus = ['tds','ec'].map(k => getWFDStatus(k));
-  const lilyStatus  = [getWFDStatus('ph')];
-  const bioIndicator = (statuses) => {
-    const worst = statuses.reduce((w, s) =>
-      WFD_STATUS_RANK[s] < WFD_STATUS_RANK[w] ? s : w, 'high');
-    return WFD_COLOURS[worst];
-  };
-  const swanInfo  = bioIndicator(swanStatus);
-  const otterInfo = bioIndicator(otterStatus);
-  const lilyInfo  = bioIndicator(lilyStatus);
+const swanStatus  = ['temperature','turbidity','level'].map(k => getWFDStatus(k));
+const otterStatus = ['tds','ec'].map(k => getWFDStatus(k));
+const lilyStatus  = [getWFDStatus('ph')];
+
+const bioIndicator = (statuses) => {
+
+  const validStatuses =
+    statuses.filter(s => s !== 'unknown');
+
+  if (validStatuses.length === 0) {
+    return WFD_COLOURS.unknown;
+  }
+
+  const worst =
+    validStatuses.reduce(
+      (w, s) =>
+        WFD_STATUS_RANK[s] < WFD_STATUS_RANK[w]
+          ? s
+          : w,
+      validStatuses[0]
+    );
+
+  return WFD_COLOURS[worst];
+};
+
+const swanInfo  = bioIndicator(swanStatus);
+const otterInfo = bioIndicator(otterStatus);
+const lilyInfo  = bioIndicator(lilyStatus);
 
   // Limiting factor note
   const limitingNote = overall.limitingSensor
@@ -1438,7 +1452,11 @@ function openWFDReport() {
               <div class="wfd-sdg-bar" style="width:${sdgBarWidth}%;background:${sdgColour}"></div>
             </div>
             <div class="wfd-sdg-pct" style="color:${sdgColour}">${sdg6.pct}%</div>
-            <div class="wfd-sdg-note">${sdg6.passing}/${sdg6.total} parameters at Good or High status</div>
+            <div class="wfd-sdg-note">
+            ${sdg6.total > 0 ? `${sdg6.passing}/${sdg6.total} parameters at Good or High status` :
+              `No live environmental observations available`
+            }
+            </div>
           </div>
           <div class="wfd-sdg-row">
             <div class="wfd-sdg-goal" title="SDG 6.6: By 2020, protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes. Real-time monitoring directly supports reporting on this target.">SDG 6.6 — Ecosystem Protection</div>
