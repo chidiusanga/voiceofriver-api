@@ -1855,8 +1855,11 @@ init();
   // ── Build / update mini gauge ──────────────────────
   function buildMiniGauge(key, val) {
     const s = SENSORS[key];
+    const gaugeValue = hasValidData(val) ? val : s.min;
     // Destroy old
-    if (tlCardGauge) { try { tlCardGauge.destroy(); } catch(e){} tlCardGauge = null; }
+    if (tlCardGauge) {
+        try { tlCardGauge.destroy(); } catch(e){} tlCardGauge = null;
+    }
     cardGWrap.innerHTML = '';
 
 const cvs = document.createElement('canvas');
@@ -1939,6 +1942,7 @@ if (!hasValidData(val)) {
   if (statusBarEl) statusBarEl.className = 'st-unknown';
 
   if (statusLblEl) statusLblEl.textContent = '● STATUS UNKNOWN';
+return; // IMPORTANT
 } else {
   cardVal.textContent  = fmtVal(val);
   cardUnit.textContent = ' ' + s.unit;
