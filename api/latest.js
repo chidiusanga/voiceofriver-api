@@ -35,7 +35,8 @@ return res.status(200).end();
     const row = rows[0];
 
     return res.status(200).json({
-
+      created_at: row.created_at,
+      
       Node1_TEMP: row.temperature,
       Node1_TURBIDITY: row.turbidity,
       Node1_WATERLEVEL: row.level,
