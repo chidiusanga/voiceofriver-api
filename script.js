@@ -185,7 +185,7 @@ const lv = Math.max(0, Math.min(1, (levelValue - s.level.min) / (s.level.max - s
 
    // =====================
    
-  waterSurfaceFrac = 0.22 + lv * 0.64;
+  waterSurfaceFrac = 0.80 - lv * 0.60;
   if (conditionMode === 'ideal') {
     waterR=30; waterG=105; waterB=185; turbOpacity=0; waveAmp=4; return;
   }
