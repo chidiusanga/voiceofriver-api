@@ -407,6 +407,7 @@ function drawScale() {
 
    const rawLevel = conditionMode === 'ideal' ? PRISTINE.level : currentReadings.level;
    const levelFt = hasValidData(rawLevel) ? rawLevel : PRISTINE.level;
+   const scaleLevelFt = Math.max(levelFt, 4);
    const levelDisplayText = hasValidData(rawLevel) ? levelFt.toFixed(1) + 'ft' : 'Offline';
    // ======================
 
@@ -419,9 +420,14 @@ function drawScale() {
   // pxPerFt derived from the water zone (most important for accuracy).
   // If levelFt is very small, fall back to distributing evenly.
   const waterZonePx = SH - waveYS;                       // pixels available below surface
-  const pxPerFt = levelFt > 0.1
-    ? waterZonePx / levelFt                               // calibrate from actual reading
-    : (SH / 16);                                         // fallback: 16ft across full height
+  // const pxPerFt = levelFt > 0.1
+  //   ? waterZonePx / levelFt                               // calibrate from actual reading
+  //   : (SH / 16);                                         // fallback: 16ft across full height
+
+   // Above replaced with below to stop magnification of vertical water level ruler
+   const pxPerFt = scaleLevelFt > 0.1
+  ? waterZonePx / scaleLevelFt
+  : (SH / 16);
 
   // How many feet of ruler are visible above the surface (sky zone)
   const ftAbove = waveYS / pxPerFt;
