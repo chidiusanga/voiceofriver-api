@@ -2030,24 +2030,55 @@ if (!hasValidData(val)) {
   }
 
   function updateCard() {
-    const ts  = scrubTs();
-    const val = valueAt(tlSensorKey, ts);
-    const s   = SENSORS[tlSensorKey];
 
-if (!hasValidData(val)) {
+  const ts  = scrubTs();
+  const val = valueAt(tlSensorKey, ts);
+  const s   = SENSORS[tlSensorKey];
 
-  cardVal.textContent  = 'OFFLINE';
-  cardUnit.textContent = '';
   const statusBarEl = document.getElementById('tlCardStatusBar');
   const statusLblEl = document.getElementById('tlCardStatusLabel');
 
-  if (statusBarEl) statusBarEl.className = 'st-unknown';
+  if (!hasValidData(val)) {
 
-  if (statusLblEl) statusLblEl.textContent = '● STATUS UNKNOWN';
-return; // IMPORTANT
-} else {
+    cardVal.textContent  = 'OFFLINE';
+    cardUnit.textContent = '';
+    cardTs.textContent   = fmtTs(ts);
+
+    if (statusBarEl) {
+      statusBarEl.className = 'st-unknown';
+    }
+
+    if (statusLblEl) {
+      statusLblEl.textContent = '● STATUS UNKNOWN';
+    }
+
+    return;
+  }
+
   cardVal.textContent  = fmtVal(val);
-   }
+  cardUnit.textContent = s.unit;
+  cardTs.textContent   = fmtTs(ts);
+
+  const st = sensorStatusCode(tlSensorKey, val);
+
+  if (statusBarEl) {
+    statusBarEl.className = 'st-' + st;
+  }
+
+  if (statusLblEl) {
+
+    if (st === 'good') {
+      statusLblEl.textContent = '● GOOD';
+    }
+    else if (st === 'warn') {
+      statusLblEl.textContent = '● WARNING';
+    }
+    else {
+      statusLblEl.textContent = '● BAD';
+    }
+
+  }
+
 }
 
   // ── Position ruler so current ts appears at card's left edge ──
