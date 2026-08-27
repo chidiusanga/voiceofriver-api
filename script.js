@@ -1701,102 +1701,102 @@ init();
 /* ══════════════════════════════════════════════════════
    TIMELINE — Past Conditions panel
 ══════════════════════════════════════════════════════ */
-// (function() {
+(function() {
 
-//   // ── Constants ──────────────────────────────────────
-//   const NOW_TS      = Date.now();
-//   const INSTALL_TS  = NOW_TS - 365 * 24 * 60 * 60 * 1000; // ~1 year of history
-//   const TOTAL_MS    = NOW_TS - INSTALL_TS;
-//   const PX_PER_DAY  = 28;          // ruler pixels per day
-//   const MS_PER_DAY  = 86400000;
-//   const TOTAL_DAYS  = Math.ceil(TOTAL_MS / MS_PER_DAY);
-//   const RULER_PX    = TOTAL_DAYS * PX_PER_DAY; // total ruler width in pixels
+  // ── Constants ──────────────────────────────────────
+  const NOW_TS      = Date.now();
+  const INSTALL_TS  = NOW_TS - 365 * 24 * 60 * 60 * 1000; // ~1 year of history
+  const TOTAL_MS    = NOW_TS - INSTALL_TS;
+  const PX_PER_DAY  = 28;          // ruler pixels per day
+  const MS_PER_DAY  = 86400000;
+  const TOTAL_DAYS  = Math.ceil(TOTAL_MS / MS_PER_DAY);
+  const RULER_PX    = TOTAL_DAYS * PX_PER_DAY; // total ruler width in pixels
 
-//   const SENSOR_LABELS = {
-//     temperature:'Heat', turbidity:'Clarity', ph:'Acidity',
-//     tds:'Saltiness', ec:'Electricity', level:'Depth'
-//   };
-//   const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const SENSOR_LABELS = {
+    temperature:'Heat', turbidity:'Clarity', ph:'Acidity',
+    tds:'Saltiness', ec:'Electricity', level:'Depth'
+  };
+  const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 
-//   // ── State ──────────────────────────────────────────
-//   let tlOpen         = false;
-//   let tlSensorKey    = 'temperature';
-//   let tlOffsetMs     = 0;           // ms before NOW (0 = present, positive = back in time)
-//   let tlHistory      = {};          // sensorKey -> [{ts, val}]
-//   let tlCardGauge    = null;        // current mini gauge instance
-//   let tlPanelHeight  = 260;
+  // ── State ──────────────────────────────────────────
+  let tlOpen         = false;
+  let tlSensorKey    = 'temperature';
+  let tlOffsetMs     = 0;           // ms before NOW (0 = present, positive = back in time)
+  let tlHistory      = {};          // sensorKey -> [{ts, val}]
+  let tlCardGauge    = null;        // current mini gauge instance
+  let tlPanelHeight  = 260;
 
-//   // ── DOM refs ───────────────────────────────────────
-//   const panel       = document.getElementById('timelinePanel');
-//   const rulerWrap   = document.getElementById('tlRulerWrap');
-//   const ruler       = document.getElementById('tlRuler');
-//   const needle      = document.getElementById('tlNeedle');
-//   const card        = document.getElementById('tlCard');
-//   const cardDisplay = document.getElementById('tlCardDisplay');
-//   const cardTs      = document.getElementById('tlCardTimestamp');
-//   const cardGWrap   = document.getElementById('tlCardGaugeWrap');
-//   const cardVal     = document.getElementById('tlCardValue');
-//   const cardUnit    = document.getElementById('tlCardUnit');
+  // ── DOM refs ───────────────────────────────────────
+  const panel       = document.getElementById('timelinePanel');
+  const rulerWrap   = document.getElementById('tlRulerWrap');
+  const ruler       = document.getElementById('tlRuler');
+  const needle      = document.getElementById('tlNeedle');
+  const card        = document.getElementById('tlCard');
+  const cardDisplay = document.getElementById('tlCardDisplay');
+  const cardTs      = document.getElementById('tlCardTimestamp');
+  const cardGWrap   = document.getElementById('tlCardGaugeWrap');
+  const cardVal     = document.getElementById('tlCardValue');
+  const cardUnit    = document.getElementById('tlCardUnit');
 
-//    // ── Load history from Supabase ─────────────────────
-// async function loadHistory() {
-//   const rows =
-//     await fetch('/api/history')
-//       .then(r => r.json());
+   // ── Load history from Supabase ─────────────────────
+async function loadHistory() {
+  const rows =
+    await fetch('/api/history')
+      .then(r => r.json());
    
-//   tlHistory = {
-//     temperature: [],
-//     turbidity: [],
-//     level: [],
-//     tds: [],
-//     ec: [],
-//     ph: []
-//   };
+  tlHistory = {
+    temperature: [],
+    turbidity: [],
+    level: [],
+    tds: [],
+    ec: [],
+    ph: []
+  };
 
-//   rows.forEach(row => {
+  rows.forEach(row => {
 
-//     const ts =
-//       new Date(row.created_at).getTime();
+    const ts =
+      new Date(row.created_at).getTime();
 
-//     tlHistory.temperature.push({
-//       ts: ts,
-//       val: row.temperature
-//     });
+    tlHistory.temperature.push({
+      ts: ts,
+      val: row.temperature
+    });
 
-//     tlHistory.turbidity.push({
-//       ts: ts,
-//       val: row.turbidity
-//     });
+    tlHistory.turbidity.push({
+      ts: ts,
+      val: row.turbidity
+    });
 
-//     tlHistory.level.push({
-//       ts: ts,
-//       val: row.level
-//     });
+    tlHistory.level.push({
+      ts: ts,
+      val: row.level
+    });
 
-//     tlHistory.tds.push({
-//       ts: ts,
-//       val: row.tds
-//     });
+    tlHistory.tds.push({
+      ts: ts,
+      val: row.tds
+    });
 
-//     tlHistory.ec.push({
-//       ts: ts,
-//       val: row.ec
-//     });
+    tlHistory.ec.push({
+      ts: ts,
+      val: row.ec
+    });
 
-//     tlHistory.ph.push({
-//       ts: ts,
-//       val: row.ph
-//     });
+    tlHistory.ph.push({
+      ts: ts,
+      val: row.ph
+    });
 
-//   });
+  });
 
-//   console.log(
-//     'History loaded:',
-//     rows.length,
-//     'records'
-//   );
+  console.log(
+    'History loaded:',
+    rows.length,
+    'records'
+  );
 
-// }
+}
 
 
   // ── Simulated history ──────────────────────────────
@@ -2000,6 +2000,7 @@ if (!hasValidData(val)) {
 return; // IMPORTANT
 } else {
   cardVal.textContent  = fmtVal(val);
+   }
 }
 
   // ── Position ruler so current ts appears at card's left edge ──
@@ -2029,7 +2030,6 @@ return; // IMPORTANT
     if (!Object.keys(tlHistory).length) {
     generateHistory();
        }
-    }
      
     buildRuler();
     tlOpen = true;
