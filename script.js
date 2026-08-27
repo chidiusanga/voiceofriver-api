@@ -132,9 +132,9 @@ let levelSensorMissing = false;
 // sim() is kept for the timeline's simulated history only.
 
 // // ==== Replacing the below because this prints 000 when data is not yet available, which is fake data - 000 is data better no data at all.
-// Object.keys(SENSORS).forEach(k => {
-//   currentReadings[k] = NaN;
-// });
+Object.keys(SENSORS).forEach(k => {
+  currentReadings[k] = NaN;
+});
 
 
 Object.keys(SENSORS).forEach(k => {
@@ -1743,6 +1743,67 @@ init();
   const cardVal     = document.getElementById('tlCardValue');
   const cardUnit    = document.getElementById('tlCardUnit');
 
+   // ── Load history from Supabase ─────────────────────
+async function loadHistory() {
+  const rows =
+    await fetch('/api/history')
+      .then(r => r.json());
+   
+  tlHistory = {
+    temperature: [],
+    turbidity: [],
+    level: [],
+    tds: [],
+    ec: [],
+    ph: []
+  };
+
+  rows.forEach(row => {
+
+    const ts =
+      new Date(row.created_at).getTime();
+
+    tlHistory.temperature.push({
+      ts: ts,
+      val: row.temperature
+    });
+
+    tlHistory.turbidity.push({
+      ts: ts,
+      val: row.turbidity
+    });
+
+    tlHistory.level.push({
+      ts: ts,
+      val: row.level
+    });
+
+    tlHistory.tds.push({
+      ts: ts,
+      val: row.tds
+    });
+
+    tlHistory.ec.push({
+      ts: ts,
+      val: row.ec
+    });
+
+    tlHistory.ph.push({
+      ts: ts,
+      val: row.ph
+    });
+
+  });
+
+  console.log(
+    'History loaded:',
+    rows.length,
+    'records'
+  );
+
+}
+
+
   // ── Simulated history ──────────────────────────────
   function generateHistory() {
     const step = 6 * 60 * 60 * 1000; // one point every 6 hours
@@ -1885,7 +1946,6 @@ if (!hasValidData(val)) {
 
     tlCardGauge = null;
     try {
-       const gaugeValue = hasValidData(val) ? val : s.min;
       tlCardGauge = new RadialGauge({
         renderTo: cvs,
         width: sz, height: sz,
@@ -1945,32 +2005,7 @@ if (!hasValidData(val)) {
 return; // IMPORTANT
 } else {
   cardVal.textContent  = fmtVal(val);
-  cardUnit.textContent = ' ' + s.unit;
-  const stCode = sensorStatusCode(tlSensorKey, val);
-  const stLabel = stCode === 'good' ? '● Normal' : stCode === 'warn' ? '● Caution' : '● Alert';
-  const statusBarEl = document.getElementById('tlCardStatusBar');
-  const statusLblEl = document.getElementById('tlCardStatusLabel');
-  if (statusBarEl) statusBarEl.className = 'st-' + stCode;
-  if (statusLblEl) statusLblEl.textContent = stLabel;
 }
-
-     
-    cardUnit.textContent = ' ' + s.unit;
-    // Status bar — colour background; value left, label right
-    const stCode   = sensorStatusCode(tlSensorKey, val);
-    const stLabel  = stCode === 'good' ? '● Normal' : stCode === 'warn' ? '● Caution' : '● Alert';
-    const statusBarEl  = document.getElementById('tlCardStatusBar');
-    const statusLblEl  = document.getElementById('tlCardStatusLabel');
-    if (statusBarEl)  statusBarEl.className    = 'st-' + stCode;
-    if (statusLblEl)  statusLblEl.textContent  = stLabel;
-
-    // Update gauge value smoothly if it exists, else rebuild
-    if (tlCardGauge) {
-      tlCardGauge.value = val;
-    } else {
-      buildMiniGauge(tlSensorKey, val);
-    }
-  }
 
   // ── Position ruler so current ts appears at card's left edge ──
   // The ruler scrolls so that the scrub position is visible.
@@ -1995,8 +2030,16 @@ return; // IMPORTANT
   const tlOverlay = document.getElementById('tlOverlay');
   const tlCloseBtn = document.getElementById('tlCloseBtn');
 
-  function openTimeline() {
-    if (!Object.keys(tlHistory).length) generateHistory();
+  async function openTimeline() {
+    if (!Object.keys(tlHistory).length) {
+       try {
+          await loadHistory();
+       } catch (err) {
+          console.warn('History load failed:', err);
+    generateHistory();
+       }
+    }
+     
     buildRuler();
     tlOpen = true;
     panel.classList.add('open');
@@ -2277,8 +2320,11 @@ function refreshSensors() {
       return response.json();
     })
     .then(function(data) {
-      applyLiveSensorData(data);
-      setConnectionStatus('live', 'Live');
+       applyLiveSensorData(data);
+
+  if (!data.created_at || (Date.now() - new Date(data.created_at).getTime()) <= 30000) {
+    setConnectionStatus('live', 'Live');
+  };
       // Brief button feedback
       var btn = document.getElementById('refreshBtn');
       if (btn) {
