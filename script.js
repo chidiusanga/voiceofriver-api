@@ -610,7 +610,7 @@ function buildGaugeOverlay() {
    
    // Display text content only if there's a data value, otherwise display "Waiting..." instead of just 000.00 or NaN.
      if (!hasValidData(val)) {
-     valTag.textContent = 'Waiting...';
+     valTag.textContent = 'Sensor Offline...';
    } else {
      valTag.textContent = formatVal(val, s);
    }
