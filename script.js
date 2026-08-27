@@ -2138,6 +2138,25 @@ function setConnectionStatus(state, label) {
    This is the ONLY place that knows about Node/sensor naming.
    JSON key names must match the ESP32 firmware exactly.           */
 function applyLiveSensorData(jsonData) {
+   
+   // Set data display timeout if sensors offline for 30 seconds
+   const DATA_TIMEOUT_MS = 30000;
+   if (jsonData.created_at) {
+      const ageMs = Date.now() - new Date(jsonData.created_at).getTime();
+      
+      if (ageMs > DATA_TIMEOUT_MS) {
+         Object.keys(currentReadings).forEach(key => {
+            currentReadings[key] = NaN;
+         });
+         levelSensorMissing = true;
+         setConnectionStatus('error', 'Data Stale');
+         applyReadings();
+         buildGaugeOverlay();
+         updateInfoPanel(activeGaugeKey);
+         return;
+      }
+   }
+   
   var updated = false;
   if (jsonData['Node1_TEMP']       !== undefined) { currentReadings.temperature = parseFloat(jsonData['Node1_TEMP']);       updated = true; }
   if (jsonData['Node1_TURBIDITY']  !== undefined) { currentReadings.turbidity    = parseFloat(jsonData['Node1_TURBIDITY']);  updated = true; }
