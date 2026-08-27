@@ -1758,35 +1758,76 @@ async function loadHistory() {
     const ts =
       new Date(row.created_at).getTime();
 
-    tlHistory.temperature.push({
-      ts: ts,
-      val: row.temperature
-    });
+if (row.temperature != null) {
+  tlHistory.temperature.push({
+    ts: ts,
+    val: row.temperature
+  });
+}
+    // tlHistory.temperature.push({
+    //   ts: ts,
+    //   val: row.temperature
+    // });
+     
+if (row.turbidity != null) {
+  tlHistory.turbidity.push({
+    ts: ts,
+    val: row.turbidity
+  });
+}
 
-    tlHistory.turbidity.push({
-      ts: ts,
-      val: row.turbidity
-    });
+    // tlHistory.turbidity.push({
+    //   ts: ts,
+    //   val: row.turbidity
+    // });
 
-    tlHistory.level.push({
-      ts: ts,
-      val: row.level
-    });
 
-    tlHistory.tds.push({
-      ts: ts,
-      val: row.tds
-    });
+if (row.level != null) {
+  tlHistory.level.push({
+    ts: ts,
+    val: row.level
+  });
+}
+     
+    // tlHistory.level.push({
+    //   ts: ts,
+    //   val: row.level
+    // });
 
-    tlHistory.ec.push({
-      ts: ts,
-      val: row.ec
-    });
+if (row.tds != null) {
+  tlHistory.tds.push({
+    ts: ts,
+    val: row.tds
+  });
+}
+    // tlHistory.tds.push({
+    //   ts: ts,
+    //   val: row.tds
+    // });
 
-    tlHistory.ph.push({
-      ts: ts,
-      val: row.ph
-    });
+if (row.ec != null) {
+  tlHistory.ec.push({
+    ts: ts,
+    val: row.ec
+  });
+}
+
+    // tlHistory.ec.push({
+    //   ts: ts,
+    //   val: row.ec
+    // });
+
+if (row.ph != null) {
+  tlHistory.ph.push({
+    ts: ts,
+    val: row.ph
+  });
+}
+
+    // tlHistory.ph.push({
+    //   ts: ts,
+    //   val: row.ph
+    // });
 
   });
 
