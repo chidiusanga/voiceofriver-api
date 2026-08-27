@@ -1590,6 +1590,31 @@ function closeWFDReport() {
   wfdPanelOpen = false;
 }
 
+// Clicking outside the governance modal closes it
+document.addEventListener('click', function(e) {
+  if (!wfdPanelOpen) return;
+  const panel = document.getElementById('wfdReportPanel');
+  const inner = panel?.querySelector('.wfd-report-inner');
+   
+  if (!inner) return;
+
+  // Ignore clicks on the button that opened the report
+  if (e.target.closest('[data-action="wfd-report"]')) {
+    return;
+  }
+
+  if (!inner.contains(e.target)) {
+    closeWFDReport();
+  }
+});
+
+// ESC key closes governance modal
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && wfdPanelOpen) {
+    closeWFDReport();
+  }
+});
+
 function switchMode(mode) {
   conditionMode = mode;
   document.querySelectorAll('.bbtn').forEach(b => b.classList.toggle('active', b.dataset.action==='mode-'+mode));
