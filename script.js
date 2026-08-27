@@ -1753,6 +1753,12 @@ async function loadHistory() {
     ph: []
   };
 
+rows.sort(
+   (a,b) =>
+      new Date(a.created_at)
+      - new Date(b.created_at)
+);
+   
   rows.forEach(row => {
 
     const ts =
@@ -2067,10 +2073,30 @@ return; // IMPORTANT
   const tlOverlay = document.getElementById('tlOverlay');
   const tlCloseBtn = document.getElementById('tlCloseBtn');
 
-  async function openTimeline() {
-    if (!Object.keys(tlHistory).length) {
-    generateHistory();
-       }
+  // async function openTimeline() {
+  //   if (!Object.keys(tlHistory).length) {
+  //   generateHistory();
+  //      }
+
+async function openTimeline() {
+
+  if (
+    !tlHistory.temperature?.length &&
+    !tlHistory.turbidity?.length &&
+    !tlHistory.level?.length &&
+    !tlHistory.tds?.length &&
+    !tlHistory.ec?.length &&
+    !tlHistory.ph?.length
+  ) {
+
+    try {
+      await loadHistory();
+    } catch (err) {
+      console.warn('History load failed', err);
+      generateHistory();
+    }
+
+  }
      
     buildRuler();
     tlOpen = true;
