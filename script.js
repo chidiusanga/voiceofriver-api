@@ -1799,439 +1799,435 @@ init();
 // }
 
 
-//   // ── Simulated history ──────────────────────────────
-//   function generateHistory() {
-//     const step = 6 * 60 * 60 * 1000; // one point every 6 hours
-//     Object.keys(SENSORS).forEach(key => {
-//       const s    = SENSORS[key];
-//       const mid  = (s.good[0] + s.good[1]) / 2;
-//       const range = (s.max - s.min) * 0.55;
-//       let   val  = mid;
-//       let   seed = key.charCodeAt(0) * 137;
-//       const pts  = [];
-//       for (let ts = INSTALL_TS; ts <= NOW_TS; ts += step) {
-//         seed = (seed * 16807 + 7) & 0x7fffffff;
-//         val += (seed / 0x7fffffff - 0.5) * range * 0.08 - (val - mid) * 0.02;
-//         val  = Math.max(s.min, Math.min(s.max, val));
-//         pts.push({ ts, val: +val.toFixed(2) });
-//       }
-//       pts.push({ ts: NOW_TS, val: currentReadings[key] });
-//       tlHistory[key] = pts;
-//     });
-//   }
+  // ── Simulated history ──────────────────────────────
+  function generateHistory() {
+    const step = 6 * 60 * 60 * 1000; // one point every 6 hours
+    Object.keys(SENSORS).forEach(key => {
+      const s    = SENSORS[key];
+      const mid  = (s.good[0] + s.good[1]) / 2;
+      const range = (s.max - s.min) * 0.55;
+      let   val  = mid;
+      let   seed = key.charCodeAt(0) * 137;
+      const pts  = [];
+      for (let ts = INSTALL_TS; ts <= NOW_TS; ts += step) {
+        seed = (seed * 16807 + 7) & 0x7fffffff;
+        val += (seed / 0x7fffffff - 0.5) * range * 0.08 - (val - mid) * 0.02;
+        val  = Math.max(s.min, Math.min(s.max, val));
+        pts.push({ ts, val: +val.toFixed(2) });
+      }
+      pts.push({ ts: NOW_TS, val: currentReadings[key] });
+      tlHistory[key] = pts;
+    });
+  }
 
-//   // ── Interpolate value at a timestamp ──────────────
-//   function valueAt(key, ts) {
-//     const pts = tlHistory[key];
-//     if (!pts || !pts.length) return currentReadings[key];
-//     if (ts >= NOW_TS) return currentReadings[key];
-//     for (let i = pts.length - 2; i >= 0; i--) {
-//       if (pts[i].ts <= ts) {
-//         const a = pts[i], b = pts[i+1];
-//         const f = (ts - a.ts) / (b.ts - a.ts);
-//         return +(a.val + (b.val - a.val) * f).toFixed(2);
-//       }
-//     }
-//     return pts[0].val;
-//   }
+  // ── Interpolate value at a timestamp ──────────────
+  function valueAt(key, ts) {
+    const pts = tlHistory[key];
+    if (!pts || !pts.length) return currentReadings[key];
+    if (ts >= NOW_TS) return currentReadings[key];
+    for (let i = pts.length - 2; i >= 0; i--) {
+      if (pts[i].ts <= ts) {
+        const a = pts[i], b = pts[i+1];
+        const f = (ts - a.ts) / (b.ts - a.ts);
+        return +(a.val + (b.val - a.val) * f).toFixed(2);
+      }
+    }
+    return pts[0].val;
+  }
 
-//   // ── Build ruler tick marks ─────────────────────────
-//   function buildRuler() {
-//     ruler.style.width = RULER_PX + 'px';
-//     ruler.innerHTML   = '';
+  // ── Build ruler tick marks ─────────────────────────
+  function buildRuler() {
+    ruler.style.width = RULER_PX + 'px';
+    ruler.innerHTML   = '';
 
-//     // NOW marker (rightmost)
-//     const nowDiv = document.createElement('div');
-//     nowDiv.className = 'tl-now-marker';
-//     nowDiv.style.left = RULER_PX + 'px';
-//     ruler.appendChild(nowDiv);
-//     const nowLbl = document.createElement('div');
-//     nowLbl.className  = 'tl-now-label';
-//     nowLbl.style.left = RULER_PX + 'px';
-//     nowLbl.textContent = 'NOW';
-//     ruler.appendChild(nowLbl);
+    // NOW marker (rightmost)
+    const nowDiv = document.createElement('div');
+    nowDiv.className = 'tl-now-marker';
+    nowDiv.style.left = RULER_PX + 'px';
+    ruler.appendChild(nowDiv);
+    const nowLbl = document.createElement('div');
+    nowLbl.className  = 'tl-now-label';
+    nowLbl.style.left = RULER_PX + 'px';
+    nowLbl.textContent = 'NOW';
+    ruler.appendChild(nowLbl);
 
-//     // Day ticks from install date to now
-//     for (let d = 0; d <= TOTAL_DAYS; d++) {
-//       const ts   = INSTALL_TS + d * MS_PER_DAY;
-//       const xPx  = d * PX_PER_DAY;
-//       const date = new Date(ts);
-//       const day  = date.getDate();
-//       const mon  = date.getMonth();
-//       const yr   = date.getFullYear();
+    // Day ticks from install date to now
+    for (let d = 0; d <= TOTAL_DAYS; d++) {
+      const ts   = INSTALL_TS + d * MS_PER_DAY;
+      const xPx  = d * PX_PER_DAY;
+      const date = new Date(ts);
+      const day  = date.getDate();
+      const mon  = date.getMonth();
+      const yr   = date.getFullYear();
 
-//       const isMon1  = day === 1;          // 1st of month
-//       const isMon5  = day % 5 === 0;     // every 5th day gets a label
+      const isMon1  = day === 1;          // 1st of month
+      const isMon5  = day % 5 === 0;     // every 5th day gets a label
 
-//       const tick = document.createElement('div');
-//       tick.className = isMon1 ? 'tl-tick major' : 'tl-tick minor';
-//       tick.style.left = xPx + 'px';
-//       ruler.appendChild(tick);
+      const tick = document.createElement('div');
+      tick.className = isMon1 ? 'tl-tick major' : 'tl-tick minor';
+      tick.style.left = xPx + 'px';
+      ruler.appendChild(tick);
 
-//       if (isMon1) {
-//         const lbl = document.createElement('div');
-//         lbl.className  = 'tl-tick-label';
-//         lbl.style.left = xPx + 'px';
-//         lbl.textContent = MONTH_NAMES[mon] + ' ' + yr;
-//         ruler.appendChild(lbl);
-//       } else if (isMon5 && xPx < RULER_PX - PX_PER_DAY) {
-//         const lbl = document.createElement('div');
-//         lbl.className  = 'tl-tick-label';
-//         lbl.style.left = xPx + 'px';
-//         lbl.textContent = day + '';
-//         ruler.appendChild(lbl);
-//       }
-//     }
-//   }
+      if (isMon1) {
+        const lbl = document.createElement('div');
+        lbl.className  = 'tl-tick-label';
+        lbl.style.left = xPx + 'px';
+        lbl.textContent = MONTH_NAMES[mon] + ' ' + yr;
+        ruler.appendChild(lbl);
+      } else if (isMon5 && xPx < RULER_PX - PX_PER_DAY) {
+        const lbl = document.createElement('div');
+        lbl.className  = 'tl-tick-label';
+        lbl.style.left = xPx + 'px';
+        lbl.textContent = day + '';
+        ruler.appendChild(lbl);
+      }
+    }
+  }
 
-//   // ── ts → ruler X pixel (rightmost = NOW) ──────────
-//   function tsToRulerX(ts) {
-//     const daysFromInstall = (ts - INSTALL_TS) / MS_PER_DAY;
-//     return daysFromInstall * PX_PER_DAY;
-//   }
+  // ── ts → ruler X pixel (rightmost = NOW) ──────────
+  function tsToRulerX(ts) {
+    const daysFromInstall = (ts - INSTALL_TS) / MS_PER_DAY;
+    return daysFromInstall * PX_PER_DAY;
+  }
 
-//   // ── Current scrub timestamp ────────────────────────
-//   function scrubTs() {
-//     return NOW_TS - tlOffsetMs;
-//   }
+  // ── Current scrub timestamp ────────────────────────
+  function scrubTs() {
+    return NOW_TS - tlOffsetMs;
+  }
 
-//   // ── Format timestamp for card header ─────────────
-//   function fmtTs(ts) {
-//     const d = new Date(ts);
-//     return d.getDate() + ' ' + MONTH_NAMES[d.getMonth()] + ' ' + d.getFullYear()
-//       + '  ' + d.getHours().toString().padStart(2,'0') + ':00';
-//   }
+  // ── Format timestamp for card header ─────────────
+  function fmtTs(ts) {
+    const d = new Date(ts);
+    return d.getDate() + ' ' + MONTH_NAMES[d.getMonth()] + ' ' + d.getFullYear()
+      + '  ' + d.getHours().toString().padStart(2,'0') + ':00';
+  }
 
-//   // ── Format sensor value ────────────────────────────
-//   function fmtVal(v) {
-//     if (typeof v !== 'number') return String(v);
-//     return v % 1 === 0 ? String(v) : v < 100 ? v.toFixed(2) : v.toFixed(1);
-//   }
+  // ── Format sensor value ────────────────────────────
+  function fmtVal(v) {
+    if (typeof v !== 'number') return String(v);
+    return v % 1 === 0 ? String(v) : v < 100 ? v.toFixed(2) : v.toFixed(1);
+  }
 
-//   // ── Build / update mini gauge ──────────────────────
-//   function buildMiniGauge(key, val) {
-//     const s = SENSORS[key];
-//     const gaugeValue = hasValidData(val) ? val : s.min;
-//     // Destroy old
-//     if (tlCardGauge) {
-//         try { tlCardGauge.destroy(); } catch(e){} tlCardGauge = null;
-//     }
-//     cardGWrap.innerHTML = '';
+  // ── Build / update mini gauge ──────────────────────
+  function buildMiniGauge(key, val) {
+    const s = SENSORS[key];
+    const gaugeValue = hasValidData(val) ? val : s.min;
+    // Destroy old
+    if (tlCardGauge) {
+        try { tlCardGauge.destroy(); } catch(e){} tlCardGauge = null;
+    }
+    cardGWrap.innerHTML = '';
 
-// const cvs = document.createElement('canvas');
-// cvs.id = 'tlMiniGaugeCvs';
-// cardGWrap.appendChild(cvs);
+const cvs = document.createElement('canvas');
+cvs.id = 'tlMiniGaugeCvs';
+cardGWrap.appendChild(cvs);
 
-// // Display Offline overlay on mini-gauge in timeline if sensors offline
-// if (!hasValidData(val)) {
-//   const off = document.createElement('div');
-//   off.className = 'tl-gauge-offline';
-//   off.textContent = 'OFFLINE';
-//   cardGWrap.appendChild(off);
-// }
+// Display Offline overlay on mini-gauge in timeline if sensors offline
+if (!hasValidData(val)) {
+  const off = document.createElement('div');
+  off.className = 'tl-gauge-offline';
+  off.textContent = 'OFFLINE';
+  cardGWrap.appendChild(off);
+}
 
-//     // Size gauge to fill the available display area
-//     const gArea = cardGWrap.getBoundingClientRect();
-//     const sz = Math.max(80, Math.min(Math.floor(gArea.width - 8), Math.floor(gArea.height - 8), 200));
-//     const highlights = [];
-//     if (s.good[0] > s.min) highlights.push({from:s.min,to:s.good[0],color:'rgba(240,80,80,.3)'});
-//     highlights.push({from:s.good[0],to:s.good[1],color:'rgba(40,200,100,.28)'});
-//     if (s.good[1] < s.warn[1]) highlights.push({from:s.good[1],to:s.warn[1],color:'rgba(240,165,40,.3)'});
-//     if (s.warn[1] < s.max) highlights.push({from:s.warn[1],to:s.max,color:'rgba(240,60,60,.32)'});
+    // Size gauge to fill the available display area
+    const gArea = cardGWrap.getBoundingClientRect();
+    const sz = Math.max(80, Math.min(Math.floor(gArea.width - 8), Math.floor(gArea.height - 8), 200));
+    const highlights = [];
+    if (s.good[0] > s.min) highlights.push({from:s.min,to:s.good[0],color:'rgba(240,80,80,.3)'});
+    highlights.push({from:s.good[0],to:s.good[1],color:'rgba(40,200,100,.28)'});
+    if (s.good[1] < s.warn[1]) highlights.push({from:s.good[1],to:s.warn[1],color:'rgba(240,165,40,.3)'});
+    if (s.warn[1] < s.max) highlights.push({from:s.warn[1],to:s.max,color:'rgba(240,60,60,.32)'});
 
-//     tlCardGauge = null;
-//     try {
-//       tlCardGauge = new RadialGauge({
-//         renderTo: cvs,
-//         width: sz, height: sz,
-//         colorPlate:'#d8e8f4', colorPlateEnd:'#c0d4e8',
-//         borders:true,
-//         borderOuterWidth:2, borderMiddleWidth:1, borderInnerWidth:2,
-//         colorBorderOuter:'#8aaccc', colorBorderOuterEnd:'#c0d8f0',
-//         colorBorderMiddle:'#9abcdc', colorBorderMiddleEnd:'#cce0f4',
-//         colorBorderInner:'#7a9cbc', colorBorderInnerEnd:'#b8d0e8',
-//         borderShadowWidth:4, colorBorderShadow:'rgba(0,0,0,.5)',
-//         colorMajorTicks:'#304050', colorMinorTicks:'#607080',
-//         colorNumbers:'#203040',
-//         colorNeedle:'#c01818', colorNeedleEnd:'#900808',
-//         needleType:'arrow', needleWidth:2,
-//         needleCircleSize:5, needleCircleOuter:true, needleCircleInner:false,
-//         colorNeedleCircleOuter:'#405060', colorNeedleCircleOuterEnd:'#607080',
-//         colorNeedleCircleInner:'#d8e8f4', colorNeedleCircleInnerEnd:'#d8e8f4',
-//         colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
-//         colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
-//         colorValueTextShadow:'rgba(0,0,0,0)',
-//         fontNumbersSize:8, fontValueSize:12,
-//         startAngle:45, ticksAngle:270,
-//         minValue:s.min, maxValue:s.max, value:gaugeValue,
-//         majorTicks:s.majorTicks, minorTicks:2, strokeTicks:true,
-//         highlights, units:'', title:'',
-//         valueBox:false,
-//         animationDuration:600, animationRule:'elastic',
-//       }).draw();
-//     } catch(gaugeErr) {
-//       console.warn('Timeline mini gauge failed:', gaugeErr);
-//     }
-//   }
+    tlCardGauge = null;
+    try {
+      tlCardGauge = new RadialGauge({
+        renderTo: cvs,
+        width: sz, height: sz,
+        colorPlate:'#d8e8f4', colorPlateEnd:'#c0d4e8',
+        borders:true,
+        borderOuterWidth:2, borderMiddleWidth:1, borderInnerWidth:2,
+        colorBorderOuter:'#8aaccc', colorBorderOuterEnd:'#c0d8f0',
+        colorBorderMiddle:'#9abcdc', colorBorderMiddleEnd:'#cce0f4',
+        colorBorderInner:'#7a9cbc', colorBorderInnerEnd:'#b8d0e8',
+        borderShadowWidth:4, colorBorderShadow:'rgba(0,0,0,.5)',
+        colorMajorTicks:'#304050', colorMinorTicks:'#607080',
+        colorNumbers:'#203040',
+        colorNeedle:'#c01818', colorNeedleEnd:'#900808',
+        needleType:'arrow', needleWidth:2,
+        needleCircleSize:5, needleCircleOuter:true, needleCircleInner:false,
+        colorNeedleCircleOuter:'#405060', colorNeedleCircleOuterEnd:'#607080',
+        colorNeedleCircleInner:'#d8e8f4', colorNeedleCircleInnerEnd:'#d8e8f4',
+        colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
+        colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
+        colorValueTextShadow:'rgba(0,0,0,0)',
+        fontNumbersSize:8, fontValueSize:12,
+        startAngle:45, ticksAngle:270,
+        minValue:s.min, maxValue:s.max, value:gaugeValue,
+        majorTicks:s.majorTicks, minorTicks:2, strokeTicks:true,
+        highlights, units:'', title:'',
+        valueBox:false,
+        animationDuration:600, animationRule:'elastic',
+      }).draw();
+    } catch(gaugeErr) {
+      console.warn('Timeline mini gauge failed:', gaugeErr);
+    }
+  }
 
-//   // ── Update card display for current scrub position ─
-//   function sensorStatusCode(key, val) {
-//     const s = SENSORS[key];
-//     if (val >= s.good[0] && val <= s.good[1]) return 'good';
-//     if (val >= s.warn[0] && val <= s.warn[1]) return 'warn';
-//     return 'bad';
-//   }
+  // ── Update card display for current scrub position ─
+  function sensorStatusCode(key, val) {
+    const s = SENSORS[key];
+    if (val >= s.good[0] && val <= s.good[1]) return 'good';
+    if (val >= s.warn[0] && val <= s.warn[1]) return 'warn';
+    return 'bad';
+  }
 
-//   function updateCard() {
-//     const ts  = scrubTs();
-//     const val = valueAt(tlSensorKey, ts);
-//     const s   = SENSORS[tlSensorKey];
+  function updateCard() {
+    const ts  = scrubTs();
+    const val = valueAt(tlSensorKey, ts);
+    const s   = SENSORS[tlSensorKey];
 
-// if (!hasValidData(val)) {
+if (!hasValidData(val)) {
 
-//   cardVal.textContent  = 'OFFLINE';
-//   cardUnit.textContent = '';
-//   const statusBarEl = document.getElementById('tlCardStatusBar');
-//   const statusLblEl = document.getElementById('tlCardStatusLabel');
+  cardVal.textContent  = 'OFFLINE';
+  cardUnit.textContent = '';
+  const statusBarEl = document.getElementById('tlCardStatusBar');
+  const statusLblEl = document.getElementById('tlCardStatusLabel');
 
-//   if (statusBarEl) statusBarEl.className = 'st-unknown';
+  if (statusBarEl) statusBarEl.className = 'st-unknown';
 
-//   if (statusLblEl) statusLblEl.textContent = '● STATUS UNKNOWN';
-// return; // IMPORTANT
-// } else {
-//   cardVal.textContent  = fmtVal(val);
-// }
+  if (statusLblEl) statusLblEl.textContent = '● STATUS UNKNOWN';
+return; // IMPORTANT
+} else {
+  cardVal.textContent  = fmtVal(val);
+}
 
-//   // ── Position ruler so current ts appears at card's left edge ──
-//   // The ruler scrolls so that the scrub position is visible.
-//   // We keep the card visually fixed and scroll the ruler behind it.
-//   function updateRulerPosition() {
-//     const rulerWrapW = rulerWrap.clientWidth;
-//     const cardLeft   = parseFloat(card.style.left) || 20;
-//     const cardW      = card.offsetWidth || 320;
+  // ── Position ruler so current ts appears at card's left edge ──
+  // The ruler scrolls so that the scrub position is visible.
+  // We keep the card visually fixed and scroll the ruler behind it.
+  function updateRulerPosition() {
+    const rulerWrapW = rulerWrap.clientWidth;
+    const cardLeft   = parseFloat(card.style.left) || 20;
+    const cardW      = card.offsetWidth || 320;
 
-//     // The needle always sits at the horizontal centre of the card
-//     const needleX = cardLeft + cardW * 0.5;
-//     needle.style.left = Math.round(needleX) + 'px';
+    // The needle always sits at the horizontal centre of the card
+    const needleX = cardLeft + cardW * 0.5;
+    needle.style.left = Math.round(needleX) + 'px';
 
-//     // Scroll the ruler so that the current scrub timestamp sits under the needle
-//     const needleRulerX   = tsToRulerX(scrubTs());
-//     const targetRulerLeft = needleX - needleRulerX;
-//     const clampedLeft     = Math.min(0, Math.max(rulerWrapW - RULER_PX, targetRulerLeft));
-//     ruler.style.transform = `translateX(${clampedLeft}px)`;
-//   }
+    // Scroll the ruler so that the current scrub timestamp sits under the needle
+    const needleRulerX   = tsToRulerX(scrubTs());
+    const targetRulerLeft = needleX - needleRulerX;
+    const clampedLeft     = Math.min(0, Math.max(rulerWrapW - RULER_PX, targetRulerLeft));
+    ruler.style.transform = `translateX(${clampedLeft}px)`;
+  }
 
-//   // ── Open / close timeline ──────────────────────────
-//   const tlOverlay = document.getElementById('tlOverlay');
-//   const tlCloseBtn = document.getElementById('tlCloseBtn');
+  // ── Open / close timeline ──────────────────────────
+  const tlOverlay = document.getElementById('tlOverlay');
+  const tlCloseBtn = document.getElementById('tlCloseBtn');
 
-//   async function openTimeline() {
-//     if (!Object.keys(tlHistory).length) {
-//        try {
-//           await loadHistory();
-//        } catch (err) {
-//           console.warn('History load failed:', err);
-//     generateHistory();
-//        }
-//     }
+  async function openTimeline() {
+    if (!Object.keys(tlHistory).length) {
+    generateHistory();
+       }
+    }
      
-//     buildRuler();
-//     tlOpen = true;
-//     panel.classList.add('open');
-//     tlOverlay.classList.add('active');
-//     // Wait for the CSS slide-up transition (350ms) to finish before measuring
-//     // the card dimensions — otherwise getBoundingClientRect returns zero
-//     setTimeout(() => {
-//       positionCard();
-//       buildMiniGauge(tlSensorKey, valueAt(tlSensorKey, scrubTs()));
-//       updateCard();
-//       updateRulerPosition();
-//     }, 380);
-//   }
+    buildRuler();
+    tlOpen = true;
+    panel.classList.add('open');
+    tlOverlay.classList.add('active');
+    // Wait for the CSS slide-up transition (350ms) to finish before measuring
+    // the card dimensions — otherwise getBoundingClientRect returns zero
+    setTimeout(() => {
+      positionCard();
+      buildMiniGauge(tlSensorKey, valueAt(tlSensorKey, scrubTs()));
+      updateCard();
+      updateRulerPosition();
+    }, 380);
+  }
 
-//   function closeTimeline() {
-//     tlOpen = false;
-//     panel.classList.remove('open');
-//     tlOverlay.classList.remove('active');
-//     // Destroy gauge to free memory
-//     if (tlCardGauge) { try { tlCardGauge.destroy(); } catch(e){} tlCardGauge = null; }
-//   }
+  function closeTimeline() {
+    tlOpen = false;
+    panel.classList.remove('open');
+    tlOverlay.classList.remove('active');
+    // Destroy gauge to free memory
+    if (tlCardGauge) { try { tlCardGauge.destroy(); } catch(e){} tlCardGauge = null; }
+  }
 
-//   // Close button inside the ruler strip
-//   tlCloseBtn.addEventListener('click', closeTimeline);
+  // Close button inside the ruler strip
+  tlCloseBtn.addEventListener('click', closeTimeline);
 
-//   // Click anywhere above the panel (on the overlay) also closes it
-//   tlOverlay.addEventListener('click', closeTimeline);
+  // Click anywhere above the panel (on the overlay) also closes it
+  tlOverlay.addEventListener('click', closeTimeline);
 
-//   // ── Position card at current offset ───────────────
-//   // Card is "stuck" at left edge when dragging back in time (rightmost in ruler = NOW).
-//   // Card is "stuck" at right edge when at NOW (tlOffsetMs = 0).
-//   function positionCard() {
-//     const areaW  = card.parentElement.clientWidth;
-//     const cardW  = card.offsetWidth || 320;
-//     const margin = 20;
-//     // Fraction of timeline: 0 = NOW (right), 1 = oldest (left)
-//     const frac   = Math.max(0, Math.min(1, tlOffsetMs / TOTAL_MS));
-//     // Card moves from right (NOW) to left (oldest)
-//     const maxLeft = areaW - cardW - margin;
-//     const minLeft = margin;
-//     const rawLeft = maxLeft - frac * (maxLeft - minLeft);
-//     card.style.left = Math.round(Math.max(minLeft, Math.min(maxLeft, rawLeft))) + 'px';
-//   }
+  // ── Position card at current offset ───────────────
+  // Card is "stuck" at left edge when dragging back in time (rightmost in ruler = NOW).
+  // Card is "stuck" at right edge when at NOW (tlOffsetMs = 0).
+  function positionCard() {
+    const areaW  = card.parentElement.clientWidth;
+    const cardW  = card.offsetWidth || 320;
+    const margin = 20;
+    // Fraction of timeline: 0 = NOW (right), 1 = oldest (left)
+    const frac   = Math.max(0, Math.min(1, tlOffsetMs / TOTAL_MS));
+    // Card moves from right (NOW) to left (oldest)
+    const maxLeft = areaW - cardW - margin;
+    const minLeft = margin;
+    const rawLeft = maxLeft - frac * (maxLeft - minLeft);
+    card.style.left = Math.round(Math.max(minLeft, Math.min(maxLeft, rawLeft))) + 'px';
+  }
 
-//   // ── Drag logic ─────────────────────────────────────
-//   let dragStartX      = 0;
-//   let dragStartOffset = 0;
-//   let isDragging      = false;
-//   let rafId           = null;
-//   // Ruler scroll velocity when card is pinned at an edge
-//   let rulerScrolling  = false;
-//   let rulerScrollDir  = 0;  // -1 = going back in time, +1 toward now
-//   let rulerScrollRaf  = null;
+  // ── Drag logic ─────────────────────────────────────
+  let dragStartX      = 0;
+  let dragStartOffset = 0;
+  let isDragging      = false;
+  let rafId           = null;
+  // Ruler scroll velocity when card is pinned at an edge
+  let rulerScrolling  = false;
+  let rulerScrollDir  = 0;  // -1 = going back in time, +1 toward now
+  let rulerScrollRaf  = null;
 
-//   function stopRulerScroll() {
-//     rulerScrolling = false;
-//     if (rulerScrollRaf) { cancelAnimationFrame(rulerScrollRaf); rulerScrollRaf = null; }
-//   }
+  function stopRulerScroll() {
+    rulerScrolling = false;
+    if (rulerScrollRaf) { cancelAnimationFrame(rulerScrollRaf); rulerScrollRaf = null; }
+  }
 
-//   function startRulerScroll(dir) {
-//     if (rulerScrolling && rulerScrollDir === dir) return;
-//     rulerScrolling = true;
-//     rulerScrollDir = dir;
-//     const MS_PER_PX_DRAG = TOTAL_MS / RULER_PX;
-//     function tick() {
-//       if (!rulerScrolling) return;
-//       // Scroll at ~120px/s equivalent
-//       tlOffsetMs += dir * MS_PER_PX_DRAG * (120 / 60);
-//       tlOffsetMs  = Math.max(0, Math.min(TOTAL_MS, tlOffsetMs));
-//       updateCard();
-//       updateRulerPosition();
-//       rulerScrollRaf = requestAnimationFrame(tick);
-//     }
-//     tick();
-//   }
+  function startRulerScroll(dir) {
+    if (rulerScrolling && rulerScrollDir === dir) return;
+    rulerScrolling = true;
+    rulerScrollDir = dir;
+    const MS_PER_PX_DRAG = TOTAL_MS / RULER_PX;
+    function tick() {
+      if (!rulerScrolling) return;
+      // Scroll at ~120px/s equivalent
+      tlOffsetMs += dir * MS_PER_PX_DRAG * (120 / 60);
+      tlOffsetMs  = Math.max(0, Math.min(TOTAL_MS, tlOffsetMs));
+      updateCard();
+      updateRulerPosition();
+      rulerScrollRaf = requestAnimationFrame(tick);
+    }
+    tick();
+  }
 
-//   function onDragStart(clientX) {
-//     isDragging      = true;
-//     dragStartX      = clientX;
-//     dragStartOffset = tlOffsetMs;
-//     stopRulerScroll();
-//     card.classList.add('dragging');
-//     // Hide the drag hint permanently once the user starts dragging
-//     const hint = document.getElementById('tlDragHint');
-//     if (hint) hint.classList.add('hidden');
-//   }
+  function onDragStart(clientX) {
+    isDragging      = true;
+    dragStartX      = clientX;
+    dragStartOffset = tlOffsetMs;
+    stopRulerScroll();
+    card.classList.add('dragging');
+    // Hide the drag hint permanently once the user starts dragging
+    const hint = document.getElementById('tlDragHint');
+    if (hint) hint.classList.add('hidden');
+  }
 
-//   function onDragMove(clientX) {
-//     if (!isDragging) return;
-//     const dx       = clientX - dragStartX;
-//     const areaW    = card.parentElement.clientWidth;
-//     const cardW    = card.offsetWidth || 320;
-//     const margin   = 20;
-//     const maxLeft  = areaW - cardW - margin;
-//     const minLeft  = margin;
-//     // dx > 0 = dragging right = moving toward NOW (reduce offset)
-//     // dx < 0 = dragging left  = going back in time (increase offset)
-//     const MS_PER_PX = TOTAL_MS / (maxLeft - minLeft);
-//     let newOffset = dragStartOffset - dx * MS_PER_PX;
-//     newOffset = Math.max(0, Math.min(TOTAL_MS, newOffset));
+  function onDragMove(clientX) {
+    if (!isDragging) return;
+    const dx       = clientX - dragStartX;
+    const areaW    = card.parentElement.clientWidth;
+    const cardW    = card.offsetWidth || 320;
+    const margin   = 20;
+    const maxLeft  = areaW - cardW - margin;
+    const minLeft  = margin;
+    // dx > 0 = dragging right = moving toward NOW (reduce offset)
+    // dx < 0 = dragging left  = going back in time (increase offset)
+    const MS_PER_PX = TOTAL_MS / (maxLeft - minLeft);
+    let newOffset = dragStartOffset - dx * MS_PER_PX;
+    newOffset = Math.max(0, Math.min(TOTAL_MS, newOffset));
 
-//     // Determine where the card WOULD be
-//     const frac      = newOffset / TOTAL_MS;
-//     const rawLeft   = maxLeft - frac * (maxLeft - minLeft);
-//     const clampedLeft = Math.max(minLeft, Math.min(maxLeft, rawLeft));
+    // Determine where the card WOULD be
+    const frac      = newOffset / TOTAL_MS;
+    const rawLeft   = maxLeft - frac * (maxLeft - minLeft);
+    const clampedLeft = Math.max(minLeft, Math.min(maxLeft, rawLeft));
 
-//     if (clampedLeft <= minLeft && dx < 0) {
-//       // Card pinned at left edge — start ruler scrolling back in time
-//       tlOffsetMs = newOffset;
-//       card.style.left = minLeft + 'px';
-//       startRulerScroll(1);  // going further back
-//     } else if (clampedLeft >= maxLeft && dx > 0) {
-//       // Card pinned at right edge — we're at NOW, stop
-//       tlOffsetMs = 0;
-//       card.style.left = maxLeft + 'px';
-//       stopRulerScroll();
-//     } else {
-//       stopRulerScroll();
-//       tlOffsetMs = newOffset;
-//       card.style.left = Math.round(clampedLeft) + 'px';
-//     }
+    if (clampedLeft <= minLeft && dx < 0) {
+      // Card pinned at left edge — start ruler scrolling back in time
+      tlOffsetMs = newOffset;
+      card.style.left = minLeft + 'px';
+      startRulerScroll(1);  // going further back
+    } else if (clampedLeft >= maxLeft && dx > 0) {
+      // Card pinned at right edge — we're at NOW, stop
+      tlOffsetMs = 0;
+      card.style.left = maxLeft + 'px';
+      stopRulerScroll();
+    } else {
+      stopRulerScroll();
+      tlOffsetMs = newOffset;
+      card.style.left = Math.round(clampedLeft) + 'px';
+    }
 
-//     // Throttle updates with rAF
-//     if (rafId) cancelAnimationFrame(rafId);
-//     rafId = requestAnimationFrame(() => {
-//       updateCard();
-//       updateRulerPosition();
-//     });
-//   }
+    // Throttle updates with rAF
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(() => {
+      updateCard();
+      updateRulerPosition();
+    });
+  }
 
-//   function onDragEnd() {
-//     if (!isDragging) return;
-//     isDragging = false;
-//     card.classList.remove('dragging');
-//     stopRulerScroll();
-//     // Final update
-//     updateCard();
-//     updateRulerPosition();
-//   }
+  function onDragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    card.classList.remove('dragging');
+    stopRulerScroll();
+    // Final update
+    updateCard();
+    updateRulerPosition();
+  }
 
-//   // ── Pointer events (mouse + touch) on the DISPLAY side only ──
-//   cardDisplay.addEventListener('mousedown', e => { e.preventDefault(); onDragStart(e.clientX); });
-//   document.addEventListener('mousemove',   e => isDragging && onDragMove(e.clientX));
-//   document.addEventListener('mouseup',     onDragEnd);
+  // ── Pointer events (mouse + touch) on the DISPLAY side only ──
+  cardDisplay.addEventListener('mousedown', e => { e.preventDefault(); onDragStart(e.clientX); });
+  document.addEventListener('mousemove',   e => isDragging && onDragMove(e.clientX));
+  document.addEventListener('mouseup',     onDragEnd);
 
-//   cardDisplay.addEventListener('touchstart', e => {
-//     e.preventDefault(); onDragStart(e.touches[0].clientX);
-//   }, { passive:false });
-//   document.addEventListener('touchmove', e => {
-//     if (isDragging) { e.preventDefault(); onDragMove(e.touches[0].clientX); }
-//   }, { passive:false });
-//   document.addEventListener('touchend', onDragEnd);
+  cardDisplay.addEventListener('touchstart', e => {
+    e.preventDefault(); onDragStart(e.touches[0].clientX);
+  }, { passive:false });
+  document.addEventListener('touchmove', e => {
+    if (isDragging) { e.preventDefault(); onDragMove(e.touches[0].clientX); }
+  }, { passive:false });
+  document.addEventListener('touchend', onDragEnd);
 
-//   // ── Sensor selector buttons ────────────────────────
-//   document.getElementById('tlCardSelector').addEventListener('click', e => {
-//     const btn = e.target.closest('[data-tl-sensor]');
-//     if (!btn) return;
-//     tlSensorKey = btn.dataset.tlSensor;
-//     document.querySelectorAll('.tl-sel-btn').forEach(b =>
-//       b.classList.toggle('active', b.dataset.tlSensor === tlSensorKey)
-//     );
-//     // Rebuild gauge for new sensor
-//     const val = valueAt(tlSensorKey, scrubTs());
-//     buildMiniGauge(tlSensorKey, val);
-//     updateCard();
-//   });
+  // ── Sensor selector buttons ────────────────────────
+  document.getElementById('tlCardSelector').addEventListener('click', e => {
+    const btn = e.target.closest('[data-tl-sensor]');
+    if (!btn) return;
+    tlSensorKey = btn.dataset.tlSensor;
+    document.querySelectorAll('.tl-sel-btn').forEach(b =>
+      b.classList.toggle('active', b.dataset.tlSensor === tlSensorKey)
+    );
+    // Rebuild gauge for new sensor
+    const val = valueAt(tlSensorKey, scrubTs());
+    buildMiniGauge(tlSensorKey, val);
+    updateCard();
+  });
 
-//   // ── Hook into Past Conditions button ──────────────
-//   // We intercept the switchMode call by listening for the mode change
-//   const _origSwitchMode = window.switchMode;  // won't work as it's local — use event instead
+  // ── Hook into Past Conditions button ──────────────
+  // We intercept the switchMode call by listening for the mode change
+  const _origSwitchMode = window.switchMode;  // won't work as it's local — use event instead
 
-//   // Instead, patch the click listener: intercept mode-past
-//   document.addEventListener('click', e => {
-//     const btn = e.target.closest('[data-action]');
-//     if (!btn) return;
-//     if (btn.dataset.action === 'mode-past') {
-//       if (!tlOpen) {
-//         openTimeline();
-//       } else {
-//         closeTimeline();
-//         // revert to present
-//         document.querySelector('[data-action="mode-present"]')?.click();
-//       }
-//     } else if (tlOpen) {
-//       // Any other mode button closes the timeline
-//       closeTimeline();
-//     }
-//   }, true); // capture phase so we run before switchMode
+  // Instead, patch the click listener: intercept mode-past
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    if (btn.dataset.action === 'mode-past') {
+      if (!tlOpen) {
+        openTimeline();
+      } else {
+        closeTimeline();
+        // revert to present
+        document.querySelector('[data-action="mode-present"]')?.click();
+      }
+    } else if (tlOpen) {
+      // Any other mode button closes the timeline
+      closeTimeline();
+    }
+  }, true); // capture phase so we run before switchMode
 
-//   // ── Resize handling ────────────────────────────────
-//   window.addEventListener('resize', () => {
-//     if (!tlOpen) return;
-//     positionCard();
-//     updateRulerPosition();
-//   });
+  // ── Resize handling ────────────────────────────────
+  window.addEventListener('resize', () => {
+    if (!tlOpen) return;
+    positionCard();
+    updateRulerPosition();
+  });
 
-// })();
+})();
 
 
 /* ══════════════════════════════════════════════════════════════════════
