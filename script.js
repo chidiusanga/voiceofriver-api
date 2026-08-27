@@ -2410,9 +2410,16 @@ function applyLiveSensorData(jsonData) {
       currentReadings.turbidity =
           parseFloat(jsonData.Node1_TURBIDITY);
 
-  if (jsonData.Node1_WATERLEVEL != null)
-      currentReadings.level =
-          parseFloat(jsonData.Node1_WATERLEVEL);
+if (jsonData.Node1_WATERLEVEL != null) {
+    currentReadings.level =
+        parseFloat(jsonData.Node1_WATERLEVEL);
+
+    levelSensorMissing = false;
+}
+
+if (jsonData.Node1_WATERLEVEL == null) {
+    levelSensorMissing = true;
+}
 
   if (jsonData.Node2_TDS != null)
       currentReadings.tds =
