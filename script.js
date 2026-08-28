@@ -2132,9 +2132,9 @@ function tsToRulerX(ts) {
 }
 
   // ── Current scrub timestamp ────────────────────────
-  function scrubTs() {
-   function currentHistorySpan() {
-     const pts =
+  function currentHistorySpan() {
+
+  const pts =
     tlHistory[tlSensorKey];
 
   if (!pts || pts.length < 2)
@@ -2146,8 +2146,10 @@ function tsToRulerX(ts) {
   );
 
 }
-    return NOW_TS - tlOffsetMs;
-  }
+
+function scrubTs() {
+  return NOW_TS - tlOffsetMs;
+}
 
   // ── Format timestamp for card header ─────────────
   function fmtTs(ts) {
@@ -2404,12 +2406,12 @@ async function openTimeline() {
     if (rulerScrolling && rulerScrollDir === dir) return;
     rulerScrolling = true;
     rulerScrollDir = dir;
-    const MS_PER_PX_DRAG = TOTAL_MS / RULER_PX;
+    const MS_PER_PX_DRAG = currentHistorySpan() / RULER_PX;
     function tick() {
       if (!rulerScrolling) return;
       // Scroll at ~120px/s equivalent
       tlOffsetMs += dir * MS_PER_PX_DRAG * (120 / 60);
-      tlOffsetMs  = Math.max(0, Math.min(TOTAL_MS, tlOffsetMs));
+      tlOffsetMs  = Math.max(0, Math.min(currentHistorySpan(), tlOffsetMs));
       updateCard();
       updateRulerPosition();
       rulerScrollRaf = requestAnimationFrame(tick);
@@ -2443,7 +2445,7 @@ async function openTimeline() {
     newOffset = Math.max(0, Math.min(currentHistorySpan(), newOffset));
 
     // Determine where the card WOULD be
-    const frac      = newOffset / TOTAL_MS;
+    const frac = newOffset / currentHistorySpan();
     const rawLeft   = maxLeft - frac * (maxLeft - minLeft);
     const clampedLeft = Math.max(minLeft, Math.min(maxLeft, rawLeft));
 
