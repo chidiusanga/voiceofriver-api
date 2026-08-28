@@ -1945,6 +1945,15 @@ function drawHistoryGraph() {
    if (!graphCtx) return;
    const pts = tlHistory[tlSensorKey];
 
+   console.log(
+  'Graph points:',
+  pts.length,
+  'first:',
+  new Date(pts[0].ts),
+  'last:',
+  new Date(pts[pts.length - 1].ts)
+);
+
   if (!pts || pts.length < 2)
     return;
 
