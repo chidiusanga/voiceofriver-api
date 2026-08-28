@@ -1947,17 +1947,6 @@ function drawHistoryGraph() {
    const pts = tlHistory[tlSensorKey];
 
 
-
-
-if (pts.length) {
-
-  const spanHours =
-    (pts[pts.length - 1].ts - pts[0].ts)
-    / 3600000;
-
-
-}
-
   if (!pts || pts.length < 2)
     return;
 
@@ -2115,35 +2104,32 @@ graphCtx.strokeStyle =
 }
 
   // ── ts → ruler X pixel (rightmost = NOW) ──────────
-  function tsToRulerX(ts) {
+function tsToRulerX(ts) {
 
-    const pts =
-      tlHistory[tlSensorKey];
+  const pts =
+    tlHistory[tlSensorKey];
 
-    if (!pts || pts.length < 2)
-      return 0;
+  if (!pts || pts.length < 2)
+    return 0;
 
-    const firstTs =
-      pts[0].ts;
+  const firstTs =
+    pts[0].ts;
 
-    const lastTs =
-      pts[pts.length - 1].ts;
+  const lastTs =
+    pts[pts.length - 1].ts;
 
-    const span =
-      Math.max(
-        1,
-        lastTs - firstTs
-      );
+  const span =
+    Math.max(
+      1,
+      lastTs - firstTs
+    );
 
-    return (
-      (ts - firstTs)
-      / span
-    ) * ruler.offsetWidth;
+  return (
+    (ts - firstTs)
+    / span
+  ) * ruler.offsetWidth;
 
-  }
-    const daysFromInstall = (ts - INSTALL_TS) / MS_PER_DAY;
-    return daysFromInstall * PX_PER_DAY;
-  }
+}
 
   // ── Current scrub timestamp ────────────────────────
   function scrubTs() {
