@@ -1970,23 +1970,39 @@ const colours = {
 
 graphCtx.beginPath();
 
-const firstTs = pts[0].ts;
-const lastTs  = pts[pts.length - 1].ts;
+const visibleSpan =
+  14 * MS_PER_DAY;
 
-const historySpan =
-  Math.max(1, lastTs - firstTs);
+const graphStartTs =
+  NOW_TS - visibleSpan;
 
-// const graphWidth = W * 0.55;
-// const graphLeft  = W - graphWidth - 340;
+let firstPoint = true;
 
-const graphWidth = W;
-const graphLeft = 0;
-   
-pts.forEach((p, i) => {
+pts.forEach((p) => {
+
+  if (p.ts < graphStartTs) {
+    return;
+  }
 
   const x =
-    graphLeft +
-    ((p.ts - firstTs) / historySpan) * graphWidth;
+    ((p.ts - graphStartTs) /
+     visibleSpan) * W;
+
+  const y =
+    H -
+    ((p.val - minVal) /
+     (maxVal - minVal))
+    * (H * 0.8)
+    - 10;
+
+  if (firstPoint) {
+    graphCtx.moveTo(x, y);
+    firstPoint = false;
+  } else {
+    graphCtx.lineTo(x, y);
+  }
+
+});
 
   const y =
     H -
