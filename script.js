@@ -2305,7 +2305,8 @@ if (!hasValidData(val)) {
     // Scroll the ruler so that the current scrub timestamp sits under the needle
     const needleRulerX   = tsToRulerX(scrubTs());
     const targetRulerLeft = needleX - needleRulerX;
-    const clampedLeft     = Math.min(0, Math.max(rulerWrapW - RULER_PX, targetRulerLeft));
+    const currentRulerWidth = ruler.offsetWidth;
+     const clampedLeft = Math.min(0, Math.max(rulerWrapW - currentRulerWidth, targetRulerLeft));
     ruler.style.transform = `translateX(${clampedLeft}px)`;
   }
 
@@ -2338,14 +2339,14 @@ async function openTimeline() {
 
   }
      
-    buildRuler();
     tlOpen = true;
-    panel.classList.add('open');
+   panel.classList.add('open');
     tlOverlay.classList.add('active');
     // Wait for the CSS slide-up transition (350ms) to finish before measuring
     // the card dimensions — otherwise getBoundingClientRect returns zero
     setTimeout(() => {
        // Added Graph Resizing
+       buildRuler();
        graphCtx = graphCanvas.getContext('2d');
        resizeGraph();
        drawHistoryGraph();
