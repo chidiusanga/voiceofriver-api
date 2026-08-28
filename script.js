@@ -1983,7 +1983,8 @@ pts.forEach((p, i) => {
 
   const y =
     H -
-    ((p.val - minVal) / (maxVal - minVal))
+    ((p.val - minVal) /
+      (maxVal - minVal))
     * (H * 0.8)
     - 10;
 
@@ -1992,6 +1993,7 @@ pts.forEach((p, i) => {
   } else {
     graphCtx.lineTo(x, y);
   }
+
 });
 
 graphCtx.strokeStyle =
