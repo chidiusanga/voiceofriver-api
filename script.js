@@ -2133,6 +2133,19 @@ function tsToRulerX(ts) {
 
   // ── Current scrub timestamp ────────────────────────
   function scrubTs() {
+   function currentHistorySpan() {
+     const pts =
+    tlHistory[tlSensorKey];
+
+  if (!pts || pts.length < 2)
+    return TOTAL_MS;
+
+  return (
+    pts[pts.length - 1].ts -
+    pts[0].ts
+  );
+
+}
     return NOW_TS - tlOffsetMs;
   }
 
@@ -2364,7 +2377,7 @@ async function openTimeline() {
     const cardW  = card.offsetWidth || 320;
     const margin = 20;
     // Fraction of timeline: 0 = NOW (right), 1 = oldest (left)
-    const frac   = Math.max(0, Math.min(1, tlOffsetMs / TOTAL_MS));
+    const frac = Math.max(0, Math.min(1, tlOffsetMs / currentHistorySpan() ));
     // Card moves from right (NOW) to left (oldest)
     const maxLeft = areaW - cardW - margin;
     const minLeft = margin;
@@ -2425,9 +2438,9 @@ async function openTimeline() {
     const minLeft  = margin;
     // dx > 0 = dragging right = moving toward NOW (reduce offset)
     // dx < 0 = dragging left  = going back in time (increase offset)
-    const MS_PER_PX = TOTAL_MS / (maxLeft - minLeft);
+    const MS_PER_PX = currentHistorySpan() / (maxLeft - minLeft);
     let newOffset = dragStartOffset - dx * MS_PER_PX;
-    newOffset = Math.max(0, Math.min(TOTAL_MS, newOffset));
+    newOffset = Math.max(0, Math.min(currentHistorySpan(), newOffset));
 
     // Determine where the card WOULD be
     const frac      = newOffset / TOTAL_MS;
