@@ -1776,6 +1776,9 @@ init();
   const cardGWrap   = document.getElementById('tlCardGaugeWrap');
   const cardVal     = document.getElementById('tlCardValue');
   const cardUnit    = document.getElementById('tlCardUnit');
+   const graphCanvas = document.getElementById('tlHistoryGraph');
+   
+   let graphCtx = null;
 
    // ── Load history from Supabase ─────────────────────
 async function loadHistory() {
@@ -1921,6 +1924,87 @@ if (row.ph != null) {
     return pts[0].val;
   }
 
+   // Graph Sizing
+   function resizeGraph() {
+      if (!graphCanvas) return;
+      
+      graphCanvas.width = graphCanvas.clientWidth;
+      
+      graphCanvas.height = graphCanvas.clientHeight;
+}
+
+function drawHistoryGraph() {
+   if (!graphCtx) return;
+   const pts = tlHistory[tlSensorKey];
+
+  if (!pts || pts.length < 2)
+    return;
+
+  const W = graphCanvas.width;
+  const H = graphCanvas.height;
+
+  graphCtx.clearRect(0, 0, W, H);
+
+  let minVal = Infinity;
+  let maxVal = -Infinity;
+
+  pts.forEach(p => {
+
+    minVal = Math.min(minVal, p.val);
+    maxVal = Math.max(maxVal, p.val);
+
+  });
+
+  if (minVal === maxVal) {
+    minVal--;
+    maxVal++;
+  }
+
+  const colours = {
+    temperature: '#ff9040',
+    turbidity:   '#60d0ff',
+    ph:          '#70ffb0',
+    tds:         '#ffe060',
+    ec:          '#d090ff',
+    level:       '#70a0ff'
+  };
+
+  graphCtx.beginPath();
+
+  pts.forEach((p, i) => {
+
+    const x =
+      ((p.ts - INSTALL_TS) / TOTAL_MS) * W;
+
+    const y =
+      H -
+      ((p.val - minVal) /
+      (maxVal - minVal))
+      * (H * 0.8)
+      - 10;
+
+    if (i === 0)
+      graphCtx.moveTo(x, y);
+    else
+      graphCtx.lineTo(x, y);
+
+  });
+
+  graphCtx.strokeStyle =
+    colours[tlSensorKey] || '#60d0ff';
+
+  graphCtx.lineWidth = 3;
+
+  graphCtx.shadowColor =
+    graphCtx.strokeStyle;
+
+  graphCtx.shadowBlur = 12;
+
+  graphCtx.stroke();
+
+  graphCtx.shadowBlur = 0;
+}
+   
   // ── Build ruler tick marks ─────────────────────────
   function buildRuler() {
     ruler.style.width = RULER_PX + 'px';
@@ -2175,6 +2259,11 @@ async function openTimeline() {
     // Wait for the CSS slide-up transition (350ms) to finish before measuring
     // the card dimensions — otherwise getBoundingClientRect returns zero
     setTimeout(() => {
+       // Added Graph Resizing
+       graphCtx = graphCanvas.getContext('2d');
+       resizeGraph();
+       drawHistoryGraph();
+       
       positionCard();
       buildMiniGauge(tlSensorKey, valueAt(tlSensorKey, scrubTs()));
       updateCard();
@@ -2333,6 +2422,7 @@ async function openTimeline() {
     const val = valueAt(tlSensorKey, scrubTs());
     buildMiniGauge(tlSensorKey, val);
     updateCard();
+     drawHistoryGraph();
   });
 
   // ── Hook into Past Conditions button ──────────────
@@ -2360,6 +2450,8 @@ async function openTimeline() {
   // ── Resize handling ────────────────────────────────
   window.addEventListener('resize', () => {
     if (!tlOpen) return;
+     resizeGraph();
+drawHistoryGraph();
     positionCard();
     updateRulerPosition();
   });
