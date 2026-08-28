@@ -4,22 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Voice of the River</title>
-<!-- Canvas Gauges library:
-     On ESP32: loaded from LittleFS (/gauge.min.js)
-     On Mac/browser testing: falls back to CDN automatically -->
-<script>
-(function() {
-  var localScript = document.createElement('script');
-  localScript.src = '/gauge.min.js';
-  localScript.onerror = function() {
-    // Local file not available (e.g. testing on Mac) — load from CDN
-    var cdnScript = document.createElement('script');
-    cdnScript.src = 'https://cdn.jsdelivr.net/npm/canvas-gauges@2.1.7/gauge.min.js';
-    document.head.appendChild(cdnScript);
-  };
-  document.head.appendChild(localScript);
-})();
-</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-gauges@2.1.7/gauge.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
