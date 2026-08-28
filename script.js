@@ -511,8 +511,9 @@ function buildGaugeHighlights(sensorDef) {
   const zones = [];
   const wfd   = sensorDef.wfd;
 
-  if (sensorDef === SENSORS.ph) {
-    // pH: colour zones around the neutral range
+  if (
+    sensorDef === SENSORS.ph || sensorDef === SENSORS.level) {
+    // pH and Water Level: colour zones around the neutral range
     if (wfd.poorLow  > sensorDef.min) zones.push({from:sensorDef.min,to:wfd.poorLow,   color:'rgba(224,48,48,.45)'}); // Bad
     if (wfd.moderateLow > wfd.poorLow) zones.push({from:wfd.poorLow,  to:wfd.moderateLow,color:'rgba(240,112,48,.4)'}); // Poor
     if (wfd.goodLow > wfd.moderateLow) zones.push({from:wfd.moderateLow,to:wfd.goodLow, color:'rgba(240,192,48,.38)'}); // Moderate
