@@ -2010,6 +2010,19 @@ graphCtx.strokeStyle =
 
   graphCtx.shadowBlur = 12;
 
+   // Delete this ConsoleLog
+
+console.log(
+  "points:",
+  pts.length,
+  "firstTs:",
+  new Date(firstTs),
+  "lastTs:",
+  new Date(lastTs)
+);
+
+   // End Delete this ConsoleLog
+   
   graphCtx.stroke();
 
   graphCtx.shadowBlur = 0;
