@@ -1969,19 +1969,35 @@ function drawHistoryGraph() {
     level:       '#70a0ff'
   };
 
+console.log(
+  tlSensorKey,
+  pts.length,
+  pts[0],
+  pts[pts.length - 1]
+);
+
   graphCtx.beginPath();
+
+   const firstTs = pts[0].ts;
+const lastTs  = pts[pts.length - 1].ts;
+
+const historySpan =
+  Math.max(1, lastTs - firstTs);
+
+   
 
   pts.forEach((p, i) => {
 
-    const x =
-      ((p.ts - INSTALL_TS) / TOTAL_MS) * W;
+  const x =
+    ((p.ts - firstTs) / historySpan) * W;
 
-    const y =
-      H -
-      ((p.val - minVal) /
-      (maxVal - minVal))
-      * (H * 0.8)
-      - 10;
+  const y =
+    H -
+    ((p.val - minVal) /
+    (maxVal - minVal))
+    * (H * 0.8)
+    - 10;
+     
 
     if (i === 0)
       graphCtx.moveTo(x, y);
