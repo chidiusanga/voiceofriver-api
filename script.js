@@ -1925,12 +1925,11 @@ if (row.ph != null) {
   }
 
    // Graph Sizing
-   function resizeGraph() {
-      if (!graphCanvas) return;
-      
-      graphCanvas.width = graphCanvas.clientWidth;
-      
-      graphCanvas.height = graphCanvas.clientHeight;
+function resizeGraph() {
+   if (!graphCanvas) return;
+   const area = document.getElementById('tlCardArea');
+   graphCanvas.width = area.clientWidth;
+   graphCanvas.height = area.clientHeight;
 }
 
 function drawHistoryGraph() {
