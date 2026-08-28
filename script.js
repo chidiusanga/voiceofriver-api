@@ -1978,20 +1978,18 @@ console.log(
 
   graphCtx.beginPath();
 
-   const firstTs = pts[0].ts;
-const lastTs  = pts[pts.length - 1].ts;
+//    const firstTs = pts[0].ts;
+// const lastTs  = pts[pts.length - 1].ts;
 
-const historySpan =
-  Math.max(1, lastTs - firstTs);
+// const historySpan =
+//   Math.max(1, lastTs - firstTs);
 
    
 
-  pts.forEach((p, i) => {
+pts.forEach((p, i) => {
 
-const historyWidth = W * 0.6;
-const x =
-  W - historyWidth +
-  ((p.ts - firstTs) / historySpan) * historyWidth;
+  const x =
+    (tsToRulerX(p.ts) / RULER_PX) * W;
 
   const y =
     H -
@@ -1999,14 +1997,13 @@ const x =
     (maxVal - minVal))
     * (H * 0.8)
     - 10;
-     
 
-    if (i === 0)
-      graphCtx.moveTo(x, y);
-    else
-      graphCtx.lineTo(x, y);
+  if (i === 0)
+    graphCtx.moveTo(x, y);
+  else
+    graphCtx.lineTo(x, y);
 
-  });
+});
 
   graphCtx.strokeStyle =
     colours[tlSensorKey] || '#60d0ff';
