@@ -2251,6 +2251,15 @@ if (!hasValidData(val)) {
 
     cardVal.textContent  = 'OFFLINE';
     cardUnit.textContent = '';
+
+// DELETE THIS
+     console.log(
+  'scrubTs:',
+  new Date(ts)
+);
+
+// DELETE THIS
+     
     cardTs.textContent   = fmtTs(ts);
 
     if (statusBarEl) {
