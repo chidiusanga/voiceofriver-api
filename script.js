@@ -2433,7 +2433,7 @@ async function openTimeline() {
     if (rulerScrolling && rulerScrollDir === dir) return;
     rulerScrolling = true;
     rulerScrollDir = dir;
-    const MS_PER_PX_DRAG = currentHistorySpan() / RULER_PX;
+    const MS_PER_PX_DRAG = currentHistorySpan() / ruler.offsetWidth;
     function tick() {
       if (!rulerScrolling) return;
       // Scroll at ~120px/s equivalent
