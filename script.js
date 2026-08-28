@@ -2132,7 +2132,8 @@ function tsToRulerX(ts) {
 }
 
   // ── Current scrub timestamp ────────────────────────
-  function currentHistorySpan() {
+  // ── Current scrub timestamp ────────────────────────
+function currentHistorySpan() {
 
   const pts =
     tlHistory[tlSensorKey];
@@ -2147,8 +2148,24 @@ function tsToRulerX(ts) {
 
 }
 
+function currentHistoryStart() {
+
+  const pts =
+    tlHistory[tlSensorKey];
+
+  if (!pts || pts.length < 2) {
+    return NOW_TS;
+  }
+
+  return pts[0].ts;
+
+}
+
 function scrubTs() {
-  return NOW_TS - tlOffsetMs;
+  return (
+    currentHistoryStart()
+    + tlOffsetMs
+  );
 }
 
   // ── Format timestamp for card header ─────────────
