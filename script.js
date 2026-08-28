@@ -1970,38 +1970,28 @@ const colours = {
 
 graphCtx.beginPath();
 
-const visibleSpan =
-  30 * MS_PER_DAY;
+const firstTs = pts[0].ts;
+const lastTs  = pts[pts.length - 1].ts;
 
-const graphStartTs =
-  NOW_TS - visibleSpan;
+const historySpan =
+  Math.max(1, lastTs - firstTs);
 
-let started = false;
-
-pts.forEach((p) => {
-
-  if (p.ts < graphStartTs) {
-    return;
-  }
+pts.forEach((p, i) => {
 
   const x =
-    ((p.ts - graphStartTs) /
-      visibleSpan) * W;
+    ((p.ts - firstTs) / historySpan) * W;
 
   const y =
     H -
-    ((p.val - minVal) /
-      (maxVal - minVal))
+    ((p.val - minVal) / (maxVal - minVal))
     * (H * 0.8)
     - 10;
 
-  if (!started) {
+  if (i === 0) {
     graphCtx.moveTo(x, y);
-    started = true;
   } else {
     graphCtx.lineTo(x, y);
   }
-
 });
 
 graphCtx.strokeStyle =
@@ -2014,16 +2004,6 @@ graphCtx.strokeStyle =
 
   graphCtx.shadowBlur = 12;
 
-   // Delete this ConsoleLog
-
-console.log(
-  "W:", W,
-  "graphWidth:", graphWidth,
-  "graphLeft:", graphLeft,
-  "points:", pts.length
-);
-
-   // End Delete this ConsoleLog
    
   graphCtx.stroke();
 
