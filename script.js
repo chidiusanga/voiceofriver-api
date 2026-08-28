@@ -1954,6 +1954,30 @@ function drawHistoryGraph() {
    if (!graphCtx) return;
    const pts = tlHistory[tlSensorKey];
 
+
+
+
+if (pts.length) {
+
+  const spanHours =
+    (pts[pts.length - 1].ts - pts[0].ts)
+    / 3600000;
+
+  console.log(
+    tlSensorKey,
+    'points:',
+    pts.length,
+    'hours:',
+    spanHours.toFixed(1)
+  );
+
+}
+
+
+
+
+   
+
    console.log(
   'Graph points:',
   pts.length,
