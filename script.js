@@ -1888,11 +1888,6 @@ if (row.ph != null) {
 
   });
 
-  console.log(
-    'History loaded:',
-    rows.length,
-    'records'
-  );
 
    Object.keys(tlHistory).forEach(key => {
 
@@ -1963,29 +1958,8 @@ if (pts.length) {
     (pts[pts.length - 1].ts - pts[0].ts)
     / 3600000;
 
-  console.log(
-    tlSensorKey,
-    'points:',
-    pts.length,
-    'hours:',
-    spanHours.toFixed(1)
-  );
 
 }
-
-
-
-
-   
-
-   console.log(
-  'Graph points:',
-  pts.length,
-  'first:',
-  new Date(pts[0].ts),
-  'last:',
-  new Date(pts[pts.length - 1].ts)
-);
 
   if (!pts || pts.length < 2)
     return;
