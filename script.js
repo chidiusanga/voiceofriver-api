@@ -2468,7 +2468,7 @@ async function openTimeline() {
     // dx > 0 = dragging right = moving toward NOW (reduce offset)
     // dx < 0 = dragging left  = going back in time (increase offset)
     const MS_PER_PX = currentHistorySpan() / (maxLeft - minLeft);
-    let newOffset = dragStartOffset + dx * MS_PER_PX;
+    let newOffset = dragStartOffset - dx * MS_PER_PX;
     newOffset = Math.max(0, Math.min(currentHistorySpan(), newOffset));
 
     // Determine where the card WOULD be
