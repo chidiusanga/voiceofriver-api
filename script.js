@@ -1894,6 +1894,15 @@ if (row.ph != null) {
     'records'
   );
 
+   Object.keys(tlHistory).forEach(key => {
+
+  console.log(
+    key,
+    tlHistory[key].length
+  );
+
+});
+
 }
 
 
