@@ -88,7 +88,8 @@ const SENSORS = {
     // Good status = natural flow regime maintained. Thresholds here are
     // ecologically derived reference ranges for a typical Irish lowland river.
     // Low level (<2 ft) stresses benthic habitat; very high (>14 ft) = flood risk.
-    wfd: { high: 12, good: 13, moderate: 14.5, poor: 15.5 },
+    wfd: {highLow: 6, highHigh: 12, goodLow: 4, goodHigh: 14, moderateLow: 2, moderateHigh: 15, poorLow: 1, poorHigh: 16
+},
     good: [3, 13], warn: [1.5, 15],
     type: 'radial', majorTicks: ['0','4','8','12','16'],
     sim: () => +(1.3 + Math.random() * 13.8).toFixed(1)
@@ -670,13 +671,44 @@ if (!hasValidData(val)) { // print Unknown when sensors are offline rather than 
   if (!wfd) return 'good'; // fallback for sensors without WFD thresholds
 
   // pH uses asymmetric two-sided boundaries
-  if (sensorKey === 'ph') {
-    if (val >= wfd.highLow  && val <= wfd.highHigh)     return 'high';
-    if (val >= wfd.goodLow  && val <= wfd.goodHigh)     return 'good';
-    if (val >= wfd.moderateLow && val <= wfd.moderateHigh) return 'moderate';
-    if (val >= wfd.poorLow  && val <= wfd.poorHigh)     return 'poor';
-    return 'bad';
-  }
+  // if (sensorKey === 'ph') {
+  //   if (val >= wfd.highLow  && val <= wfd.highHigh)     return 'high';
+  //   if (val >= wfd.goodLow  && val <= wfd.goodHigh)     return 'good';
+  //   if (val >= wfd.moderateLow && val <= wfd.moderateHigh) return 'moderate';
+  //   if (val >= wfd.poorLow  && val <= wfd.poorHigh)     return 'poor';
+  //   return 'bad';
+  // }
+
+   // Replaced above with the below for pH
+   if (sensorKey === 'ph' || sensorKey === 'level') {
+
+  if (
+      val >= wfd.highLow &&
+      val <= wfd.highHigh
+     )
+      return 'high';
+
+  if (
+      val >= wfd.goodLow &&
+      val <= wfd.goodHigh
+     )
+      return 'good';
+
+  if (
+      val >= wfd.moderateLow &&
+      val <= wfd.moderateHigh
+     )
+      return 'moderate';
+
+  if (
+      val >= wfd.poorLow &&
+      val <= wfd.poorHigh
+     )
+      return 'poor';
+
+  return 'bad';
+}
+   
 
   // Temperature: both low and high extremes can be Poor/Bad
   if (sensorKey === 'temperature') {
