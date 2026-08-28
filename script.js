@@ -1977,9 +1977,12 @@ const lastTs  = pts[pts.length - 1].ts;
 const historySpan =
   Math.max(1, lastTs - firstTs);
 
-const graphWidth = W * 0.55;
-const graphLeft  = W - graphWidth - 340;
+// const graphWidth = W * 0.55;
+// const graphLeft  = W - graphWidth - 340;
 
+const graphWidth = W;
+const graphLeft = 0;
+   
 pts.forEach((p, i) => {
 
   const x =
@@ -2013,12 +2016,10 @@ graphCtx.strokeStyle =
    // Delete this ConsoleLog
 
 console.log(
-  "points:",
-  pts.length,
-  "firstTs:",
-  new Date(firstTs),
-  "lastTs:",
-  new Date(lastTs)
+  "W:", W,
+  "graphWidth:", graphWidth,
+  "graphLeft:", graphLeft,
+  "points:", pts.length
 );
 
    // End Delete this ConsoleLog
