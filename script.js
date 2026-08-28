@@ -1988,8 +1988,10 @@ const historySpan =
 
   pts.forEach((p, i) => {
 
-  const x =
-    ((p.ts - firstTs) / historySpan) * W;
+const historyWidth = W * 0.6;
+const x =
+  W - historyWidth +
+  ((p.ts - firstTs) / historySpan) * historyWidth;
 
   const y =
     H -
