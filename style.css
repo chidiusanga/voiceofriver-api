@@ -459,6 +459,15 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
    Timeline History Graph
 ──────────────────────────── */
 
+#tlHistoryGraph{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:1;
+  pointer-events:none;
+}
+
 #tlCard{
   position:absolute;
    z-index:3;
