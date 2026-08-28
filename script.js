@@ -1971,12 +1971,12 @@ const colours = {
 graphCtx.beginPath();
 
 const visibleSpan =
-  14 * MS_PER_DAY;
+  30 * MS_PER_DAY;
 
 const graphStartTs =
   NOW_TS - visibleSpan;
 
-let firstPoint = true;
+let started = false;
 
 pts.forEach((p) => {
 
@@ -1986,35 +1986,21 @@ pts.forEach((p) => {
 
   const x =
     ((p.ts - graphStartTs) /
-     visibleSpan) * W;
+      visibleSpan) * W;
 
   const y =
     H -
     ((p.val - minVal) /
-     (maxVal - minVal))
+      (maxVal - minVal))
     * (H * 0.8)
     - 10;
 
-  if (firstPoint) {
+  if (!started) {
     graphCtx.moveTo(x, y);
-    firstPoint = false;
+    started = true;
   } else {
     graphCtx.lineTo(x, y);
   }
-
-});
-
-  const y =
-    H -
-    ((p.val - minVal) /
-    (maxVal - minVal))
-    * (H * 0.8)
-    - 10;
-
-  if (i === 0)
-    graphCtx.moveTo(x, y);
-  else
-    graphCtx.lineTo(x, y);
 
 });
 
