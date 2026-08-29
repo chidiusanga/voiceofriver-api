@@ -622,11 +622,13 @@ const sz = Math.max(
    valTag.className = 'gauge-value-tag';
    
    // Display text content only if there's a data value, otherwise display "Sensor Offline..." instead of just 000.00 or NaN.
-     if (!hasValidData(val)) {
-     valTag.textContent = 'Sensor Offline...';
-   } else {
-     valTag.textContent = formatVal(val, s);
-   }
+if (!hasValidData(val)) {
+   valTag.textContent = 'Sensor Offline';
+   valTag.style.color = '#ff5050';
+} else {
+   valTag.textContent = formatVal(val, s);
+   valTag.style.color = '#ffffff';
+}
     bubble.appendChild(labelEl);
     bubble.appendChild(wrapEl);
     bubble.appendChild(valTag);
