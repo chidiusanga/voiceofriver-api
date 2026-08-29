@@ -332,8 +332,8 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
 #narrativeWrap{
   flex:1;
   padding:8px 12px;
-  font-size:clamp(10px, 1.3vw, 12px);   /* slightly larger than the 9–11px but below original 12–16px */
-  line-height:1.6;
+  font-size:clamp(13px, 1vw, 16px);   /* slightly larger than the 9–11px but below original 12–16px */
+  line-height:1.8;
   color:#0a2436;
   font-style:italic;
   min-height:40px;
@@ -690,22 +690,23 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
 .wfd-overall-class { font-family: var(--title-font); font-size: 26px; letter-spacing: .12em; margin-bottom: 6px; }
 .wfd-overall-note { font-size: 12px; color: var(--text-mid); line-height: 1.5; }
 .wfd-param-header {
-  display: grid; grid-template-columns: 1fr 90px 110px 70px;
-  padding: 6px 14px; font-size: 9px; font-weight: 700; letter-spacing: .1em;
-  text-transform: uppercase; color: var(--text-dim);
-  border-bottom: 1px solid rgba(80,140,200,.1);
+  display: grid;
+  grid-template-columns: 1fr 110px 140px 90px;
+  column-gap: 18px;
 }
+
 .wfd-param-row {
-  display: grid; grid-template-columns: 1fr 90px 110px 70px;
-  padding: 7px 14px; align-items: center;
-  border-bottom: 1px solid rgba(80,140,200,.07); font-size: 11px;
+  display: grid;
+  grid-template-columns: 1fr 110px 140px 90px;
+  column-gap: 18px;
+  align-items: center;
 }
 .wfd-param-row:last-of-type { border-bottom: none; }
 .wfd-param-name { color: var(--text-mid); }
 .wfd-param-val  { color: var(--text-bright); font-family: var(--title-font); font-size: 13px; }
 .wfd-param-status {
-  display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 6px;
-  font-size: 9px; font-weight: 700; letter-spacing: .06em; white-space: nowrap;
+  display: inline-flex; align-items: center; padding: 4px 10px; border-radius: 6px;
+  font-size: 11px; font-weight: 700; letter-spacing: .06em; white-space: nowrap;
 }
 .wfd-param-sdg { color: var(--text-dim); font-size: 9px; }
 .wfd-source-note {
@@ -750,6 +751,23 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
   border-top: 1px solid rgba(80,140,200,.15);
   font-size: 9px; color: var(--text-dim); font-style: italic;
 }
+
+.wfd-param-row{
+    align-items:center;
+}
+
+.wfd-param-status{
+    justify-self:start;
+    white-space:nowrap;
+}
+
+.wfd-param-sdg{
+    justify-self:end;
+    text-align:right;
+    white-space:nowrap;
+    font-size:9px;
+}
+
 @media (max-width: 500px) {
   .wfd-esg-grid { grid-template-columns: repeat(2, 1fr); }
   .wfd-param-header, .wfd-param-row { grid-template-columns: 1fr 80px 90px; }
@@ -821,12 +839,12 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
   font-size: 10px;
 }
 .wfd-param-row{
-  font-size: 12px;       /* up from 11px */
+  font-size: 14px;       /* up from 11px */
 }
-.wfd-param-name{ color: #a8cce0; }  /* WCAG contrast on #0e1f38 ≈ 5.8:1 */
+.wfd-param-name{ color: #a8cce0; font-size:14px;}  /* WCAG contrast on #0e1f38 ≈ 5.8:1 */
 .wfd-param-val{
   color: #ffffff;
-  font-size: 14px;       /* up from 13px */
+  font-size: 16px;       /* up from 13px */
 }
 .wfd-param-sdg{ color: #7aabcc; font-size: 10px; }
 .wfd-source-note{
@@ -834,13 +852,13 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
   font-size: 10px;
   line-height: 1.6;
 }
-.wfd-overall-class{ font-size: 30px; letter-spacing: .1em; }
+.wfd-overall-class{ font-size: 34px; letter-spacing: .1em; }
 .wfd-overall-note{ font-size: 13px; color: #c0ddf0; }  /* WCAG ≈ 7:1 on dark bg */
-.wfd-sdg-goal{ font-size: 11px; color: #a8cce0; }
+.wfd-sdg-goal{ font-size: 13px; color: #a8cce0; }
 .wfd-sdg-pct{ font-size: 13px; }
-.wfd-sdg-note{ font-size: 10px; color: #7aabcc; }
-.wfd-bio-name{ font-size: 12px; color: #c0ddf0; }
-.wfd-bio-desc{ font-size: 11px; color: #88aac4; }
+.wfd-sdg-note{ font-size: 12px; color: #7aabcc; }
+.wfd-bio-name{ font-size: 14px; color: #c0ddf0; }
+.wfd-bio-desc{ font-size: 13px; color: #88aac4; }
 .wfd-esg-label{ font-size: 10px; color: #88aac4; }
 .wfd-esg-value{ font-size: 22px; }
 .wfd-esg-note{ font-size: 10px; color: #7aabcc; }
@@ -848,7 +866,7 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
   color: #6699bb;
   font-size: 10px;
 }
-.wfd-report-title{ font-size: 22px; }
+.wfd-report-title{ font-size: 26px; }
 
 /* ── WFD Framework parent box ──────────────────────────────────────────── */
 .wfd-framework-box{
