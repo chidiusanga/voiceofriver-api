@@ -960,41 +960,6 @@ button[title], .bbtn[title], .ebtn[title], .gtbtn[title]{
 }
 
 
-/* ════════════════════════════════════════════════════
-   Large Screen Gauge Scaling
-════════════════════════════════════════════════════ */
-
-@media (min-width: 1600px){
-
-  #gaugeOverlay{
-    gap: 24px;
-    padding-top: 28px;
-  }
-
-  .gauge-bubble{
-    transform: scale(1.20);
-    transform-origin: top center;
-  }
-
-  .gauge-label{
-    font-size: 15px;
-  }
-
-}
-
-@media (min-width: 2200px){
-
-  .gauge-bubble{
-    transform: scale(1.35);
-    transform-origin: top center;
-  }
-
-  .gauge-label{
-    font-size: 17px;
-  }
-
-}
-
 
 
 
