@@ -958,3 +958,187 @@ button[title], .bbtn[title], .ebtn[title], .gtbtn[title]{
   0%,100%{ opacity: .3;  transform: translateX(0); }
   50%{     opacity: 1;   transform: translateX(-5px); }
 }
+
+
+
+
+/* ════════════════════════════════════════════════════════
+   CROSS-BROWSER LAYOUT CLEANUP
+   Windows Edge + Safari improvements
+   Append at END of stylesheet
+════════════════════════════════════════════════════════ */
+
+/* ---------- Flexbox stability ---------- */
+
+#main{
+  min-width:0;
+}
+
+#waterArea{
+  min-width:0;
+}
+
+#infoPanel{
+  min-width:0;
+  min-height:0;
+}
+
+#entitySection{
+  min-width:0;
+  min-height:0;
+}
+
+#entityScrollZone{
+  min-width:0;
+  min-height:0;
+}
+
+#sensorData{
+  min-width:0;
+}
+
+#gaugeOverlay{
+  min-width:0;
+  min-height:0;
+}
+
+/* ---------- Remove unnecessary scroll regions ---------- */
+
+#gaugeOverlay{
+  overflow:hidden !important;
+}
+
+#sensorBlock{
+  overflow:hidden !important;
+}
+
+#entitySection{
+  overflow:hidden !important;
+}
+
+#entityCanvasWrap{
+  overflow:hidden !important;
+}
+
+/* ---------- Narrative is the ONLY main scrolling zone ---------- */
+
+#narrativeWrap{
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+
+/* ---------- Sidebar scrolling ---------- */
+
+#entityScrollZone{
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+/* ---------- Better flex sizing ---------- */
+
+#rangesBlock{
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+#tlCardSelector{
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+/* ---------- Safari canvas fixes ---------- */
+
+#waterCanvas,
+#entityCanvas,
+#scaleCanvas{
+  display:block;
+  max-width:100%;
+}
+
+/* ---------- Sidebar visual cleanup ---------- */
+
+#sensorBlock{
+  border-bottom:1px solid rgba(80,140,200,.15);
+}
+
+#rangesBlock{
+  border-bottom:1px solid rgba(80,140,200,.12);
+}
+
+#entityCanvasWrap{
+  border-bottom:1px solid rgba(80,140,200,.12);
+}
+
+/* ---------- Remove boxy Windows appearance ---------- */
+
+#infoPanel{
+  border-left:1px solid rgba(80,140,200,.18);
+}
+
+/* ---------- Modern scrollbar styling ---------- */
+
+*{
+  scrollbar-width:thin;
+  scrollbar-color: rgba(120,170,210,.45) transparent;
+}
+
+::-webkit-scrollbar{
+  width:8px;
+  height:8px;
+}
+
+::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+::-webkit-scrollbar-thumb{
+  background:rgba(120,170,210,.35);
+  border-radius:8px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:rgba(120,170,210,.55);
+}
+
+/* ---------- Prevent phantom horizontal scrollbars ---------- */
+
+#infoPanel,
+#sensorBlock,
+#entitySection,
+#entityScrollZone,
+#rangesBlock,
+#narrativeWrap{
+  max-width:100%;
+}
+
+/* ---------- Timeline stability ---------- */
+
+#timelinePanel{
+  overflow:hidden;
+}
+
+#tlCardArea{
+  overflow:hidden;
+}
+
+#tlRulerWrap{
+  overflow:hidden;
+}
+
+/* ---------- Mobile Safari fix ---------- */
+
+html,
+body,
+#app{
+  min-height:100vh;
+}
+
+/* ---------- Optional glass refinement ---------- */
+
+#sensorBlock,
+#rangesBlock,
+#entityCanvasWrap,
+#narrativeWrap{
+  box-shadow:none;
+}
+
