@@ -286,23 +286,32 @@ function drawWater() {
       // wctx.restore();
    // REPLACED HERE TO MOVE "AWAITING WATER LEVEL DATA" DOWN
 
-      wctx.save();
-      const overlayY = WH - 175;
-      wctx.fillStyle = 'rgba(180,20,20,.28)';
-      wctx.strokeStyle = '#ff8080';
-      wctx.lineWidth = 1;
-      wctx.beginPath();
-      wctx.roundRect( WW/2 - 180, overlayY, 360, 50, 5);
-      wctx.fill();
-      wctx.beginPath();
-      wctx.roundRect(WW/2 - 180, overlayY, 360, 50, 5);
-      wctx.stroke();
-      wctx.fillStyle = '#ffe0e0';
-      wctx.textAlign = 'center';
-      wctx.font = 'bold 16px sans-serif';
-      wctx.fillText('Water Level Sensor Offline', WW/2, overlayY + 20);
-      wctx.font = '12px sans-serif';
-      wctx.fillText('The Artificial Twin of the Swan is probably not on the river at the moment. So, displaying indeterminate river depth for now.', WW/2, overlayY + 38); wctx.restore();
+wctx.save();
+const overlayY = Math.max(
+  WH * 0.65,
+  WH - 175
+);
+wctx.textAlign = 'center';
+wctx.fillStyle = '#ff6060';
+wctx.font = 'bold 18px sans-serif';
+wctx.fillText(
+  'Water Level Sensor Offline',
+  WW / 2,
+  overlayY + 20
+);
+wctx.font = '13px sans-serif';
+wctx.fillText(
+  'The Artificial Twin of the Swan is probably not on the river at the moment.',
+  WW / 2,
+  overlayY + 42
+);
+wctx.fillText(
+  'Displaying indeterminate river depth for now.',
+  WW / 2,
+  overlayY + 60
+);
+
+wctx.restore();
    }
 
   // Fish
