@@ -573,9 +573,29 @@ function buildGaugeOverlay() {
   const waterArea = document.getElementById('waterArea');
   const aW = waterArea ? waterArea.clientWidth  - 52 : window.innerWidth  * 0.65;
   const aH = waterArea ? waterArea.clientHeight - 48 : window.innerHeight * 0.75;
-  const byWidth  = Math.floor((aW - entityKeys.length * 20) / entityKeys.length);
-  const byHeight = Math.floor(aH * 0.78);
-  const sz = Math.max(80, Math.min(byWidth, byHeight, 280));
+  
+   const byWidth  = Math.floor((aW - entityKeys.length * 20) / entityKeys.length);
+   const byHeight = Math.floor(aH * 0.78);
+   let maxGaugeSize = 280;
+
+/* Large desktop monitors */
+if (window.innerWidth >= 1600) {
+  maxGaugeSize = 380;   // ~35% larger
+}
+
+/* 4K displays and TVs */
+if (window.innerWidth >= 2200) {
+  maxGaugeSize = 450;
+}
+
+const sz = Math.max(
+  80,
+  Math.min(
+    byWidth,
+    byHeight,
+    maxGaugeSize
+  )
+);
 
   entityKeys.forEach(key => {
     const s   = SENSORS[key];
