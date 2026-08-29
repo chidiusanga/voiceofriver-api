@@ -302,7 +302,7 @@ function drawWater() {
       wctx.font = 'bold 16px sans-serif';
       wctx.fillText('Water Level Sensor Offline', WW/2, overlayY + 20);
       wctx.font = '12px sans-serif';
-      wctx.fillText('Displaying default river depth', WW/2, overlayY + 38); wctx.restore();
+      wctx.fillText('The Artificial Twin of the Swan is probably not on the river at the moment. So, displaying indeterminate river depth for now.', WW/2, overlayY + 38); wctx.restore();
    }
 
   // Fish
