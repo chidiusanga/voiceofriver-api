@@ -497,17 +497,67 @@ function drawScale() {
   // Horizontal line at surface
   sctx.strokeStyle='#e05010'; sctx.lineWidth=2;
   sctx.beginPath(); sctx.moveTo(0,labelY); sctx.lineTo(SW-2,labelY); sctx.stroke();
+
+   
   // Pill label
-  const lfsize = 11;
-  sctx.font = `700 ${lfsize}px 'DM Sans',sans-serif`;
-  const lw = sctx.measureText(liveText).width;
-  const lpad = 3, lh = lfsize + 5;
-  sctx.fillStyle='rgba(255,255,255,.92)';
-  sctx.beginPath(); sctx.roundRect(1, labelY-lh+2, lw+lpad*2+2, lh, 3); sctx.fill();
-  sctx.strokeStyle='#e05010'; sctx.lineWidth=1;
-  sctx.beginPath(); sctx.roundRect(1, labelY-lh+2, lw+lpad*2+2, lh, 3); sctx.stroke();
-  sctx.fillStyle='#c03000'; sctx.textAlign='left';
-  sctx.fillText(liveText, lpad+1, labelY-2);
+  // const lfsize = 11;
+  // sctx.font = `700 ${lfsize}px 'DM Sans',sans-serif`;
+  // const lw = sctx.measureText(liveText).width;
+  // const lpad = 3, lh = lfsize + 5;
+  // sctx.fillStyle='rgba(255,255,255,.92)';
+  // sctx.beginPath(); sctx.roundRect(1, labelY-lh+2, lw+lpad*2+2, lh, 3); sctx.fill();
+  // sctx.strokeStyle='#e05010'; sctx.lineWidth=1;
+  // sctx.beginPath(); sctx.roundRect(1, labelY-lh+2, lw+lpad*2+2, lh, 3); sctx.stroke();
+  // sctx.fillStyle='#c03000'; sctx.textAlign='left';
+  // sctx.fillText(liveText, lpad+1, labelY-2);
+
+// Pill label (replaced to allow Safari and SmartTV display properly)
+const lfsize = 11;
+sctx.font = `700 ${lfsize}px 'DM Sans',sans-serif`;
+const lw = sctx.measureText(liveText).width;
+const lpad = 3, lh = lfsize + 5;
+
+const rx = 1;
+const ry = labelY - lh + 2;
+const rw = lw + lpad * 2 + 2;
+const rh = lh;
+const rr = 3;
+
+sctx.fillStyle = 'rgba(255,255,255,.92)';
+
+sctx.beginPath();
+sctx.moveTo(rx + rr, ry);
+sctx.lineTo(rx + rw - rr, ry);
+sctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rr);
+sctx.lineTo(rx + rw, ry + rh - rr);
+sctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - rr, ry + rh);
+sctx.lineTo(rx + rr, ry + rh);
+sctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rr);
+sctx.lineTo(rx, ry + rr);
+sctx.quadraticCurveTo(rx, ry, rx + rr, ry);
+sctx.closePath();
+sctx.fill();
+
+sctx.strokeStyle = '#e05010';
+sctx.lineWidth = 1;
+
+sctx.beginPath();
+sctx.moveTo(rx + rr, ry);
+sctx.lineTo(rx + rw - rr, ry);
+sctx.quadraticCurveTo(rx + rw, ry, rx + rw, ry + rr);
+sctx.lineTo(rx + rw, ry + rh - rr);
+sctx.quadraticCurveTo(rx + rw, ry + rh, rx + rw - rr, ry + rh);
+sctx.lineTo(rx + rr, ry + rh);
+sctx.quadraticCurveTo(rx, ry + rh, rx, ry + rh - rr);
+sctx.lineTo(rx, ry + rr);
+sctx.quadraticCurveTo(rx, ry, rx + rr, ry);
+sctx.closePath();
+sctx.stroke();
+
+sctx.fillStyle = '#c03000';
+sctx.textAlign = 'left';
+sctx.fillText(liveText, lpad + 1, labelY - 2);
+   
 }
 
 /* ════════════════════════════════════════════════════
