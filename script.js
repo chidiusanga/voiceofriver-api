@@ -2639,24 +2639,15 @@ function updateGPSPanel()
         statusEl.textContent =
             '✅ Live GPS Position';
 
-        coordsEl.innerHTML =
-            gpsLatitude.toFixed(6)
-            + '<br>'
-            + gpsLongitude.toFixed(6);
-
+        coordsEl.innerHTML = gpsLatitude.toFixed(5) + ', ' + gpsLongitude.toFixed(5);
         return;
     }
 
     statusEl.textContent =
         '⚠ Satellite Fix Lost';
 
-    coordsEl.innerHTML =
-        gpsLatitude.toFixed(6)
-        + '<br>'
-        + gpsLongitude.toFixed(6)
-        + '<br>Last Fix: '
-        + gpsAgeSeconds
-        + ' s ago';
+    coordsEl.innerHTML = gpsLatitude.toFixed(5) + ', ' + gpsLongitude.toFixed(5) + '<br>
+       Last fix: ' + gpsAgeSeconds + 's';
 }
 
 
