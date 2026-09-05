@@ -36,17 +36,42 @@ return res.status(200).end();
 
     return res.status(200).json({
       created_at: row.created_at,
-      
+    
       Node1_TEMP: row.temperature,
       Node1_TURBIDITY: row.turbidity,
       Node1_WATERLEVEL: row.level,
-
+    
       Node2_TDS: row.tds,
       Node2_EC: row.ec,
+    
+      Node3_PH: row.ph,
+    
+      latitude: row.latitude,
+      longitude: row.longitude,
+      gps_fix: row.gps_fix,
+      gps_age_seconds: row.gps_age_seconds
+});
 
-      Node3_PH: row.ph
 
-    });
+
+
+
+    
+    
+
+    // return res.status(200).json({
+    //   created_at: row.created_at,
+      
+    //   Node1_TEMP: row.temperature,
+    //   Node1_TURBIDITY: row.turbidity,
+    //   Node1_WATERLEVEL: row.level,
+
+    //   Node2_TDS: row.tds,
+    //   Node2_EC: row.ec,
+
+    //   Node3_PH: row.ph
+
+    // });
 
   } catch (err) {
 
