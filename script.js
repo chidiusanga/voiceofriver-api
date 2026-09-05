@@ -2740,8 +2740,8 @@ if (jsonData.Node1_WATERLEVEL == null) {
       currentReadings.ph =
           parseFloat(jsonData.Node3_PH);
 
-   gpsLatitude = jsonData.latitude;
-   gpsLongitude = jsonData.longitude;
+   gpsLatitude = jsonData.latitude != null ? parseFloat(jsonData.latitude) : null;
+   gpsLongitude = jsonData.longitude != null ? parseFloat(jsonData.longitude) : null;
    gpsFix = jsonData.gps_fix === true;
    gpsAgeSeconds =
        jsonData.gps_age_seconds || 0;
