@@ -2669,7 +2669,7 @@ else {
 }
 
 statusEl.textContent =
-    '⚠ GPS Signal Lost ' +
+    '⚠ Satellite Signals Lost ' +
     ageText +
     ' ago';
 }
