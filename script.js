@@ -2609,45 +2609,53 @@ function setConnectionStatus(state, label) {
   badge.querySelector('.cs-label').textContent = label;
 }
 
-/* ── Create GPS Panel Update Function ──────────────────────────────── */
-function updateGPSPanel() {
+function updateGPSPanel()
+{
+    const statusEl =
+        document.getElementById('gpsStatusText');
 
-    const lineEl =
-        document.getElementById(
-            'gpsStatusLine'
-        );
+    const coordsEl =
+        document.getElementById('gpsCoords');
 
-    if (!lineEl)
+    if (!statusEl || !coordsEl)
         return;
-
-    const lat = Number(gpsLatitude);
-    const lon = Number(gpsLongitude);
 
     if (
-        !Number.isFinite(lat) ||
-        !Number.isFinite(lon)
-    ) {
-        lineEl.textContent =
-            '📍 GPS: Searching For Satellites';
+        gpsLatitude == null ||
+        gpsLongitude == null
+       )
+    {
+        statusEl.textContent =
+            '📡 Searching For Satellites...';
+
+        coordsEl.textContent = '--';
 
         return;
     }
 
-    if (gpsFix) {
+    if (gpsFix)
+    {
+        statusEl.textContent =
+            '✅ Live GPS Position';
 
-        lineEl.textContent =
-            '📍 GPS: ' +
-            lat.toFixed(5) +
+        coordsEl.innerHTML =
+            gpsLatitude.toFixed(5) +
             ', ' +
-            lon.toFixed(5);
+            gpsLongitude.toFixed(5);
 
         return;
     }
 
-    lineEl.textContent =
-        '📍 GPS Lost (' +
+    statusEl.textContent =
+        '⚠ Satellite Fix Lost';
+
+    coordsEl.innerHTML =
+        gpsLatitude.toFixed(5) +
+        ', ' +
+        gpsLongitude.toFixed(5) +
+        '<br>Last fix: ' +
         gpsAgeSeconds +
-        's)';
+        's';
 }
 
 
