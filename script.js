@@ -2602,6 +2602,14 @@ drawHistoryGraph();
 ══════════════════════════════════════════════════════════════════════ */
 
 /* ── Connection status badge helper ──────────────────────────────── */
+
+function setConnectionStatus(state, label) {
+  var badge = document.getElementById('connectionStatus');
+  if (!badge) return;
+  badge.className = 'cs-' + state;
+  badge.querySelector('.cs-label').textContent = label;
+}
+
 function updateGPSPanel()
 {
     const statusEl =
@@ -2686,12 +2694,7 @@ statusEl.textContent =
 
 
 
-// function setConnectionStatus(state, label) {
-//   var badge = document.getElementById('connectionStatus');
-//   if (!badge) return;
-//   badge.className = 'cs-' + state;
-//   badge.querySelector('.cs-label').textContent = label;
-// }
+
 
 // function updateGPSPanel()
 // {
