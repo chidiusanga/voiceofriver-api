@@ -128,6 +128,11 @@ let entityAnimClock = 0;
 let entityRafId     = null;
 let levelSensorMissing = false;
 
+let gpsLatitude   = null;
+let gpsLongitude  = null;
+let gpsFix        = false;
+let gpsAgeSeconds = 0;
+
 // Initialise with midpoint placeholder values — stable display while
 // waiting for the first real sensor reading from the ESP32.
 // sim() is kept for the timeline's simulated history only.
@@ -2604,6 +2609,59 @@ function setConnectionStatus(state, label) {
   badge.querySelector('.cs-label').textContent = label;
 }
 
+/* ── Create GPS Panel Update Function ──────────────────────────────── */
+function updateGPSPanel()
+{
+    const statusEl =
+        document.getElementById('gpsStatusText');
+
+    const coordsEl =
+        document.getElementById('gpsCoords');
+
+    if (!statusEl || !coordsEl)
+        return;
+
+    if (
+        gpsLatitude == null ||
+        gpsLongitude == null
+       )
+    {
+        statusEl.textContent =
+            '📡 Searching For Satellites...';
+
+        coordsEl.textContent = '--';
+
+        return;
+    }
+
+    if (gpsFix)
+    {
+        statusEl.textContent =
+            '✅ Live GPS Position';
+
+        coordsEl.innerHTML =
+            gpsLatitude.toFixed(6)
+            + '<br>'
+            + gpsLongitude.toFixed(6);
+
+        return;
+    }
+
+    statusEl.textContent =
+        '⚠ Satellite Fix Lost';
+
+    coordsEl.innerHTML =
+        gpsLatitude.toFixed(6)
+        + '<br>'
+        + gpsLongitude.toFixed(6)
+        + '<br>Last Fix: '
+        + gpsAgeSeconds
+        + ' s ago';
+}
+
+
+
+
 /* ── Map ESP32 JSON keys → internal sensor keys ───────────────────
    This is the ONLY place that knows about Node/sensor naming.
    JSON key names must match the ESP32 firmware exactly.           */
@@ -2638,6 +2696,7 @@ function applyLiveSensorData(jsonData) {
           applyReadings();
           buildGaugeOverlay();
           updateInfoPanel(activeGaugeKey);
+          updateGPSPanel();
 
           return;
       }
@@ -2680,6 +2739,12 @@ if (jsonData.Node1_WATERLEVEL == null) {
   if (jsonData.Node3_PH != null)
       currentReadings.ph =
           parseFloat(jsonData.Node3_PH);
+
+   gpsLatitude = jsonData.latitude;
+   gpsLongitude = jsonData.longitude;
+   gpsFix = jsonData.gps_fix === true;
+   gpsAgeSeconds =
+       jsonData.gps_age_seconds || 0;
 
   applyReadings();
   buildGaugeOverlay();
