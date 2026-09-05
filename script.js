@@ -2613,7 +2613,8 @@ function setConnectionStatus(state, label) {
 function updateGPSPanel()
 {
     const statusEl =
-        document.getElementById('gpsStatusCard');
+        // document.getElementById('gpsStatusCard');
+         document.getElementById('locationCard');
 
     if (!statusEl)
         return;
@@ -2624,18 +2625,26 @@ function updateGPSPanel()
        )
     {
         statusEl.textContent =
-            '📡 Searching For Satellites...';
+            // '📡 Searching For Satellites...';
+           '📍 📡 Location: Searching for Satellites...';
 
         return;
     }
 
     if (gpsFix)
     {
-        statusEl.textContent =
-            '✅ GPS: ' +
-            gpsLatitude.toFixed(5) +
-            ', ' +
-            gpsLongitude.toFixed(5);
+        // statusEl.textContent =
+        //     '✅ GPS: ' +
+        //     gpsLatitude.toFixed(5) +
+        //     ', ' +
+        //     gpsLongitude.toFixed(5);
+
+       statusEl.textContent =
+       '📍 ✅ Location: ' +
+       Math.abs(gpsLatitude).toFixed(5) +
+       '° N, ' +
+       Math.abs(gpsLongitude).toFixed(5) +
+       '° W';
 
         return;
     }
@@ -2676,8 +2685,13 @@ else {
         (days === 1 ? '' : 's');
 }
 
-statusEl.textContent =
-    '⚠ Satellite Signals Lost ' +
+// statusEl.textContent =
+//     '⚠ Satellite Signals Lost ' +
+//     ageText +
+//     ' ago';
+
+   statusEl.textContent =
+    '📍 ⚠ Location Signal Lost ' +
     ageText +
     ' ago';
 }
