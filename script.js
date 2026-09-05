@@ -2632,10 +2632,46 @@ function updateGPSPanel()
         return;
     }
 
-    statusEl.textContent =
-        '⚠ GPS Lost (' +
+let ageText;
+
+if (gpsAgeSeconds < 60) {
+    ageText =
         gpsAgeSeconds +
-        's)';
+        ' second' +
+        (gpsAgeSeconds === 1 ? '' : 's');
+}
+else if (gpsAgeSeconds < 3600) {
+    const mins =
+        Math.floor(gpsAgeSeconds / 60);
+
+    ageText =
+        mins +
+        ' minute' +
+        (mins === 1 ? '' : 's');
+}
+else if (gpsAgeSeconds < 86400) {
+    const hours =
+        Math.floor(gpsAgeSeconds / 3600);
+
+    ageText =
+        hours +
+        ' hour' +
+        (hours === 1 ? '' : 's');
+}
+else {
+    const days =
+        Math.floor(gpsAgeSeconds / 86400);
+
+    ageText =
+        days +
+        ' day' +
+        (days === 1 ? '' : 's');
+}
+
+statusEl.textContent =
+    '⚠ GPS Signal Lost ' +
+    ageText +
+    ' ago';
 }
 
 
