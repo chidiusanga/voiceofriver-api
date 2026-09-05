@@ -618,7 +618,7 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
 #connectionStatus.cs-error     .cs-dot{ background:#f04848; }
 
 /* ── Live GPS status badge ── */
-#gpsStatusCard{
+/* #gpsStatusCard{
   position:fixed;
   top:40px;
   right:12px;
@@ -638,6 +638,27 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
 
 #gpsStatusLine{
   white-space:nowrap;
+} */
+
+
+#locationCard {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 10px 14px;
+  margin-bottom: 10px;
+
+  background: rgba(5,20,40,.85);
+  border: 1px solid rgba(120,200,255,.25);
+  border-radius: 10px;
+
+  color: #d8f0ff;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  text-align: center;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
