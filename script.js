@@ -2612,8 +2612,9 @@ function setConnectionStatus(state, label) {
 function updateGPSPanel()
 {
     const statusEl =
-        document.getElementById('gpsStatusText');
-
+        // document.getElementById('gpsStatusText');
+        document.getElementById('gpsStatusCard');
+   
     const coordsEl =
         document.getElementById('gpsCoords');
 
