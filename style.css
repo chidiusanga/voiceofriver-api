@@ -617,6 +617,36 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
 #connectionStatus.cs-live      .cs-dot{ background:#30e880; }
 #connectionStatus.cs-error     .cs-dot{ background:#f04848; }
 
+/* ── Live GPS status badge ── */
+#gpsStatusCard{
+  margin-top:8px;
+  background:rgba(8,20,40,.92);
+  border:1px solid rgba(80,140,200,.35);
+  border-radius:10px;
+  padding:8px 10px;
+  min-width:220px;
+  color:#d8f0ff;
+}
+
+.gps-title{
+  font-size:12px;
+  font-weight:700;
+  color:#80d0ff;
+  margin-bottom:5px;
+}
+
+#gpsStatusText{
+  font-size:12px;
+  font-weight:600;
+}
+
+#gpsCoords{
+  margin-top:4px;
+  font-size:11px;
+  color:#b8d8f0;
+  line-height:1.35;
+}
+
 /* ══════════════════════════════════════════════════════════════════════
    WFD / ESG REPORT PANEL
    Official WFD five-class colour palette:
