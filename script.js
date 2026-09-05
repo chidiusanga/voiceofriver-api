@@ -2808,6 +2808,7 @@ if (jsonData.Node1_WATERLEVEL == null) {
   applyReadings();
   buildGaugeOverlay();
   updateInfoPanel(activeGaugeKey);
+  updateGPSPanel();
 }
 
 /* ── Override refreshSensors to hit the real /readings endpoint ───
