@@ -2616,7 +2616,9 @@ function updateGPSPanel()
         document.getElementById('gpsStatusCard');
    
     const coordsEl =
-        document.getElementById('gpsCoords');
+        // document.getElementById('gpsCoords');
+
+       document.getElementById('gpsStatusLine');
 
     if (!statusEl || !coordsEl)
         return;
