@@ -2610,15 +2610,14 @@ function setConnectionStatus(state, label) {
 }
 
 /* ── Create GPS Panel Update Function ──────────────────────────────── */
-function updateGPSPanel()
-{
-    const statusEl =
-        document.getElementById('gpsStatusText');
+function updateGPSPanel() {
 
-    const coordsEl =
-        document.getElementById('gpsCoords');
+    const lineEl =
+        document.getElementById(
+            'gpsStatusLine'
+        );
 
-    if (!statusEl || !coordsEl)
+    if (!lineEl)
         return;
 
     const lat = Number(gpsLatitude);
@@ -2627,22 +2626,17 @@ function updateGPSPanel()
     if (
         !Number.isFinite(lat) ||
         !Number.isFinite(lon)
-    )
-    {
-        statusEl.textContent =
-            '📡 Searching For Satellites...';
-
-        coordsEl.textContent = '--';
+    ) {
+        lineEl.textContent =
+            '📍 GPS: Searching For Satellites';
 
         return;
     }
 
-    if (gpsFix)
-    {
-        statusEl.textContent =
-            '✅ Live GPS Position';
+    if (gpsFix) {
 
-        coordsEl.textContent =
+        lineEl.textContent =
+            '📍 GPS: ' +
             lat.toFixed(5) +
             ', ' +
             lon.toFixed(5);
@@ -2650,16 +2644,10 @@ function updateGPSPanel()
         return;
     }
 
-    statusEl.textContent =
-        '⚠ Satellite Fix Lost';
-
-    coordsEl.innerHTML =
-        lat.toFixed(5) +
-        ', ' +
-        lon.toFixed(5) +
-        '<br>Last fix: ' +
+    lineEl.textContent =
+        '📍 GPS Lost (' +
         gpsAgeSeconds +
-        's';
+        's)';
 }
 
 
@@ -2751,10 +2739,10 @@ function applyLiveSensorData(jsonData) {
               'Data Stale'
           );
 
-          applyReadings();
-          buildGaugeOverlay();
-          updateInfoPanel(activeGaugeKey);
-          updateGPSPanel();
+         applyReadings();
+         buildGaugeOverlay();
+         updateInfoPanel(activeGaugeKey);
+         updateGPSPanel();
 
           return;
       }
