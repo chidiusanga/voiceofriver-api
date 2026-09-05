@@ -2621,10 +2621,13 @@ function updateGPSPanel()
     if (!statusEl || !coordsEl)
         return;
 
+    const lat = Number(gpsLatitude);
+    const lon = Number(gpsLongitude);
+
     if (
-        gpsLatitude == null ||
-        gpsLongitude == null
-       )
+        !Number.isFinite(lat) ||
+        !Number.isFinite(lon)
+    )
     {
         statusEl.textContent =
             '📡 Searching For Satellites...';
@@ -2639,16 +2642,80 @@ function updateGPSPanel()
         statusEl.textContent =
             '✅ Live GPS Position';
 
-        coordsEl.innerHTML = gpsLatitude.toFixed(5) + ', ' + gpsLongitude.toFixed(5);
+        coordsEl.textContent =
+            lat.toFixed(5) +
+            ', ' +
+            lon.toFixed(5);
+
         return;
     }
 
     statusEl.textContent =
         '⚠ Satellite Fix Lost';
 
-    coordsEl.innerHTML = gpsLatitude.toFixed(5) + ', ' + gpsLongitude.toFixed(5) + '<br>
-       Last fix: ' + gpsAgeSeconds + 's';
+    coordsEl.innerHTML =
+        lat.toFixed(5) +
+        ', ' +
+        lon.toFixed(5) +
+        '<br>Last fix: ' +
+        gpsAgeSeconds +
+        's';
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function updateGPSPanel()
+// {
+//     const statusEl =
+//         document.getElementById('gpsStatusText');
+
+//     const coordsEl =
+//         document.getElementById('gpsCoords');
+
+//     if (!statusEl || !coordsEl)
+//         return;
+
+//     if (
+//         gpsLatitude == null ||
+//         gpsLongitude == null
+//        )
+//     {
+//         statusEl.textContent =
+//             '📡 Searching For Satellites...';
+
+//         coordsEl.textContent = '--';
+
+//         return;
+//     }
+
+//     if (gpsFix)
+//     {
+//         statusEl.textContent =
+//             '✅ Live GPS Position';
+
+//         coordsEl.innerHTML = gpsLatitude.toFixed(5) + ', ' + gpsLongitude.toFixed(5);
+//         return;
+//     }
+
+//     statusEl.textContent =
+//         '⚠ Satellite Fix Lost';
+
+//     coordsEl.innerHTML = gpsLatitude.toFixed(5) + ', ' + gpsLongitude.toFixed(5) + '<br>
+//        Last fix: ' + gpsAgeSeconds + 's';
+// }
 
 
 
@@ -2733,6 +2800,19 @@ if (jsonData.Node1_WATERLEVEL == null) {
 
    gpsLatitude = jsonData.latitude != null ? parseFloat(jsonData.latitude) : null;
    gpsLongitude = jsonData.longitude != null ? parseFloat(jsonData.longitude) : null;
+
+
+// Delete this Debug
+   console.log(
+    'GPS:',
+    gpsLatitude,
+    gpsLongitude,
+    gpsFix,
+    gpsAgeSeconds
+); 
+// End of Delete this Debug
+
+   
    gpsFix = jsonData.gps_fix === true;
    gpsAgeSeconds =
        jsonData.gps_age_seconds || 0;
