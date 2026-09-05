@@ -2602,25 +2602,12 @@ drawHistoryGraph();
 ══════════════════════════════════════════════════════════════════════ */
 
 /* ── Connection status badge helper ──────────────────────────────── */
-function setConnectionStatus(state, label) {
-  var badge = document.getElementById('connectionStatus');
-  if (!badge) return;
-  badge.className = 'cs-' + state;
-  badge.querySelector('.cs-label').textContent = label;
-}
-
 function updateGPSPanel()
 {
     const statusEl =
-        // document.getElementById('gpsStatusText');
         document.getElementById('gpsStatusCard');
-   
-    const coordsEl =
-        // document.getElementById('gpsCoords');
 
-       document.getElementById('gpsStatusLine');
-
-    if (!statusEl || !coordsEl)
+    if (!statusEl)
         return;
 
     if (
@@ -2631,17 +2618,13 @@ function updateGPSPanel()
         statusEl.textContent =
             '📡 Searching For Satellites...';
 
-        coordsEl.textContent = '--';
-
         return;
     }
 
     if (gpsFix)
     {
         statusEl.textContent =
-            '✅ Live GPS Position';
-
-        coordsEl.innerHTML =
+            '✅ GPS: ' +
             gpsLatitude.toFixed(5) +
             ', ' +
             gpsLongitude.toFixed(5);
@@ -2650,16 +2633,81 @@ function updateGPSPanel()
     }
 
     statusEl.textContent =
-        '⚠ Satellite Fix Lost';
-
-    coordsEl.innerHTML =
-        gpsLatitude.toFixed(5) +
-        ', ' +
-        gpsLongitude.toFixed(5) +
-        '<br>Last fix: ' +
+        '⚠ GPS Lost (' +
         gpsAgeSeconds +
-        's';
+        's)';
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function setConnectionStatus(state, label) {
+//   var badge = document.getElementById('connectionStatus');
+//   if (!badge) return;
+//   badge.className = 'cs-' + state;
+//   badge.querySelector('.cs-label').textContent = label;
+// }
+
+// function updateGPSPanel()
+// {
+//     const statusEl =
+//         // document.getElementById('gpsStatusText');
+//         document.getElementById('gpsStatusCard');
+   
+//     const coordsEl =
+//         // document.getElementById('gpsCoords');
+
+//        document.getElementById('gpsStatusLine');
+
+//     if (!statusEl || !coordsEl)
+//         return;
+
+//     if (
+//         gpsLatitude == null ||
+//         gpsLongitude == null
+//        )
+//     {
+//         statusEl.textContent =
+//             '📡 Searching For Satellites...';
+
+//         coordsEl.textContent = '--';
+
+//         return;
+//     }
+
+//     if (gpsFix)
+//     {
+//         statusEl.textContent =
+//             '✅ Live GPS Position';
+
+//         coordsEl.innerHTML =
+//             gpsLatitude.toFixed(5) +
+//             ', ' +
+//             gpsLongitude.toFixed(5);
+
+//         return;
+//     }
+
+//     statusEl.textContent =
+//         '⚠ Satellite Fix Lost';
+
+//     coordsEl.innerHTML =
+//         gpsLatitude.toFixed(5) +
+//         ', ' +
+//         gpsLongitude.toFixed(5) +
+//         '<br>Last fix: ' +
+//         gpsAgeSeconds +
+//         's';
+// }
 
 
 
