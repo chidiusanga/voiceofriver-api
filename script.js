@@ -730,7 +730,7 @@ if (!hasValidData(val)) {
           fontNumbersSize:28,
           needle:true, needleType:'line', needleWidth:2,
           colorNeedle:'#c01818', colorNeedleEnd:'#a01010',
-          valueBoxWidth:24, fontValueSize:34,
+          valueBoxWidth:22, fontValueSize:22,
         })).draw();
       } else {
         // Default: radial-full (270° sweep)
