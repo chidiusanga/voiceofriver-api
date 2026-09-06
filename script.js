@@ -1804,6 +1804,8 @@ setTimeout(() => {
   }
 
   swanMap.invalidateSize();
+   
+   updateSwanMarker();
 
 }, 100);
 
@@ -1823,6 +1825,39 @@ function closeSwanMap() {
   }
 
   swanMapPanelOpen = false;
+}
+
+// Add a live Swan marker
+
+function updateSwanMarker() {
+
+  if (
+    !swanMap ||
+    gpsLatitude == null ||
+    gpsLongitude == null
+  ) {
+    return;
+  }
+
+  if (!swanMarker) {
+
+    swanMarker = L.marker(
+      [
+        gpsLatitude,
+        gpsLongitude
+      ]
+    ).addTo(swanMap);
+
+  } else {
+
+    swanMarker.setLatLng(
+      [
+        gpsLatitude,
+        gpsLongitude
+      ]
+    );
+
+  }
 }
 
 
@@ -2996,6 +3031,7 @@ function applyLiveSensorData(jsonData) {
          buildGaugeOverlay();
          updateInfoPanel(activeGaugeKey);
          updateGPSPanel();
+         updateSwanMarker();
 
           return;
       }
