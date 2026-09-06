@@ -131,6 +131,8 @@ let levelSensorMissing = false;
 let swanMap = null;
 let swanMarker = null;
 let swanIcon = null;
+let streetLayer = null;
+let satelliteLayer;
 let swanMapOpen = false;
 
 let gpsLatitude   = null;
@@ -1774,12 +1776,34 @@ setTimeout(() => {
       'swanLeafletMap'
     );
 
-    L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        attribution: '&copy; OpenStreetMap'
-      }
-    ).addTo(swanMap);
+streetLayer = L.tileLayer(
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {
+    attribution:
+      '&copy; OpenStreetMap'
+  }
+);
+
+satelliteLayer = L.tileLayer(
+  'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  {
+    attribution:
+      '&copy; Esri World Imagery'
+  }
+);
+
+streetLayer.addTo(swanMap);
+
+L.control.layers(
+  {
+    '🗺 Street Map': streetLayer,
+    '🛰 Satellite': satelliteLayer
+  },
+  {},
+  {
+    collapsed: false
+  }
+).addTo(swanMap);
 
   }
 
