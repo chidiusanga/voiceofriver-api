@@ -1918,26 +1918,63 @@ swanMarker = L.marker(
 ).addTo(swanMap);
 
 swanMarker.bindTooltip(
-  `
-  <div style="
-    text-align:center;
-    font-size:13px;
-    line-height:1.5;
-  ">
-    <strong>🦢 Artificial Twin</strong><br>
-    Voice of the River<br><br>
+`
+<div style="
+  font-size:13px;
+  line-height:1.5;
+">
 
-    📍 ${gpsLatitude.toFixed(5)}° N<br>
+  <div style="
+    font-weight:bold;
+    margin-bottom:6px;
+  ">
+    🦢 Artificial Twin
+  </div>
+
+  <div style="
+    margin-bottom:8px;
+    color:#b8d8ff;
+  ">
+    Voice of the River
+  </div>
+
+  <hr style="
+    margin:8px 0;
+    border:none;
+    border-top:1px solid rgba(255,255,255,.15);
+  ">
+
+  <div>
+    📡 <strong>Satellites:</strong> ${gpsSatellites}
+  </div>
+
+  <div>
+    ${
+      gpsFix
+        ? '✅ <strong>GPS:</strong> Live'
+        : '⚠ <strong>GPS:</strong> Lost'
+    }
+  </div>
+
+  <div>
+    📍 <strong>Latitude:</strong>
+    ${gpsLatitude.toFixed(5)}° N
+  </div>
+
+  <div>
+    📍 <strong>Longitude:</strong>
     ${Math.abs(gpsLongitude).toFixed(5)}° W
   </div>
-  `,
-  {
-    permanent: false,
-    direction: 'top',
-    offset: [0, -60],
-    opacity: 0.98,
-    className: 'swan-tooltip'
-  }
+
+</div>
+`,
+{
+  permanent:false,
+  direction:'top',
+  offset:[0,-60],
+  opacity:0.98,
+  className:'swan-tooltip'
+}
 );
 
   } else {
