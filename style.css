@@ -661,6 +661,22 @@ html,body{width:100%;height:100%;background:#0a1828;overflow:hidden;font-family:
   text-align: left;
 }
 
+/* ── Spinning Satellite Dish during signal search ── */
+.gps-spin {
+  display: inline-block;
+  animation: gpsSpin 2s linear infinite;
+}
+
+@keyframes gpsSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ══════════════════════════════════════════════════════════════════════
    WFD / ESG REPORT PANEL
    Official WFD five-class colour palette:
