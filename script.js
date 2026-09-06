@@ -1866,15 +1866,19 @@ function getSwanIcon() {
     html: `
       <div
         style="
-          font-size:34px;
-          filter:drop-shadow(0 0 6px #ffffff);
+          font-size:100px;
+          filter:
+               drop-shadow(0 0 12px #ffffff)
+               drop-shadow(0 0 24px #ffffff)
+               drop-shadow(0 0 36px #60c8f0)
+               drop-shadow(0 0 60px #60c8f0);
         ">
         🦢
       </div>
     `,
 
-    iconSize: [40,40],
-    iconAnchor: [20,20]
+    iconSize: [120,120],
+    iconAnchor: [60,60]
 
   });
 
