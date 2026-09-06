@@ -623,8 +623,12 @@ function sharedGaugeCfg(s, val) {
     colorMajorTicks:'#304050', colorMinorTicks:'#607080',
     colorTitle:'#203040', colorUnits:'#405060', colorNumbers:'#203040',
     colorNeedle:'#c01818', colorNeedleEnd:'#900808',
-    colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
-    colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
+    // colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
+    // colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
+
+     colorValueBoxRect:'#303030', colorValueBoxRectEnd:'#202020',
+     colorValueBoxBackground:'#080808', colorValueText:'#7fd6ff',
+     
     colorValueTextShadow:'rgba(0,0,0,0)',
     fontNumbersSize: 18, fontValueSize:20,
     minValue:s.min, maxValue:s.max, value:val,
