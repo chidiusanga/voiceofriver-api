@@ -1917,6 +1917,25 @@ swanMarker = L.marker(
   }
 ).addTo(swanMap);
 
+swanMarker.bindTooltip(
+  `
+  <div style="
+    text-align:center;
+    font-size:13px;
+    line-height:1.4;
+  ">
+    <strong>🦢 Artificial Twin</strong><br>
+    Voice of the River
+  </div>
+  `,
+  {
+    permanent: false,
+    direction: 'top',
+    offset: [0, -25],
+    opacity: 0.95
+  }
+);
+
   } else {
 
     swanMarker.setLatLng(
