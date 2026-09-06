@@ -1922,17 +1922,21 @@ swanMarker.bindTooltip(
   <div style="
     text-align:center;
     font-size:13px;
-    line-height:1.4;
+    line-height:1.5;
   ">
     <strong>🦢 Artificial Twin</strong><br>
-    Voice of the River
+    Voice of the River<br><br>
+
+    📍 ${gpsLatitude.toFixed(5)}° N<br>
+    ${Math.abs(gpsLongitude).toFixed(5)}° W
   </div>
   `,
   {
     permanent: false,
     direction: 'top',
-    offset: [0, -25],
-    opacity: 0.95
+    offset: [0, -60],
+    opacity: 0.98,
+    className: 'swan-tooltip'
   }
 );
 
