@@ -2570,8 +2570,13 @@ if (!hasValidData(val)) {
         needleCircleSize:5, needleCircleOuter:true, needleCircleInner:false,
         colorNeedleCircleOuter:'#405060', colorNeedleCircleOuterEnd:'#607080',
         colorNeedleCircleInner:'#d8e8f4', colorNeedleCircleInnerEnd:'#d8e8f4',
-        colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
-        colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
+        // colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
+        // colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
+
+
+         colorValueBoxRect:'#303030', colorValueBoxRectEnd:'#202020',
+        colorValueBoxBackground:'#080808', colorValueText:'#7fd6ff',
+         
         colorValueTextShadow:'rgba(0,0,0,0)',
         fontNumbersSize:8, fontValueSize:12,
         startAngle:45, ticksAngle:270,
