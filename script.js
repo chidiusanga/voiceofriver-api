@@ -132,6 +132,7 @@ let gpsLatitude   = null;
 let gpsLongitude  = null;
 let gpsFix        = false;
 let gpsAgeSeconds = 0;
+let gpsOffline    = false;
 
 // Initialise with midpoint placeholder values — stable display while
 // waiting for the first real sensor reading from the ESP32.
@@ -2619,6 +2620,12 @@ function updateGPSPanel()
     if (!statusEl)
         return;
 
+   if (gpsOffline) {
+    statusEl.textContent =
+        '📍 ⛔ Swan Location Offline';
+    return;
+}
+
     if (
         gpsLatitude == null ||
         gpsLongitude == null
@@ -2840,6 +2847,8 @@ function applyLiveSensorData(jsonData) {
               ageMs
           );
 
+         gpsOffline = true;
+
           Object.keys(currentReadings).forEach(key => {
               currentReadings[key] = NaN;
           });
@@ -2897,6 +2906,8 @@ if (jsonData.Node1_WATERLEVEL == null) {
   if (jsonData.Node3_PH != null)
       currentReadings.ph =
           parseFloat(jsonData.Node3_PH);
+
+   gpsOffline = false;
 
    gpsLatitude = jsonData.latitude != null ? parseFloat(jsonData.latitude) : null;
    gpsLongitude = jsonData.longitude != null ? parseFloat(jsonData.longitude) : null;
