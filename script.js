@@ -2635,7 +2635,7 @@ function updateGPSPanel()
     {
         statusEl.textContent =
             // '📡 Searching For Satellites...';
-           '📍 📡 Location: Searching for Satellites...';
+           '📍 <span class="gps-spin">📡</span> Location: Searching for Satellites...';
 
         return;
     }
@@ -2653,7 +2653,7 @@ function updateGPSPanel()
           //     ' Satellites)';
 
          statusEl.textContent =
-              '📍 ✅ No. of Satellites Fixed: ' +
+              '📍 📡 No. of Satellites Fixed: ' +
               gpsSatellites;
          
           return;
