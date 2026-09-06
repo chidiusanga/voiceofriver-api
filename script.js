@@ -2647,10 +2647,15 @@ function updateGPSPanel()
           gpsLockMessageUntil
          )
       {
-          statusEl.textContent =
-              '📍 ✅ Location Acquired (' +
-              gpsSatellites +
-              ' Satellites)';
+          // statusEl.textContent =
+          //     '📍 ✅ Location Acquired (' +
+          //     gpsSatellites +
+          //     ' Satellites)';
+
+         statusEl.textContent =
+              '📍 ✅ No. of Satellites Fixed: ' +
+              gpsSatellites;
+         
           return;
       }
         // statusEl.textContent =
