@@ -1961,15 +1961,15 @@ swanMarker.bindTooltip(
   ">
 
   <div>
-    📡 <strong>Satellites:</strong> ${gpsSatellites}
-  </div>
-
-  <div>
     ${
       gpsFix
         ? '✅ <strong>GPS:</strong> Live'
         : '⚠ <strong>GPS:</strong> Lost'
     }
+  </div>
+
+   <div>
+    📡 <strong>Satellites:</strong> ${gpsSatellites}
   </div>
 
 </div>
