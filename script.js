@@ -1935,10 +1935,26 @@ swanMarker.bindTooltip(
     margin-bottom:8px;
     color:#b8d8ff;
   ">
-   Swan's Current Location
+   Current Location
   </div>
 
   <hr style="
+    margin:8px 0;
+    border:none;
+    border-top:1px solid rgba(255,255,255,.15);
+  ">
+
+  <div>
+    📍 <strong>Latitude:</strong>
+    ${gpsLatitude.toFixed(5)}° N
+  </div>
+
+  <div>
+    📍 <strong>Longitude:</strong>
+    ${Math.abs(gpsLongitude).toFixed(5)}° W
+  </div>
+
+   <hr style="
     margin:8px 0;
     border:none;
     border-top:1px solid rgba(255,255,255,.15);
@@ -1954,16 +1970,6 @@ swanMarker.bindTooltip(
         ? '✅ <strong>GPS:</strong> Live'
         : '⚠ <strong>GPS:</strong> Lost'
     }
-  </div>
-
-  <div>
-    📍 <strong>Latitude:</strong>
-    ${gpsLatitude.toFixed(5)}° N
-  </div>
-
-  <div>
-    📍 <strong>Longitude:</strong>
-    ${Math.abs(gpsLongitude).toFixed(5)}° W
   </div>
 
 </div>
