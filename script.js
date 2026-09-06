@@ -1928,14 +1928,14 @@ swanMarker.bindTooltip(
     font-weight:bold;
     margin-bottom:6px;
   ">
-    🦢 Artificial Twin
+    🦢 Swan's Artificial Twin | Voicing the Shannon River
   </div>
 
   <div style="
     margin-bottom:8px;
     color:#b8d8ff;
   ">
-    Current Location
+   Swan's Current Location
   </div>
 
   <hr style="
