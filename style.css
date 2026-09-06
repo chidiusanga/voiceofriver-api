@@ -1097,13 +1097,10 @@ button[title], .bbtn[title], .ebtn[title], .gtbtn[title]{
   color: #fff;
 }
 
-#swanMapPlaceholder {
+#swanLeafletMap {
   flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #d8f0ff;
+  width: 100%;
+  min-height: 500px;
 }
 
 /* Unknown Status indicator for WFD bar under entity icons */
