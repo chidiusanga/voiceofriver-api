@@ -1935,7 +1935,7 @@ swanMarker.bindTooltip(
     margin-bottom:8px;
     color:#b8d8ff;
   ">
-    Voice of the River
+    Current Location
   </div>
 
   <hr style="
