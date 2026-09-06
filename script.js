@@ -1863,69 +1863,22 @@ function getSwanIcon() {
 
     className: '',
 
-    // html: `
-    //   <div
-    //     style="
-    //       font-size:100px;
-    //       filter:
-    //            drop-shadow(0 0 12px #ffffff)
-    //            drop-shadow(0 0 24px #ffffff)
-    //            drop-shadow(0 0 36px #60c8f0)
-    //            drop-shadow(0 0 60px #60c8f0);
-    //     ">
-    //     🦢
-    //   </div>
-    // `,
+    html: `
+      <div
+        style="
+          font-size:80px;
+          filter:
+               drop-shadow(0 0 12px #ffffff)
+               drop-shadow(0 0 24px #ffffff)
+               drop-shadow(0 0 36px #60c8f0)
+               drop-shadow(0 0 60px #60c8f0);
+        ">
+        🦢
+      </div>
+    `,
+     
 
-
-// Above HTML replaced with the one below
-
-     html: `
-<div
-  style="
-    position:relative;
-    width:120px;
-    height:120px;
-  ">
-
-  <div
-    style="
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:80px;
-      height:80px;
-      border-radius:50%;
-      transform:translate(-50%,-50%);
-      background:rgba(96,200,240,.35);
-
-      box-shadow:
-        0 0 20px #ffffff,
-        0 0 40px #60c8f0,
-        0 0 80px #60c8f0;
-    ">
-  </div>
-
-  <div
-    style="
-      position:absolute;
-      left:50%;
-      top:50%;
-      transform:translate(-50%,-50%);
-      font-size:100px;
-
-      filter:
-        drop-shadow(0 0 12px #ffffff)
-        drop-shadow(0 0 24px #ffffff)
-        drop-shadow(0 0 36px #60c8f0);
-    ">
-      🦢
-  </div>
-
-</div>
-`,
-
-    iconSize: [120,120],
+    iconSize: [100,100],
     iconAnchor: [60,60]
 
   });
