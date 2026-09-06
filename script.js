@@ -128,6 +128,10 @@ let entityAnimClock = 0;
 let entityRafId     = null;
 let levelSensorMissing = false;
 
+let swanMap = null;
+let swanMarker = null;
+let swanMapOpen = false;
+
 let gpsLatitude   = null;
 let gpsLongitude  = null;
 let gpsFix        = false;
