@@ -133,6 +133,7 @@ let gpsLongitude  = null;
 let gpsFix        = false;
 let gpsAgeSeconds = 0;
 let gpsOffline    = false;
+let gpsSatellites = 0;
 
 // Initialise with midpoint placeholder values — stable display while
 // waiting for the first real sensor reading from the ESP32.
@@ -2927,6 +2928,9 @@ if (jsonData.Node1_WATERLEVEL == null) {
    gpsFix = jsonData.gps_fix === true;
    gpsAgeSeconds =
        jsonData.gps_age_seconds || 0;
+
+   gpsSatellites =
+    jsonData.gps_satellites || 0;
 
   applyReadings();
   buildGaugeOverlay();
