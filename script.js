@@ -1752,9 +1752,7 @@ function openSwanMap() {
 
         </div>
 
-        <div id="swanMapPlaceholder">
-          Swan map coming...
-        </div>
+        <div id="swanLeafletMap"></div>
 
       </div>
     `;
