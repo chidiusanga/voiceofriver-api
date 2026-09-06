@@ -1717,6 +1717,73 @@ function closeWFDReport() {
   wfdPanelOpen = false;
 }
 
+// Swan Map modal
+// =====================
+let swanMapPanelOpen = false;
+
+function openSwanMap() {
+
+  let panel =
+    document.getElementById(
+      'swanMapPanel'
+    );
+
+  if (!panel) {
+
+    panel =
+      document.createElement('div');
+
+    panel.id = 'swanMapPanel';
+
+    panel.innerHTML = `
+      <div class="swan-map-inner">
+
+        <div class="swan-map-header">
+
+          <div class="swan-map-title">
+            🗺 Swan Location Map
+          </div>
+
+          <button
+            class="swan-map-close-btn"
+            onclick="closeSwanMap()">
+            ✕ Close
+          </button>
+
+        </div>
+
+        <div id="swanMapPlaceholder">
+          Swan map coming...
+        </div>
+
+      </div>
+    `;
+
+    document
+      .getElementById('app')
+      .appendChild(panel);
+  }
+
+  panel.style.display = 'flex';
+
+  swanMapPanelOpen = true;
+}
+
+function closeSwanMap() {
+
+  const panel =
+    document.getElementById(
+      'swanMapPanel'
+    );
+
+  if (panel) {
+    panel.style.display = 'none';
+  }
+
+  swanMapPanelOpen = false;
+}
+
+
 // Clicking outside the governance modal closes it
 document.addEventListener('click', function(e) {
   if (!wfdPanelOpen) return;
@@ -1779,8 +1846,9 @@ document.addEventListener('click', e => {
   if (a==='mode-present') switchMode('present');
   if (a==='mode-ideal')   switchMode('ideal');
   if (a==='mode-api')     switchMode('api');
-  if (a==='refresh')      refreshSensors();
-  if (a==='wfd-report')   openWFDReport();
+   if (a==='refresh')      refreshSensors();
+   if (a==='wfd-report')   openWFDReport();
+   if (a==='swan-map')     openSwanMap();
 });
 
 /* ════════════════════════════════════════════════════
