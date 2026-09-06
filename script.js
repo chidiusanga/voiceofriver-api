@@ -134,6 +134,7 @@ let gpsFix        = false;
 let gpsAgeSeconds = 0;
 let gpsOffline    = false;
 let gpsSatellites = 0;
+let gpsLockMessageUntil = 0;
 
 // Initialise with midpoint placeholder values — stable display while
 // waiting for the first real sensor reading from the ESP32.
@@ -2641,6 +2642,17 @@ function updateGPSPanel()
 
     if (gpsFix)
     {
+      if (
+          Date.now() <
+          gpsLockMessageUntil
+         )
+      {
+          statusEl.textContent =
+              '📍 ✅ Location Acquired (' +
+              gpsSatellites +
+              ' Satellites)';
+          return;
+      }
         // statusEl.textContent =
         //     '✅ GPS: ' +
         //     gpsLatitude.toFixed(5) +
@@ -2925,7 +2937,17 @@ if (jsonData.Node1_WATERLEVEL == null) {
 // End of Delete this Debug
 
    
+   // gpsFix = jsonData.gps_fix === true;
+
+   // The line commented out above is replaced with the below lines to hold fixed number of satellites for 5 seconds before displaying the coordinates
+
+   const oldGpsFix = gpsFix;
    gpsFix = jsonData.gps_fix === true;
+   if (!oldGpsFix && gpsFix) {
+       gpsLockMessageUntil =
+           Date.now() + 5000;
+   }
+   
    gpsAgeSeconds =
        jsonData.gps_age_seconds || 0;
 
