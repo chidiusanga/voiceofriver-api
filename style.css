@@ -1026,6 +1026,86 @@ button[title], .bbtn[title], .ebtn[title], .gtbtn[title]{
   outline-offset: 2px;
 }
 
+/* ══════════════════════════════════════════════════════
+   SWAN MAP MODAL
+══════════════════════════════════════════════════════ */
+
+#swanMapPanel {
+  position: fixed;
+  inset: 0;
+  z-index: 160;
+  background: rgba(2,8,20,.55);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.swan-map-inner {
+  width: 100%;
+  max-width: 1100px;
+  height: 80vh;
+  background: rgba(8,20,40,.92);
+  border: 1px solid rgba(80,140,200,.35);
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 16px 64px rgba(0,0,0,.8);
+}
+
+.swan-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background:
+    linear-gradient(
+      90deg,
+      #0a1e3a,
+      #102a50
+    );
+
+  border-bottom:
+    1px solid rgba(80,140,200,.3);
+}
+.swan-map-title {
+  font-family: var(--title-font);
+  font-size: 20px;
+  letter-spacing: .1em;
+  color: var(--text-bright);
+}
+
+.swan-map-close-btn {
+  padding: 4px 12px;
+  background: rgba(180,50,50,.25);
+  border:
+    1px solid rgba(220,80,80,.4);
+  border-radius: 10px;
+  color:
+    rgba(255,180,180,.9);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.swan-map-close-btn:hover {
+
+  background:
+    rgba(200,60,60,.5);
+  color: #fff;
+}
+
+#swanMapPlaceholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #d8f0ff;
+}
+
 /* Unknown Status indicator for WFD bar under entity icons */
 .wfd-bar-unknown {
    background: linear-gradient(90deg, #4a4a4a, #666666);
