@@ -626,7 +626,7 @@ function sharedGaugeCfg(s, val) {
     colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
     colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
     colorValueTextShadow:'rgba(0,0,0,0)',
-    fontNumbersSize:26, fontValueSize:20,
+    fontNumbersSize: 18, fontValueSize:20,
     minValue:s.min, maxValue:s.max, value:val,
     majorTicks:s.majorTicks, minorTicks:4, strokeTicks:true,
     highlights:buildGaugeHighlights(s),
@@ -723,10 +723,10 @@ if (!hasValidData(val)) {
           colorBarProgressEnd: st==='good'?'#e03030':st==='warn'?'#e89030':'#8030d0',
           tickSide:'both', numberSide:'both', needleSide:'left',
           ticksWidth:14, ticksWidthMinor:6, ticksPadding:3,
-          fontNumbersSize:36,
+          fontNumbersSize:28,
           needle:true, needleType:'line', needleWidth:2,
           colorNeedle:'#c01818', colorNeedleEnd:'#a01010',
-          valueBoxWidth:62, fontValueSize:54,
+          valueBoxWidth:62, fontValueSize:44,
         })).draw();
       } else {
         // Default: radial-full (270° sweep)
@@ -737,7 +737,7 @@ if (!hasValidData(val)) {
           needleCircleSize:7, needleCircleOuter:true, needleCircleInner:false,
           colorNeedleCircleOuter:'#405060', colorNeedleCircleOuterEnd:'#607080',
           colorNeedleCircleInner:'#d8e8f4', colorNeedleCircleInnerEnd:'#d8e8f4',
-          fontValueSize:44,
+          fontValueSize:34,
         })).draw();
       }
     } catch(gaugeErr) {
