@@ -2640,7 +2640,7 @@ function updateGPSPanel()
         //     gpsLongitude.toFixed(5);
 
        statusEl.textContent =
-       '📍 ✅ Swan's Location: ' +
+       '📍 ✅ Swan Location: ' +
        Math.abs(gpsLatitude).toFixed(5) +
        '° N, ' +
        Math.abs(gpsLongitude).toFixed(5) +
