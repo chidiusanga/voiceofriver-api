@@ -741,7 +741,7 @@ if (!hasValidData(val)) {
           needleCircleSize:7, needleCircleOuter:true, needleCircleInner:false,
           colorNeedleCircleOuter:'#405060', colorNeedleCircleOuterEnd:'#607080',
           colorNeedleCircleInner:'#d8e8f4', colorNeedleCircleInnerEnd:'#d8e8f4',
-          fontValueSize:18,
+          fontValueSize:22,
         })).draw();
       }
     } catch(gaugeErr) {
