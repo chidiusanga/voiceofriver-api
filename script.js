@@ -2633,7 +2633,7 @@ function updateGPSPanel()
         gpsLongitude == null
        )
     {
-        statusEl.textContent =
+        statusEl.innerHTML =
             // '📡 Searching For Satellites...';
            '📍 <span class="gps-spin">📡</span> Location: Searching for Satellites...';
 
