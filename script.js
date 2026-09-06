@@ -726,7 +726,7 @@ if (!hasValidData(val)) {
           fontNumbersSize:28,
           needle:true, needleType:'line', needleWidth:2,
           colorNeedle:'#c01818', colorNeedleEnd:'#a01010',
-          valueBoxWidth:62, fontValueSize:44,
+          valueBoxWidth:48, fontValueSize:18,
         })).draw();
       } else {
         // Default: radial-full (270° sweep)
@@ -737,7 +737,7 @@ if (!hasValidData(val)) {
           needleCircleSize:7, needleCircleOuter:true, needleCircleInner:false,
           colorNeedleCircleOuter:'#405060', colorNeedleCircleOuterEnd:'#607080',
           colorNeedleCircleInner:'#d8e8f4', colorNeedleCircleInnerEnd:'#d8e8f4',
-          fontValueSize:34,
+          fontValueSize:18,
         })).draw();
       }
     } catch(gaugeErr) {
