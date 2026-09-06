@@ -623,12 +623,8 @@ function sharedGaugeCfg(s, val) {
     colorMajorTicks:'#304050', colorMinorTicks:'#607080',
     colorTitle:'#203040', colorUnits:'#405060', colorNumbers:'#203040',
     colorNeedle:'#c01818', colorNeedleEnd:'#900808',
-    // colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
-    // colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
-
-     colorValueBoxRect:'#303030', colorValueBoxRectEnd:'#202020',
-     colorValueBoxBackground:'#080808', colorValueText:'#7fd6ff',
-     
+    colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
+    colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',  
     colorValueTextShadow:'rgba(0,0,0,0)',
     fontNumbersSize: 18, fontValueSize:20,
     minValue:s.min, maxValue:s.max, value:val,
@@ -730,7 +726,7 @@ if (!hasValidData(val)) {
           fontNumbersSize:28,
           needle:true, needleType:'line', needleWidth:2,
           colorNeedle:'#c01818', colorNeedleEnd:'#a01010',
-          valueBoxWidth:22, fontValueSize:22,
+          valueBoxWidth:24, fontValueSize:24,
         })).draw();
       } else {
         // Default: radial-full (270° sweep)
@@ -2570,13 +2566,8 @@ if (!hasValidData(val)) {
         needleCircleSize:5, needleCircleOuter:true, needleCircleInner:false,
         colorNeedleCircleOuter:'#405060', colorNeedleCircleOuterEnd:'#607080',
         colorNeedleCircleInner:'#d8e8f4', colorNeedleCircleInnerEnd:'#d8e8f4',
-        // colorValueBoxRect:'#405060', colorValueBoxRectEnd:'#506070',
-        // colorValueBoxBackground:'#182838', colorValueText:'#a0e0ff',
-
-
          colorValueBoxRect:'#303030', colorValueBoxRectEnd:'#202020',
         colorValueBoxBackground:'#080808', colorValueText:'#7fd6ff',
-         
         colorValueTextShadow:'rgba(0,0,0,0)',
         fontNumbersSize:8, fontValueSize:12,
         startAngle:45, ticksAngle:270,
