@@ -49,7 +49,8 @@ return res.status(200).end();
       latitude: row.latitude,
       longitude: row.longitude,
       gps_fix: row.gps_fix,
-      gps_age_seconds: row.gps_age_seconds
+      gps_age_seconds: row.gps_age_seconds,
+      gps_satellites: row.gps_satellites
 });
 
 
