@@ -133,7 +133,7 @@ let swanMarker = null;
 let swanIcon = null;
 let streetLayer = null;
 let satelliteLayer;
-let swanMapOpen = false;
+// let swanMapOpen = false;
 
 let gpsLatitude   = null;
 let gpsLongitude  = null;
