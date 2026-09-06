@@ -1707,52 +1707,8 @@ const limitingNote = overall.status === 'unknown'
     </div><!-- end wfd-report-inner -->
   `;
 
-// Initialise Leaflet Map
-
-   panel.style.display = 'flex';
-   setTimeout(() => {
-  if (!swanMap) {
-    swanMap = L.map(
-      'swanLeafletMap'
-    );
-
-    L.tileLayer(
-      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-      {
-        attribution:
-          '&copy; OpenStreetMap'
-      }
-    ).addTo(swanMap);
-
-  }
-
-  if (
-      gpsLatitude != null &&
-      gpsLongitude != null
-     )
-  {
-      swanMap.setView(
-        [
-          gpsLatitude,
-          gpsLongitude
-        ],
-        16
-      );
-  }
-  else
-  {
-      swanMap.setView(
-        [52.66, -8.63],
-        11
-      );
-  }
-
-  swanMap.invalidateSize();
-
-}, 100);
-
-swanMapPanelOpen = true;
-
+     panel.style.display = 'flex';
+     wfdPanelOpen = true;
    
 }
 
@@ -1807,9 +1763,52 @@ function openSwanMap() {
       .appendChild(panel);
   }
 
-  panel.style.display = 'flex';
+panel.style.display = 'flex';
 
-  swanMapPanelOpen = true;
+setTimeout(() => {
+
+  if (!swanMap) {
+
+    swanMap = L.map(
+      'swanLeafletMap'
+    );
+
+    L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        attribution: '&copy; OpenStreetMap'
+      }
+    ).addTo(swanMap);
+
+  }
+
+  if (
+    gpsLatitude != null &&
+    gpsLongitude != null
+  )
+  {
+    swanMap.setView(
+      [
+        gpsLatitude,
+        gpsLongitude
+      ],
+      16
+    );
+  }
+  else
+  {
+    swanMap.setView(
+      [52.66, -8.63],
+      11
+    );
+  }
+
+  swanMap.invalidateSize();
+
+}, 100);
+
+swanMapPanelOpen = true;
+   
 }
 
 function closeSwanMap() {
