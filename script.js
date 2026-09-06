@@ -130,6 +130,7 @@ let levelSensorMissing = false;
 
 let swanMap = null;
 let swanMarker = null;
+let swanIcon = null;
 let swanMapOpen = false;
 
 let gpsLatitude   = null;
@@ -1827,6 +1828,35 @@ function closeSwanMap() {
   swanMapPanelOpen = false;
 }
 
+// Create Swan Icon
+function getSwanIcon() {
+
+  if (swanIcon) {
+    return swanIcon;
+  }
+
+  swanIcon = L.divIcon({
+
+    className: '',
+
+    html: `
+      <div
+        style="
+          font-size:34px;
+          filter:drop-shadow(0 0 6px #ffffff);
+        ">
+        🦢
+      </div>
+    `,
+
+    iconSize: [40,40],
+    iconAnchor: [20,20]
+
+  });
+
+  return swanIcon;
+}
+
 // Add a live Swan marker
 
 function updateSwanMarker() {
@@ -1841,12 +1871,22 @@ function updateSwanMarker() {
 
   if (!swanMarker) {
 
-    swanMarker = L.marker(
-      [
-        gpsLatitude,
-        gpsLongitude
-      ]
-    ).addTo(swanMap);
+    // swanMarker = L.marker(
+    //   [
+    //     gpsLatitude,
+    //     gpsLongitude
+    //   ]
+    // ).addTo(swanMap);
+
+swanMarker = L.marker(
+  [
+    gpsLatitude,
+    gpsLongitude
+  ],
+  {
+    icon: getSwanIcon()
+  }
+).addTo(swanMap);
 
   } else {
 
