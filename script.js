@@ -2857,7 +2857,7 @@ function applyLiveSensorData(jsonData) {
 
           setConnectionStatus(
               'error',
-              'Data Stale'
+              'Not Live'
           );
 
          applyReadings();
