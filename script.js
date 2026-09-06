@@ -1707,8 +1707,53 @@ const limitingNote = overall.status === 'unknown'
     </div><!-- end wfd-report-inner -->
   `;
 
-  panel.style.display = 'flex';
-  wfdPanelOpen = true;
+// Initialise Leaflet Map
+
+   panel.style.display = 'flex';
+   setTimeout(() => {
+  if (!swanMap) {
+    swanMap = L.map(
+      'swanLeafletMap'
+    );
+
+    L.tileLayer(
+      'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      {
+        attribution:
+          '&copy; OpenStreetMap'
+      }
+    ).addTo(swanMap);
+
+  }
+
+  if (
+      gpsLatitude != null &&
+      gpsLongitude != null
+     )
+  {
+      swanMap.setView(
+        [
+          gpsLatitude,
+          gpsLongitude
+        ],
+        16
+      );
+  }
+  else
+  {
+      swanMap.setView(
+        [52.66, -8.63],
+        11
+      );
+  }
+
+  swanMap.invalidateSize();
+
+}, 100);
+
+swanMapPanelOpen = true;
+
+   
 }
 
 function closeWFDReport() {
