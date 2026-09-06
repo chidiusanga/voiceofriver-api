@@ -1852,6 +1852,31 @@ function closeSwanMap() {
   swanMapPanelOpen = false;
 }
 
+// Clicking outside the Swan Map closes it
+document.addEventListener('click', function(e) {
+
+  if (!swanMapPanelOpen) return;
+
+  const panel =
+    document.getElementById('swanMapPanel');
+
+  const inner =
+    panel?.querySelector('.swan-map-inner');
+
+  if (!inner) return;
+
+  // Ignore clicks on the button that opened the map
+  if (e.target.closest('[data-action="swan-map"]')) {
+    return;
+  }
+
+  if (!inner.contains(e.target)) {
+    closeSwanMap();
+  }
+
+});
+
+
 // Create Swan Icon
 function getSwanIcon() {
 
@@ -2014,11 +2039,20 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ESC key closes governance modal
+// ESC key closes governance or swan map modal
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape' && wfdPanelOpen) {
+  if (e.key !== 'Escape') {
+    return;
+  }
+
+  if (wfdPanelOpen) {
     closeWFDReport();
   }
+
+  if (swanMapPanelOpen) {
+    closeSwanMap();
+  }
+
 });
 
 function switchMode(mode) {
