@@ -1867,6 +1867,21 @@ function openSwanChat() {
   }
 
   swanChatPanelOpen = true;
+
+// Swan's opening message
+const messages = document.getElementById('swanChatMessages');
+
+if (
+  messages &&
+  !messages.dataset.initialised
+) {
+
+  addSwanMessage(
+    'Hello. I am the Voice of the Shannon. Ask me about water quality, biodiversity, WFD status, river depth, environmental stewardship or the sensors monitoring the river.'
+  );
+
+  messages.dataset.initialised = 'true';
+}
 }
 
 function closeSwanChat() {
@@ -1945,13 +1960,53 @@ function sendSwanMessage() {
   );
 }
 
+// Add Swan Intelligence
+
+function handleSwanQuestion(question) {
+   const q = question.toLowerCase();
+   let reply = 'I am not sure about that yet. Try asking about water quality, WFD status, biodiversity, river depth or sensors.';
+
+  if (q.includes('water quality') || q.includes('quality')) {
+    reply = 'The current water quality indicators suggest I am continuously monitoring the Shannon using the latest sensor readings available on this dashboard.';
+  }
+
+  else if (q.includes('depth') || q.includes('water level')) {
+    reply = 'The river depth can be viewed on the Depth gauge. I use that measurement to understand navigation, habitat conditions and flood risk.';
+  }
+
+  else if (q.includes('wfd')) {
+    reply =
+      'WFD stands for the Water Framework Directive, the European framework used to assess ecological water health from High to Bad status.';
+  }
+
+  else if (
+    q.includes('biodiversity')
+  ) {
+
+    reply =
+      'Biodiversity reflects how well the Shannon supports fish, birds, plants and other living organisms that depend on the river ecosystem.';
+  }
+
+  else if (
+    q.includes('sensor')
+  ) {
+
+    reply =
+      'The dashboard receives information from distributed environmental sensors measuring conditions such as water quality and river state.';
+  }
+
+  setTimeout(
+    () => addSwanMessage(reply),
+    500
+  );
+
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
   const closeBtn =
-    document.getElementById(
-      'closeSwanChatBtn'
-    );
+    document.getElementById('closeSwanChatBtn');
 
   if (closeBtn) {
     closeBtn.addEventListener(
@@ -1960,30 +2015,18 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  const swanChatInput =
-    document.getElementById(
-      'swanChatInput'
-    );
+  const swanChatInput = document.getElementById('swanChatInput');
 
   if (swanChatInput) {
 
-    swanChatInput.addEventListener(
-      'keydown',
-      function(e) {
+    swanChatInput.addEventListener('keydown', function(e) {
 
-        if (e.key === 'Enter') {
-
-          e.preventDefault();
-
-          sendSwanMessage();
-
-        }
-
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendSwanMessage();
       }
-    );
-
+    });
   }
-
 });
 
 // Clicking outside the Swan Map closes it
