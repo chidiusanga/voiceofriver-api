@@ -1921,6 +1921,30 @@ function addUserMessage(text) {
   messages.scrollTop = messages.scrollHeight;
 }
 
+// Send Swan's Messages
+function sendSwanMessage() {
+
+  const input =
+    document.getElementById(
+      'swanChatInput'
+    );
+
+  if (!input) return;
+
+  const question =
+    input.value.trim();
+
+  if (!question) return;
+
+  addUserMessage(question);
+
+  input.value = '';
+
+  handleSwanQuestion(
+    question
+  );
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
