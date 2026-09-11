@@ -1960,6 +1960,30 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
+  const swanChatInput =
+    document.getElementById(
+      'swanChatInput'
+    );
+
+  if (swanChatInput) {
+
+    swanChatInput.addEventListener(
+      'keydown',
+      function(e) {
+
+        if (e.key === 'Enter') {
+
+          e.preventDefault();
+
+          sendSwanMessage();
+
+        }
+
+      }
+    );
+
+  }
+
 });
 
 // Clicking outside the Swan Map closes it
