@@ -1923,6 +1923,36 @@ document.addEventListener('click', function(e) {
 
 });
 
+// Clicking outside the Swan Chat closes it
+document.addEventListener('click', function(e) {
+
+  if (!swanChatPanelOpen) return;
+
+  const panel =
+    document.getElementById(
+      'swanChatPanel'
+    );
+
+  const inner =
+    panel?.querySelector(
+      '.swan-chat-inner'
+    );
+
+  if (!inner) return;
+
+  if (
+    e.target.closest(
+      '[data-action="chat-swan"]'
+    )
+  ) {
+    return;
+  }
+
+  if (!inner.contains(e.target)) {
+    closeSwanChat();
+  }
+
+});
 
 // Create Swan Icon
 function getSwanIcon() {
@@ -2086,7 +2116,7 @@ document.addEventListener('click', function(e) {
   }
 });
 
-// ESC key closes governance or swan map modal
+// ESC key closes governance, swan map or swan chat modal
 document.addEventListener('keydown', function(e) {
   if (e.key !== 'Escape') {
     return;
@@ -2099,6 +2129,10 @@ document.addEventListener('keydown', function(e) {
   if (swanMapPanelOpen) {
     closeSwanMap();
   }
+
+   if (swanChatPanelOpen) {
+     closeSwanChat();
+   }
 
 });
 
