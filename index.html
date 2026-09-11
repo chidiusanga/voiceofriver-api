@@ -190,10 +190,21 @@
       <div class="swan-chat-title">
         🦢 Chat with the Swan
       </div>
-      <button id="closeSwanChatBtn" class="swan-chat-close-btn"> ✕ Close </button>
+      <button id="closeSwanChatBtn" class="swan-chat-close-btn" ✕ Close</button>
     </div>
     <div id="swanChatMessages">
-      <div class="swan-msg swan"> <strong>The Swan speaks:</strong> Hello. I can explain water quality,
+      <div class="swan-msg swan"><strong>The Swan speaks:</strong>
+        Hello. I can explain water quality,
+        biodiversity, WFD status and
+        river conditions.
+      </div>
+    </div>
+    <div class="swan-chat-input-row">
+      <input type="text" id="swanChatInput" placeholder="Ask the Swan about the river...">
+      <button id="sendSwanChatBtn">Send</button>
+    </div>
+  </div>
+</div>
   
 <!-- Load Leaflet map styling library -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
