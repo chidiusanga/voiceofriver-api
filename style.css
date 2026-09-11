@@ -1249,6 +1249,12 @@ button[title], .bbtn[title], .ebtn[title], .gtbtn[title]{
   color:#d8f4ff;
 }
 
+.swan-msg.user{
+  background:#2f6a4c;
+  color:#ffffff;
+  margin-left:auto;
+}
+
 .swan-chat-input-row{
   display:flex;
   gap:10px;
