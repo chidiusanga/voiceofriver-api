@@ -1883,6 +1883,7 @@ function closeSwanChat() {
   swanChatPanelOpen = false;
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
 
   const closeBtn =
