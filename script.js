@@ -1883,6 +1883,44 @@ function closeSwanChat() {
   swanChatPanelOpen = false;
 }
 
+// Swan message appending function
+
+function addSwanMessage(text) {
+  const messages =
+    document.getElementById(
+      'swanChatMessages'
+    );
+
+  if (!messages) return;
+  const bubble =
+    document.createElement('div');
+  bubble.className = 'swan-msg swan';
+  bubble.textContent = text;
+  messages.appendChild(bubble);
+  messages.scrollTop =
+    messages.scrollHeight;
+}
+
+// User message appending function
+function addUserMessage(text) {
+  const messages =
+    document.getElementById(
+      'swanChatMessages'
+    );
+
+  if (!messages) return;
+  const bubble =
+    document.createElement('div');
+
+  bubble.className = 'swan-msg user';
+
+  bubble.textContent = text;
+
+  messages.appendChild(bubble);
+
+  messages.scrollTop = messages.scrollHeight;
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
