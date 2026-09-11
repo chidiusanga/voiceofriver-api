@@ -1164,6 +1164,19 @@ button[title], .bbtn[title], .ebtn[title], .gtbtn[title]{
   font-family: 'DM Sans', sans-serif;
 }
 
+#swanChatPanel{
+  position:fixed;
+  inset:0;
+  display:none;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,.65);
+  z-index:10000;
+}
+
+.swan-chat-inner{
+  width:min(720px,90vw);
+  height:
 
 /* Unknown Status indicator for WFD bar under entity icons */
 .wfd-bar-unknown {
