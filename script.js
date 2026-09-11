@@ -1883,6 +1883,21 @@ function closeSwanChat() {
   swanChatPanelOpen = false;
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+
+  const closeBtn =
+    document.getElementById(
+      'closeSwanChatBtn'
+    );
+
+  if (closeBtn) {
+    closeBtn.addEventListener(
+      'click',
+      closeSwanChat
+    );
+  }
+
+});
 
 // Clicking outside the Swan Map closes it
 document.addEventListener('click', function(e) {
