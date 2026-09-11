@@ -1852,6 +1852,38 @@ function closeSwanMap() {
   swanMapPanelOpen = false;
 }
 
+// Swan Chat modal
+let swanChatPanelOpen = false;
+
+function openSwanChat() {
+
+  const panel =
+    document.getElementById(
+      'swanChatPanel'
+    );
+
+  if (panel) {
+    panel.style.display = 'flex';
+  }
+
+  swanChatPanelOpen = true;
+}
+
+function closeSwanChat() {
+
+  const panel =
+    document.getElementById(
+      'swanChatPanel'
+    );
+
+  if (panel) {
+    panel.style.display = 'none';
+  }
+
+  swanChatPanelOpen = false;
+}
+
+
 // Clicking outside the Swan Map closes it
 document.addEventListener('click', function(e) {
 
@@ -2095,6 +2127,7 @@ document.addEventListener('click', e => {
    if (a==='refresh')      refreshSensors();
    if (a==='wfd-report')   openWFDReport();
    if (a==='swan-map')     openSwanMap();
+   if (a==='chat-swan')    openSwanChat();
 });
 
 /* ════════════════════════════════════════════════════
