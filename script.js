@@ -1979,7 +1979,7 @@ function handleSwanQuestion(question) {
 
   addSwanMessage(reply);
 }
-   const q = question.toLowerCase();
+   // const q = question.toLowerCase();
    let reply = 'I am not sure about that yet. Try asking about water quality, WFD status, biodiversity, river depth or sensors.';
 
   if (q.includes('water quality') || q.includes('quality')) {
