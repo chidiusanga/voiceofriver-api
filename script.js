@@ -1963,6 +1963,22 @@ function sendSwanMessage() {
 // Add Swan Intelligence
 
 function handleSwanQuestion(question) {
+
+  console.log('Question received:', question);
+
+  const q = question.toLowerCase();
+
+  let reply = 'I am not sure about that yet.';
+
+  if (q.includes('water quality')) {
+    reply =
+      'Water quality response works!';
+  }
+
+  console.log('Reply:', reply);
+
+  addSwanMessage(reply);
+}
    const q = question.toLowerCase();
    let reply = 'I am not sure about that yet. Try asking about water quality, WFD status, biodiversity, river depth or sensors.';
 
