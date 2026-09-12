@@ -1979,44 +1979,9 @@ function handleSwanQuestion(question) {
 
   addSwanMessage(reply);
 }
-   // const q = question.toLowerCase();
-   let reply = 'I am not sure about that yet. Try asking about water quality, WFD status, biodiversity, river depth or sensors.';
 
-  if (q.includes('water quality') || q.includes('quality')) {
-    reply = 'The current water quality indicators suggest I am continuously monitoring the Shannon using the latest sensor readings available on this dashboard.';
-  }
 
-  else if (q.includes('depth') || q.includes('water level')) {
-    reply = 'The river depth can be viewed on the Depth gauge. I use that measurement to understand navigation, habitat conditions and flood risk.';
-  }
 
-  else if (q.includes('wfd')) {
-    reply =
-      'WFD stands for the Water Framework Directive, the European framework used to assess ecological water health from High to Bad status.';
-  }
-
-  else if (
-    q.includes('biodiversity')
-  ) {
-
-    reply =
-      'Biodiversity reflects how well the Shannon supports fish, birds, plants and other living organisms that depend on the river ecosystem.';
-  }
-
-  else if (
-    q.includes('sensor')
-  ) {
-
-    reply =
-      'The dashboard receives information from distributed environmental sensors measuring conditions such as water quality and river state.';
-  }
-
-  setTimeout(
-    () => addSwanMessage(reply),
-    500
-  );
-
-}
 
 
 document.addEventListener('DOMContentLoaded', () => {
