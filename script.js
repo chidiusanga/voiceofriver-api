@@ -1996,18 +1996,37 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   }
 
-  const swanChatInput = document.getElementById('swanChatInput');
+  // const swanChatInput = document.getElementById('swanChatInput');
 
-  if (swanChatInput) {
+  // if (swanChatInput) {
 
-    swanChatInput.addEventListener('keydown', function(e) {
+  //   swanChatInput.addEventListener('keydown', function(e) {
 
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        sendSwanMessage();
-      }
-    });
-  }
+  //     if (e.key === 'Enter') {
+  //       e.preventDefault();
+  //       sendSwanMessage();
+  //     }
+  //   });
+  // }
+
+const swanChatInput =
+  document.getElementById('swanChatInput');
+
+if (swanChatInput) {
+
+  swanChatInput.addEventListener('keydown', function(e) {
+
+    console.log('KEY:', e.key);
+
+    if (e.key === 'Enter') {
+      console.log('ENTER DETECTED');
+      e.preventDefault();
+      sendSwanMessage();
+    }
+
+  });
+}
+   
 });
 
 // Clicking outside the Swan Map closes it
