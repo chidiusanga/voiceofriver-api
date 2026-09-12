@@ -2012,11 +2012,6 @@ function handleSwanQuestion(question) {
   const swanChatInput =
     document.getElementById('swanChatInput');
 
-   console.log(
-  'INPUT FOUND:',
-  swanChatInput
-);
-
   if (swanChatInput) {
 
     swanChatInput.addEventListener('keydown', function(e) {
@@ -2024,7 +2019,6 @@ function handleSwanQuestion(question) {
       console.log('KEY:', e.key);
 
       if (e.key === 'Enter') {
-        console.log('ENTER DETECTED');
         e.preventDefault();
         sendSwanMessage();
       }
