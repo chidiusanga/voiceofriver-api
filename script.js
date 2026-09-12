@@ -2011,6 +2011,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const swanChatInput =
     document.getElementById('swanChatInput');
 
+   console.log(
+  'INPUT FOUND:',
+  swanChatInput
+);
+
   if (swanChatInput) {
 
     swanChatInput.addEventListener('keydown', function(e) {
