@@ -1983,22 +1983,6 @@ function handleSwanQuestion(question) {
 }
 
 
-
-
-  // const swanChatInput = document.getElementById('swanChatInput');
-
-  // if (swanChatInput) {
-
-  //   swanChatInput.addEventListener('keydown', function(e) {
-
-  //     if (e.key === 'Enter') {
-  //       e.preventDefault();
-  //       sendSwanMessage();
-  //     }
-  //   });
-  // }
-
-
   const closeBtn =
     document.getElementById('closeSwanChatBtn');
 
@@ -2015,9 +1999,6 @@ function handleSwanQuestion(question) {
   if (swanChatInput) {
 
     swanChatInput.addEventListener('keydown', function(e) {
-
-      console.log('KEY:', e.key);
-
       if (e.key === 'Enter') {
         e.preventDefault();
         sendSwanMessage();
@@ -3386,11 +3367,6 @@ function applyLiveSensorData(jsonData) {
           new Date(jsonData.created_at).getTime();
 
       if (ageMs > DATA_TIMEOUT_MS) {
-
-          console.log(
-              'STALE DATA DETECTED',
-              ageMs
-          );
 
          gpsOffline = true;
 
