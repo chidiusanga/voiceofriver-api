@@ -1939,6 +1939,8 @@ function addUserMessage(text) {
 // Send Swan's Messages
 function sendSwanMessage() {
 
+   console.log('SEND FUNCTION LOADED');
+   
   const input =
     document.getElementById(
       'swanChatInput'
