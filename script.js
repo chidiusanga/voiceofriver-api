@@ -1983,18 +1983,6 @@ function handleSwanQuestion(question) {
 
 
 
-
-
-  const closeBtn =
-    document.getElementById('closeSwanChatBtn');
-
-  if (closeBtn) {
-    closeBtn.addEventListener(
-      'click',
-      closeSwanChat
-    );
-  }
-
   // const swanChatInput = document.getElementById('swanChatInput');
 
   // if (swanChatInput) {
@@ -2008,25 +1996,37 @@ function handleSwanQuestion(question) {
   //   });
   // }
 
-const swanChatInput =
-  document.getElementById('swanChatInput');
+document.addEventListener('DOMContentLoaded', () => {
 
-if (swanChatInput) {
+  const closeBtn =
+    document.getElementById('closeSwanChatBtn');
 
-  swanChatInput.addEventListener('keydown', function(e) {
+  if (closeBtn) {
+    closeBtn.addEventListener(
+      'click',
+      closeSwanChat
+    );
+  }
 
-    console.log('KEY:', e.key);
+  const swanChatInput =
+    document.getElementById('swanChatInput');
 
-    if (e.key === 'Enter') {
-      console.log('ENTER DETECTED');
-      e.preventDefault();
-      sendSwanMessage();
-    }
+  if (swanChatInput) {
 
-  });
+    swanChatInput.addEventListener('keydown', function(e) {
 
-   
-}
+      console.log('KEY:', e.key);
+
+      if (e.key === 'Enter') {
+        console.log('ENTER DETECTED');
+        e.preventDefault();
+        sendSwanMessage();
+      }
+
+    });
+  }
+
+});
 
 // Clicking outside the Swan Map closes it
 document.addEventListener('click', function(e) {
