@@ -1984,7 +1984,6 @@ function handleSwanQuestion(question) {
 
 
 
-document.addEventListener('DOMContentLoaded', () => {
 
   const closeBtn =
     document.getElementById('closeSwanChatBtn');
@@ -2025,9 +2024,9 @@ if (swanChatInput) {
     }
 
   });
-}
+
    
-});
+}
 
 // Clicking outside the Swan Map closes it
 document.addEventListener('click', function(e) {
