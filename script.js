@@ -1987,7 +1987,7 @@ function interpretTurbidity(value) {
    if (value <= 75)
       return 'The water is becoming noticeably cloudy. This means that aquatic wildlife such as the Salmon may be sad. I am myself, as it means I may not be able to see underwater grasses to feed on. As you probably know, Salmon like pristine and well oxygenated water. And I would not advise any human to go swimming in this water at this time either';
 
-   return 'The water is highly turbid and may be experiencing environmental pressure. This means that aquatic wildlife such as the Salmon would find it really difficult getting around. As you probably know, Salmon like pristine and well oxygenated water. And I would not advise any human to go swimming in this water at this time either';
+   return 'The water is highly turbid and may be experiencing environmental pressure. This means that aquatic wildlife such as the Salmon would find it really difficult getting around. As you probably know, Salmon like pristine and well oxygenated water. And I won\'t advise any human to go swimming in this water at this time either.';
 }
 
 function interpretTemperature(temp) {
