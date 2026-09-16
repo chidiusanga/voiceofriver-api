@@ -1962,25 +1962,300 @@ function sendSwanMessage() {
   );
 }
 
-// Add Swan Intelligence
+
+
+// ========================
+//  Add Swan Intelligence
+// ========================
+function interpretPH(ph) {
+
+   if (ph >= 6.5 && ph <= 8.5)
+      return 'This falls within the High ecological status range.';
+
+   if (ph >= 6.0 && ph <= 9.0)
+      return 'This remains within the Good ecological status range.';
+
+   return 'This reading suggests ecological stress and warrants investigation.';
+}
+
+function interpretTurbidity(value) {
+
+   if (value <= 5)
+      return 'The water is exceptionally clear.';
+
+   if (value <= 25)
+      return 'Water clarity is generally good.';
+
+   if (value <= 75)
+      return 'The water is becoming noticeably cloudy.';
+
+   return 'The water is highly turbid and may be experiencing environmental pressure.';
+}
+
+function interpretTemperature(temp) {
+
+   if (temp <= 20)
+      return 'Temperature conditions are favourable for many freshwater species.';
+
+   if (temp <= 25)
+      return 'Conditions remain acceptable for most freshwater ecosystems.';
+
+   return 'Elevated temperature may place stress on aquatic life.';
+}
+
+function interpretLevel(level) {
+
+   if (level >= 6 && level <= 12)
+      return 'River depth is within the preferred ecological range.';
+
+   if (level < 6)
+      return 'River levels appear lower than normal.';
+
+   return 'Water levels are elevated and should be monitored.';
+}
+
+function interpretEC(ec) {
+
+   if (ec <= 200)
+      return 'Conductivity is consistent with near-reference river conditions.';
+
+   if (ec <= 800)
+      return 'Conductivity remains within the Good status range.';
+
+   return 'Conductivity suggests increasing concentrations of dissolved substances.';
+}
+
+function interpretTDS(tds) {
+
+   if (tds <= 130)
+      return 'Dissolved solids are consistent with High ecological status.';
+
+   if (tds <= 520)
+      return 'Dissolved solids remain within the Good status range.';
+
+   return 'Elevated dissolved solids may indicate human influence on water chemistry.';
+}
+
+// Overall River Assessment
+
+function generateRiverAssessment() {
+
+   let observations = [];
+
+   if (hasValidData(currentReadings.ph)) {
+
+      if (
+          currentReadings.ph >= 6.5 &&
+          currentReadings.ph <= 8.5
+         ) {
+
+         observations.push(
+            'pH is healthy'
+         );
+
+      } else {
+
+         observations.push(
+            'pH requires attention'
+         );
+      }
+   }
+
+   if (hasValidData(currentReadings.turbidity)) {
+
+      if (currentReadings.turbidity <= 25) {
+
+         observations.push(
+            'water clarity is good'
+         );
+
+      } else {
+
+         observations.push(
+            'water clarity is reduced'
+         );
+      }
+   }
+
+   if (hasValidData(currentReadings.temperature)) {
+
+      if (currentReadings.temperature <= 25) {
+
+         observations.push(
+            'water temperature is suitable for freshwater life'
+         );
+
+      } else {
+
+         observations.push(
+            'water temperature is elevated'
+         );
+      }
+   }
+
+   if (observations.length === 0) {
+
+      return 'I do not currently have sufficient environmental observations to assess river health.';
+   }
+
+   return 'Based on the latest sensor readings, ' +
+          observations.join(', ') +
+          '.';
+}
+
+
+// function handleSwanQuestion(question) {
+
+//   console.log('Question received:', question);
+
+//   const q = question.toLowerCase();
+
+//   let reply = 'I am not sure about that yet.';
+
+//   if (q.includes('water quality')) {
+//     reply =
+//       'Water quality response works!';
+//   }
+
+//   console.log('Reply:', reply);
+
+//   addSwanMessage(reply);
+// }
+
+
+  // =====================================
+  // HANDLING THE SWAN'S QUESTIONS FOR SENSOR READINGS, RIVER HEALTH, SWAN IDENTITY AND GENERIC WATER QUALITY
+  // =====================================
 
 function handleSwanQuestion(question) {
-
   console.log('Question received:', question);
-
   const q = question.toLowerCase();
+  let reply = null;
 
-  let reply = 'I am not sure about that yet.';
+  // =====================================
+  // LIVE SENSOR READINGS
+  // =====================================
 
-  if (q.includes('water quality')) {
-    reply =
-      'Water quality response works!';
+  if (
+      q.includes('current ph') ||
+      q.includes('ph today') ||
+      q === 'ph'
+     ) {
+
+      if (hasValidData(currentReadings.ph)) {
+          reply =
+              `The current pH at this monitoring location is ${currentReadings.ph.toFixed(2)}. ${interpretPH(currentReadings.ph)}`;
+      } else {
+          reply =
+              'I cannot currently determine the pH because the sensor is offline.';
+      }
+  }
+
+  else if (
+      q.includes('turbidity') ||
+      q.includes('clarity')
+     ) {
+      if (hasValidData(currentReadings.turbidity)) {
+          reply =
+              `The current turbidity is ${currentReadings.turbidity.toFixed(1)} NTU. ${interpretTurbidity(currentReadings.turbidity)}`;
+      } else {
+          reply =
+              'I cannot currently assess water clarity because the turbidity sensor is unavailable.';
+      }
+  }
+
+  else if (
+      q.includes('temperature') ||
+      q.includes('heat')
+     ) {
+
+      if (hasValidData(currentReadings.temperature)) {
+          reply =
+              `The water temperature is currently ${currentReadings.temperature.toFixed(1)}°C. ${interpretTemperature(currentReadings.temperature)}`;
+      } else {
+          reply =
+              'I do not currently have a live temperature reading.';
+      }
+  }
+
+  else if (
+      q.includes('water level') ||
+      q.includes('river depth') ||
+      q.includes('depth')
+     ) {
+      if (hasValidData(currentReadings.level)) {
+          reply = `The river depth is currently ${currentReadings.level.toFixed(1)} feet. ${interpretLevel(currentReadings.level)}`;
+      } else {
+          reply = 'My artificial twin is not currently reporting river depth.';
+      }
+  }
+
+  else if (
+      q.includes('conductivity') ||
+      q.includes('ec')
+     ) {
+      if (hasValidData(currentReadings.ec)) {
+          reply = `Conductivity is currently ${currentReadings.ec.toFixed(0)} µS/cm. ${interpretEC(currentReadings.ec)}`;
+
+      } else {
+          reply = 'I cannot currently sense conductivity.';
+      }
+  }
+
+  else if (
+      q.includes('tds') ||
+      q.includes('dissolved solids')
+     ) {
+
+      if (hasValidData(currentReadings.tds)) {
+          reply = `Total dissolved solids currently measure ${currentReadings.tds.toFixed(0)} ppm. ${interpretTDS(currentReadings.tds)}`;
+      } else {
+          reply = 'I cannot currently sense dissolved solids.';
+      }
+  }
+
+  // =====================================
+  // RIVER HEALTH QUESTIONS
+  // =====================================
+
+  else if (
+      q.includes('how is the river') ||
+      q.includes('river health') ||
+      q.includes('condition of the river') ||
+      q.includes('how healthy')
+     ) {
+      reply = generateRiverAssessment();
+  }
+
+  // =====================================
+  // SWAN IDENTITY
+  // =====================================
+
+  else if (
+      q.includes('who are you') ||
+      q.includes('what are you')
+     ) {
+      reply = 'I am the Swan, a voice for this part of the Shannon River. I help visitors understand environmental conditions, biodiversity, stewardship and water quality.';
+  }
+
+  // =====================================
+  // GENERIC WATER QUALITY
+  // =====================================
+
+  else if (
+      q.includes('water quality')
+     ) {
+      reply = 'Water quality reflects the condition of the river. I examine pH, temperature, turbidity, conductivity, dissolved solids and river depth to understand how healthy the ecosystem is.';
+  }
+
+  if (!reply) {
+      reply = 'I am still learning. Try asking me about pH, turbidity, temperature, conductivity, dissolved solids, river depth or the health of the river.';
   }
 
   console.log('Reply:', reply);
-
   addSwanMessage(reply);
 }
+
 
 
   const closeBtn =
