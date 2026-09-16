@@ -1957,9 +1957,7 @@ function sendSwanMessage() {
 
   input.value = '';
 
-  handleSwanQuestion(
-    question
-  );
+  handleSwanQuestion(question);
 }
 
 
@@ -1987,31 +1985,31 @@ function interpretTurbidity(value) {
       return 'Water clarity is generally good.';
 
    if (value <= 75)
-      return 'The water is becoming noticeably cloudy.';
+      return 'The water is becoming noticeably cloudy. This means that aquatic wildlife such as the Salmon may be sad. I am myself, as it means I may not be able to see underwater grasses to feed on. As you probably know, Salmon like pristine and well oxygenated water. And I would not advise any human to go swimming in this water at this time either';
 
-   return 'The water is highly turbid and may be experiencing environmental pressure.';
+   return 'The water is highly turbid and may be experiencing environmental pressure. This means that aquatic wildlife such as the Salmon would find it really difficult getting around. As you probably know, Salmon like pristine and well oxygenated water. And I would not advise any human to go swimming in this water at this time either';
 }
 
 function interpretTemperature(temp) {
 
    if (temp <= 20)
-      return 'Temperature conditions are favourable for many freshwater species.';
+      return 'Temperature conditions are favourable for many freshwater species, including the Salmon.';
 
    if (temp <= 25)
-      return 'Conditions remain acceptable for most freshwater ecosystems.';
+      return 'Conditions remain acceptable for most freshwater ecosystems, including the Salmon.';
 
-   return 'Elevated temperature may place stress on aquatic life.';
+   return 'Elevated temperature may place stress on aquatic life. The Salmon and other sensitive aquatic wildlife may be endangered. Salmon do not like hot or even warm water. It hurts them.';
 }
 
 function interpretLevel(level) {
 
    if (level >= 6 && level <= 12)
-      return 'River depth is within the preferred ecological range.';
+      return 'River depth is within the preferred ecological range. At the moment, it meets requirements of the EU Water Framework Directive.';
 
    if (level < 6)
-      return 'River levels appear lower than normal.';
+      return 'River levels appear lower than normal. Underwater species may not be able to swim freely, and they would be constantly in fear of humans; they would be too exposed.';
 
-   return 'Water levels are elevated and should be monitored.';
+   return 'Water levels are elevated and should be monitored. Floods may be loading.... Watch out!';
 }
 
 function interpretEC(ec) {
@@ -2020,7 +2018,7 @@ function interpretEC(ec) {
       return 'Conductivity is consistent with near-reference river conditions.';
 
    if (ec <= 800)
-      return 'Conductivity remains within the Good status range.';
+      return 'Conductivity remains within the Good status range, in the EU Water Framework Directive\'s scale.';
 
    return 'Conductivity suggests increasing concentrations of dissolved substances.';
 }
@@ -2028,10 +2026,10 @@ function interpretEC(ec) {
 function interpretTDS(tds) {
 
    if (tds <= 130)
-      return 'Dissolved solids are consistent with High ecological status.';
+      return 'Dissolved solids are consistent with High ecological status, by the scale of the EU Water Framework Directive (WFD).';
 
    if (tds <= 520)
-      return 'Dissolved solids remain within the Good status range.';
+      return 'Dissolved solids remain within the Good status range. The river is obviously healthy in that respect, in my opinion.';
 
    return 'Elevated dissolved solids may indicate human influence on water chemistry.';
 }
