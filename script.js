@@ -2107,7 +2107,12 @@ function generateRiverAssessment() {
    
 function getSwanKnowledge(q) {
 
-  const knowledge = [
+q = q
+  .toLowerCase()
+  .replace(/[^\w\s]/g, '')
+  .trim();
+
+const knowledge = [
 
     {
       keywords: ['governance framework','governance'],
@@ -2340,9 +2345,7 @@ if (knowledgeReply) {
   }
 
   else if (
-      q.includes('tds') ||
-      q.includes('dissolved solids')
-     ) {
+      q.includes('current tds') || q.includes('tds today') || q.includes('live tds') || q.includes('dissolved solids')) {
 
       if (hasValidData(currentReadings.tds)) {
           reply = `Total dissolved solids currently measure ${currentReadings.tds.toFixed(0)} ppm. ${interpretTDS(currentReadings.tds)}`;
