@@ -2101,6 +2101,133 @@ function generateRiverAssessment() {
           '.';
 }
 
+// ============================
+// Swan's General Knowledge
+// ============================
+   
+function getSwanKnowledge(q) {
+
+  const knowledge = [
+
+    {
+      keywords: ['governance framework','governance'],
+      answer: 'The Governance Framework shows how citizens, researchers, environmental agencies, local authorities and river stakeholders collaborate to protect and steward the Shannon River.'
+    },
+
+    {
+      keywords: ['stakeholders','who protects the river'],
+      answer: 'River stewardship is shared among environmental agencies, researchers, local communities, policymakers, educators and citizens.'
+    },
+
+    {
+      keywords: ['stewardship','protect the river'],
+      answer: 'Environmental stewardship means actively caring for the river through monitoring, conservation, education, restoration and responsible behaviour.'
+    },
+
+    {
+      keywords: ['wfd','water framework directive'],
+      answer: 'The Water Framework Directive is European legislation that aims to achieve at least Good ecological status for all water bodies.'
+    },
+
+    {
+      keywords: ['high status'],
+      answer: 'High ecological status represents near-natural conditions with minimal human impact. It is the highest classification under the Water Framework Directive.'
+    },
+
+    {
+      keywords: ['good status'],
+      answer: 'Good ecological status is the principal target established by the Water Framework Directive and indicates a healthy aquatic ecosystem.'
+    },
+
+    {
+      keywords: ['swan'],
+      answer: 'I represent the Swan, a voice for the river ecosystem. Through me, the river can share its condition, challenges and stories with people.'
+    },
+
+    {
+      keywords: ['otter'],
+      answer: 'The Otter represents the river chemistry domain. It monitors conductivity and dissolved solids, helping interpret the invisible chemistry of the water.'
+    },
+
+    {
+      keywords: ['lily','water lily'],
+      answer: 'The Lily represents river acidity and ecological balance. It responds particularly to changes in pH.'
+    },
+
+    {
+      keywords: ['biodiversity'],
+      answer: 'Biodiversity refers to the variety of life supported by the river, including fish, birds, plants, insects and microorganisms.'
+    },
+
+    {
+      keywords: ['wildlife'],
+      answer: 'The Shannon supports a rich diversity of wildlife including swans, ducks, otters, fish, aquatic plants and many invertebrate species.'
+    },
+
+    {
+      keywords: ['gps','location'],
+      answer: 'GPS helps connect environmental observations to a specific place along the river. Environmental data becomes much more meaningful when its location is known.'
+    },
+
+    {
+      keywords: ['timeline','history'],
+      answer: 'The timeline allows visitors to explore environmental conditions through time and understand how the river changes day by day.'
+    },
+
+    {
+      keywords: ['dashboard'],
+      answer: 'This dashboard combines live monitoring, environmental storytelling, governance information, biodiversity indicators and river stewardship tools.'
+    },
+
+    {
+      keywords: ['temperature'],
+      answer: 'Temperature influences dissolved oxygen levels, aquatic habitats and the health of freshwater ecosystems.'
+    },
+
+    {
+      keywords: ['turbidity'],
+      answer: 'Turbidity measures water clarity. High turbidity can result from sediment runoff, storms, erosion or pollution.'
+    },
+
+    {
+      keywords: ['ph'],
+      answer: 'pH measures whether water is acidic or alkaline. Most freshwater ecosystems thrive when pH remains reasonably balanced.'
+    },
+
+    {
+      keywords: ['tds','dissolved solids'],
+      answer: 'Total Dissolved Solids measure salts, minerals and other substances dissolved in water.'
+    },
+
+    {
+      keywords: ['conductivity','ec'],
+      answer: 'Electrical Conductivity indicates the ability of water to conduct electricity and provides insight into dissolved substances within the river.'
+    },
+
+    {
+      keywords: ['river health'],
+      answer: 'River health reflects the combined condition of water quality, biodiversity, habitat quality and ecosystem resilience.'
+    }
+
+  ];
+
+  for (const item of knowledge) {
+
+    for (const keyword of item.keywords) {
+
+      if (q.includes(keyword)) {
+        return item.answer;
+      }
+
+    }
+  }
+
+  return null;
+}
+
+
+
+
 
 // function handleSwanQuestion(question) {
 
@@ -2128,6 +2255,18 @@ function generateRiverAssessment() {
 function handleSwanQuestion(question) {
   console.log('Question received:', question);
   const q = question.toLowerCase();
+
+   const knowledgeReply =
+  getSwanKnowledge(q);
+
+if (knowledgeReply) {
+
+  addSwanMessage(
+    knowledgeReply
+  );
+
+  return;
+}
   let reply = null;
 
   // =====================================
