@@ -2260,18 +2260,7 @@ const knowledge = [
 function handleSwanQuestion(question) {
   console.log('Question received:', question);
   const q = question.toLowerCase();
-
-   const knowledgeReply =
-  getSwanKnowledge(q);
-
-if (knowledgeReply) {
-
-  addSwanMessage(
-    knowledgeReply
-  );
-
-  return;
-}
+   
   let reply = null;
 
   // =====================================
@@ -2280,7 +2269,9 @@ if (knowledgeReply) {
 
   if (
       q.includes('current ph') ||
+     q.includes('ph currently') ||
       q.includes('ph today') ||
+     q.includes('ph now') ||
       q === 'ph'
      ) {
 
@@ -2294,7 +2285,12 @@ if (knowledgeReply) {
   }
 
   else if (
-      q.includes('turbidity') ||
+      q.includes('current turbidity') ||
+     q.includes('turbidity currently') ||
+     q.includes('turbidity today') ||
+     q.includes('turbidity now') ||
+     q.includes('how clear') ||
+     q.includes('clear') ||
       q.includes('clarity')
      ) {
       if (hasValidData(currentReadings.turbidity)) {
@@ -2306,9 +2302,13 @@ if (knowledgeReply) {
       }
   }
 
-  else if (
-      q.includes('temperature') ||
-      q.includes('heat')
+ else if (
+      q.includes('current temperature') ||
+      q.includes('temperature today') ||
+      q.includes('temperature currently') ||
+      q.includes('hot') ||
+    q.includes('heat') ||
+      q.includes('water temperature now')
      ) {
 
       if (hasValidData(currentReadings.temperature)) {
@@ -2387,8 +2387,19 @@ if (knowledgeReply) {
      ) {
       reply = 'Water quality reflects the condition of the river. I examine pH, temperature, turbidity, conductivity, dissolved solids and river depth to understand how healthy the ecosystem is.';
   }
-
+   
   if (!reply) {
+
+     const knowledgeReply =
+      getSwanKnowledge(q);
+      
+      if (knowledgeReply) {
+      addSwanMessage(
+       knowledgeReply
+      );
+      
+      return;
+      }
       reply = 'I am still learning. Try asking me about pH, turbidity, temperature, conductivity, dissolved solids, river depth or the health of the river.';
   }
 
