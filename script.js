@@ -2307,7 +2307,7 @@ function handleSwanQuestion(question) {
       q.includes('temperature today') ||
       q.includes('temperature currently') ||
       q.includes('hot') ||
-    q.includes('heat') ||
+       q.includes('heat') ||
       q.includes('water temperature now')
      ) {
 
@@ -2323,6 +2323,9 @@ function handleSwanQuestion(question) {
   else if (
       q.includes('water level') ||
       q.includes('river depth') ||
+     q.includes('deep') ||
+     q.includes('how deep') ||
+     q.includes('how shallow') ||
       q.includes('depth')
      ) {
       if (hasValidData(currentReadings.level)) {
@@ -2334,6 +2337,11 @@ function handleSwanQuestion(question) {
 
   else if (
       q.includes('conductivity') ||
+     q.includes('conductivity now') ||
+     q.includes('conductivity today') ||
+     q.includes('conductivity currently') ||
+     q.includes('electricity') ||
+     q.includes('conductive') ||
       q.includes('ec')
      ) {
       if (hasValidData(currentReadings.ec)) {
@@ -2345,7 +2353,12 @@ function handleSwanQuestion(question) {
   }
 
   else if (
-      q.includes('current tds') || q.includes('tds today') || q.includes('live tds') || q.includes('dissolved solids')) {
+      q.includes('current tds') ||
+     q.includes('tds today') ||
+     q.includes('live tds') ||
+     q.includes('tds currently') ||
+     q.includes('tds now') ||
+     q.includes('dissolved solids')) {
 
       if (hasValidData(currentReadings.tds)) {
           reply = `Total dissolved solids currently measure ${currentReadings.tds.toFixed(0)} ppm. ${interpretTDS(currentReadings.tds)}`;
