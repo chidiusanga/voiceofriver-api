@@ -178,6 +178,12 @@ let waveAmp = 5;
 let waterR = 30, waterG = 100, waterB = 180;
 let turbOpacity = 0;
 
+// Performance controls
+let waterLoopFrame = 0;
+let reducedMotion = false;
+let animationsPaused = false;
+let waterRafId = null;
+
 function resizeWater() {
   const waterArea = document.getElementById('waterArea') || waterWrap;
   DPR = window.devicePixelRatio || 1;
@@ -1066,13 +1072,63 @@ function resizeEntityCanvas() {
   ectx.scale(dpr,dpr);
 }
 
+// function startEntityAnimation() {
+//   if (entityRafId) cancelAnimationFrame(entityRafId);
+//   function frame() {
+//     entityAnimClock += 0.02;
+//     if (ectx) ENTITIES[activeEntityKey].draw(ectx, EW, EH, entityAnimClock);
+//     entityRafId = requestAnimationFrame(frame);
+//   }
+//   frame();
+// }
+
+
+
 function startEntityAnimation() {
-  if (entityRafId) cancelAnimationFrame(entityRafId);
-  function frame() {
-    entityAnimClock += 0.02;
-    if (ectx) ENTITIES[activeEntityKey].draw(ectx, EW, EH, entityAnimClock);
-    entityRafId = requestAnimationFrame(frame);
+
+  if (entityRafId) {
+    cancelAnimationFrame(
+      entityRafId
+    );
   }
+
+  let entityFrame = 0;
+
+  function frame() {
+
+    if (
+      animationsPaused ||
+      reducedMotion
+    ) {
+      entityRafId = null;
+      return;
+    }
+
+    entityFrame++;
+
+    // draw only every second frame
+    if (entityFrame % 2 === 0) {
+
+      entityAnimClock += 0.04;
+
+      if (ectx) {
+
+        ENTITIES[
+          activeEntityKey
+        ].draw(
+          ectx,
+          EW,
+          EH,
+          entityAnimClock
+        );
+      }
+    }
+    entityRafId =
+      requestAnimationFrame(
+        frame
+      );
+  }
+
   frame();
 }
 
@@ -2695,10 +2751,22 @@ function switchMode(mode) {
    ANIMATION LOOP
 ════════════════════════════════════════════════════ */
 function loop() {
-  animClock += 0.016;
-  drawWater();
-  drawScale();
-  requestAnimationFrame(loop);
+
+  if (animationsPaused) {
+    return;
+  }
+
+  waterLoopFrame++;
+
+  // Draw only every 9th frame
+  if (waterLoopFrame % 9 === 0) {
+    animClock += 0.144;
+    drawWater();
+    drawScale();
+  }
+
+  waterRafId =
+    requestAnimationFrame(loop);
 }
 
 /* ════════════════════════════════════════════════════
@@ -3980,6 +4048,41 @@ function initSensorSSE() {
     // EventSource will auto-retry — status updates when reconnected
   };
 }
+
+/* --- Page Visibility Optimisation - to stop dashboard animations if user switches to another tab ---*/
+document.addEventListener(
+  'visibilitychange',
+  () => {
+
+    if (document.hidden) {
+      animationsPaused = true;
+
+      if (waterRafId) {
+        cancelAnimationFrame(
+          waterRafId
+        );
+        waterRafId = null;
+      }
+
+      if (entityRafId) {
+        cancelAnimationFrame(
+          entityRafId
+        );
+        entityRafId = null;
+      }
+
+   } else {
+  if (!animationsPaused) return;
+  animationsPaused = false;
+
+  waterRafId = requestAnimationFrame(
+      loop
+    );
+
+  startEntityAnimation();
+}
+  }
+);
 
 /* ── Start SSE after dashboard init, then do one immediate poll ─── */
 // setTimeout(initSensorSSE, 150);
