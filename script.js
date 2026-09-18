@@ -341,7 +341,7 @@ function drawWater() {
   for (let i=0;i<14;i++){
     const sd=i*97.3, px=((sd*13+animClock*28)%(WW+40))-10;
     const pSurf=surfY(px), py=pSurf+20+((sd*7.1)%Math.max(1,WH-pSurf-30));
-    wctx.globalAlpha=.16;
+    wctx.globalAlpha=.1;
     wctx.beginPath(); wctx.ellipse(px,py,10+Math.sin(sd+animClock)*4,3+Math.cos(sd+animClock*.7)*1.5,0,0,Math.PI*2);
     wctx.strokeStyle='#a0d8f0'; wctx.lineWidth=1; wctx.stroke();
   }
