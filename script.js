@@ -2978,6 +2978,28 @@ window.addEventListener('resize', () => {
 
 init();
 
+// Hamburger Menu Handler
+
+const mobileMenuBtn =
+  document.getElementById(
+    'mobileMenuBtn'
+  );
+
+if (mobileMenuBtn) {
+
+  mobileMenuBtn.addEventListener(
+    'click',
+    function(e) {
+
+      e.stopPropagation();
+
+      toggleMobileMenu();
+
+    }
+  );
+
+}
+
 // Close Hamburger Menu
 document.addEventListener(
   'click',
@@ -2997,7 +3019,7 @@ document.addEventListener(
       mobileMenuOpen &&
       panel &&
       !panel.contains(e.target) &&
-      e.target !== btn
+      !btn.contains(e.target)
     ) {
 
       panel.style.display = 'none';
