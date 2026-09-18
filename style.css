@@ -1061,7 +1061,7 @@ button[title], .bbtn[title], .ebtn[title], .gtbtn[title]{
 
 /* ================================
    PUBLIC API MODAL
-================================ */
+================================= */
 
 #publicAPIPanel {
   position: fixed;
