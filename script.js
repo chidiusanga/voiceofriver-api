@@ -2621,9 +2621,9 @@ function handleSwanQuestion(question) {
     });
   }
 
-======================
-TOGGLE HAMBURGER MENU
-======================
+// ======================
+// TOGGLE HAMBURGER MENU
+// ======================
 let mobileMenuOpen = false;
 
 function toggleMobileMenu() {
