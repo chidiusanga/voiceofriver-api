@@ -1837,6 +1837,14 @@ function openPublicAPI() {
 
     panel.id = 'publicAPIPanel';
 
+   // Close API Panel by Clicking Outside of It
+panel.addEventListener('click', function(e) {
+  if (e.target === panel) {
+    closePublicAPI();
+  }
+
+});
+
     panel.innerHTML = `
       <div class="public-api-inner">
 
