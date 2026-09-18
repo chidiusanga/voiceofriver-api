@@ -246,6 +246,62 @@ function surfY(x) {
     + Math.sin(x*.009 + animClock*.8)  * waveAmp*.25;
 }
 
+// =======================
+// GET THE FISH MOVING
+// ========================
+function updateFish() {
+
+  const FADE_ZONE = 100;
+
+  fishArray.forEach(f => {
+
+    f.x += f.dir * f.spd * .8;
+
+    if (f.dir === 1 && f.x > WW + 80) {
+      Object.assign(f, createFish(0));
+      f.x = -50;
+      f.dir = 1;
+    }
+
+    if (f.dir === -1 && f.x < -80) {
+      Object.assign(f, createFish(0));
+      f.x = WW + 50;
+      f.dir = -1;
+    }
+
+    if (f.dir === 1) {
+
+      f.alpha = Math.min(
+        1,
+        Math.max(
+          0,
+          Math.min(
+            f.x / FADE_ZONE,
+            (WW - f.x) / FADE_ZONE
+          )
+        )
+      );
+
+    } else {
+
+      f.alpha = Math.min(
+        1,
+        Math.max(
+          0,
+          Math.min(
+            (WW - f.x) / FADE_ZONE,
+            f.x / FADE_ZONE
+          )
+        )
+      );
+    }
+
+  });
+
+}
+// =====================
+// DRAW THE WATER
+// =======================
 function drawWater() {
   if (!wctx) return;
    
@@ -335,33 +391,16 @@ wctx.fillText(
 wctx.restore();
    }
 
-  // Fish
-  const FADE_ZONE = 100; // px from edge over which fish fade in/out
-  fishArray.forEach(f=>{
-    f.x+=f.dir*f.spd*.8;
+// Fish
+fishArray.forEach(f => {
 
-    // Respawn fish that have fully left the screen
-    if(f.dir===1  && f.x>WW+80){ Object.assign(f,createFish(0)); f.x=-50;    f.dir=1;  }
-    if(f.dir===-1 && f.x<-80)  { Object.assign(f,createFish(0)); f.x=WW+50; f.dir=-1; }
+  const fy = f.yFrac * WH * .9;
 
-    // Fade in as fish enters from the edge, fade out as it leaves
-    if(f.dir===1){
-      // Swimming right: fade in near left edge, fade out near right edge
-      f.alpha = Math.min(1, Math.max(0,
-        Math.min(f.x / FADE_ZONE,              // fade in from left
-                 (WW - f.x) / FADE_ZONE)       // fade out toward right
-      ));
-    } else {
-      // Swimming left: fade in near right edge, fade out near left edge
-      f.alpha = Math.min(1, Math.max(0,
-        Math.min((WW - f.x) / FADE_ZONE,       // fade in from right
-                 f.x / FADE_ZONE)              // fade out toward left
-      ));
-    }
+  if (fy > surfY(f.x) + f.sz) {
+    drawFish(f);
+  }
 
-    const fy=f.yFrac*WH*.9;
-    if(fy>surfY(f.x)+f.sz) drawFish(f);
-  });
+});
 
   // Riverbed - three layered bands
   wctx.save();
@@ -2755,7 +2794,7 @@ function loop() {
   if (animationsPaused) {
     return;
   }
-
+   updateFish();
   waterLoopFrame++;
 
   // Draw only every 9th frame
