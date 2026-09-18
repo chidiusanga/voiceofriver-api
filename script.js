@@ -2798,8 +2798,8 @@ function loop() {
   waterLoopFrame++;
 
   // Draw only every 9th frame
-  if (waterLoopFrame % 4 === 0) {
-    animClock += 0.064;
+  if (waterLoopFrame % 9 === 0) {
+    animClock += 0.144;
     drawWater();
     drawScale();
   }
