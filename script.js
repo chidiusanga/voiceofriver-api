@@ -2621,6 +2621,20 @@ function handleSwanQuestion(question) {
     });
   }
 
+======================
+TOGGLE HAMBURGER MENU
+======================
+let mobileMenuOpen = false;
+
+function toggleMobileMenu() {
+  const panel = document.getElementById('mobileMenuPanel');
+
+  if (!panel) return;
+
+  mobileMenuOpen = !mobileMenuOpen;
+  panel.style.display = mobileMenuOpen ? 'flex' : 'none';
+}
+
 // Clicking outside the Swan Map closes it
 document.addEventListener('click', function(e) {
 
@@ -2888,6 +2902,9 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
+
+
+
 /* ════════════════════════════════════════════════════
    EVENT LISTENERS (data-action)
 ════════════════════════════════════════════════════ */
@@ -2960,6 +2977,36 @@ window.addEventListener('resize', () => {
 });
 
 init();
+
+// Close Hamburger Menu
+document.addEventListener(
+  'click',
+  function(e) {
+
+    const panel =
+      document.getElementById(
+        'mobileMenuPanel'
+      );
+
+    const btn =
+      document.getElementById(
+        'mobileMenuBtn'
+      );
+
+    if (
+      mobileMenuOpen &&
+      panel &&
+      !panel.contains(e.target) &&
+      e.target !== btn
+    ) {
+
+      panel.style.display = 'none';
+      mobileMenuOpen = false;
+
+    }
+
+  }
+);
 
 
 /* ══════════════════════════════════════════════════════
