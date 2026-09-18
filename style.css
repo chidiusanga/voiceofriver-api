@@ -1074,22 +1074,23 @@ PUBLIC API MODAL
 }
 
 .public-api-inner {
-  width: 95%;
-  height: 92%;
+  width: min(1100px, 88vw);
+  height: min(820px, 88vh);
   background: #15253d;
   border-radius: 16px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,.5);
 }
 
 .public-api-header {
-  height: 52px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 16px;
-  background: #1b304f;
+  padding: 12px 16px;
+  background: #1c3558;
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
 .public-api-title {
@@ -1099,10 +1100,13 @@ PUBLIC API MODAL
 }
 
 .public-api-close-btn {
+  background: #d9534f;
+  color: white;
   border: none;
   border-radius: 8px;
-  padding: 6px 12px;
+  padding: 8px 12px;
   cursor: pointer;
+  font-weight: 600;
 }
 
 #publicAPIFrame {
