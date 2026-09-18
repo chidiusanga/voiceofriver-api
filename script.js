@@ -1816,6 +1816,78 @@ function closeWFDReport() {
   wfdPanelOpen = false;
 }
 
+
+// =====================
+//    PUBLIC API MODAL
+// ====================
+
+let publicAPIPanelOpen = false;
+
+function openPublicAPI() {
+
+  let panel =
+    document.getElementById(
+      'publicAPIPanel'
+    );
+
+  if (!panel) {
+
+    panel =
+      document.createElement('div');
+
+    panel.id = 'publicAPIPanel';
+
+    panel.innerHTML = `
+      <div class="public-api-inner">
+
+        <div class="public-api-header">
+
+          <div class="public-api-title">
+            🔌 Public API Data
+          </div>
+
+          <button
+            class="public-api-close-btn"
+            onclick="closePublicAPI()">
+            ✕ Close
+          </button>
+
+        </div>
+
+        <iframe
+          id="publicAPIFrame"
+          src="https://shannon-river.vercel.app/"
+          loading="lazy">
+        </iframe>
+
+      </div>
+    `;
+
+    document
+      .getElementById('app')
+      .appendChild(panel);
+  }
+
+  panel.style.display = 'flex';
+
+  publicAPIPanelOpen = true;
+}
+
+function closePublicAPI() {
+
+  const panel =
+    document.getElementById(
+      'publicAPIPanel'
+    );
+
+  if (panel) {
+    panel.style.display = 'none';
+  }
+
+  publicAPIPanelOpen = false;
+}
+
+// ========================
 // Swan Map modal
 // =====================
 let swanMapPanelOpen = false;
@@ -2821,12 +2893,14 @@ document.addEventListener('click', e => {
   }
   const btn = e.target.closest('[data-action],[data-entity]');
   if (!btn) return;
-  if (btn.dataset.entity) { switchEntity(btn.dataset.entity); return; }
+  if (btn.dataset.entity) { switchEntity(btn.dataset.entity); return;
+            }
   const a = btn.dataset.action;
+   
   if (a==='mode-past')    switchMode('past');
   if (a==='mode-present') switchMode('present');
   if (a==='mode-ideal')   switchMode('ideal');
-  if (a==='mode-api')     switchMode('api');
+  if (a==='mode-api')     openPublicAPI();
    if (a==='refresh')      refreshSensors();
    if (a==='wfd-report')   openWFDReport();
    if (a==='swan-map')     openSwanMap();
