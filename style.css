@@ -1603,7 +1603,7 @@ body,
    overflow-y:auto !important;
    overflow-x:hidden !important;
    padding-top:50px;
-   padding-bottom:180px;
+   padding-bottom:250px;
    }
 #infoPanel{
    width:240px;
@@ -1618,8 +1618,8 @@ body,
    }
 
 #gaugeTypeBar{
-   bottom:10px;
-   z-index:50;
+   bottom:5px;
+   z-index:100;
    }
 .gauge-canvas-wrap{
   position:relative;
