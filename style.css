@@ -1587,7 +1587,6 @@ body,
 /* ════════════════════════════════════════════════════════
    TABLET LAYOUT (615px - 768px)
 ════════════════════════════════════════════════════════ */
-
 @media (min-width:615px) and (max-width:768px){
 
   #infoPanel{
@@ -1608,14 +1607,14 @@ body,
     font-size:11px;
   }
 
-  .range-name,
-  .range-vals{
-    font-size:9px;
-  }
-
   #locationCard{
     font-size:11px;
     padding:8px 10px;
+  }
+
+  .range-name,
+  .range-vals{
+    font-size:9px;
   }
 
   #wfdStatusText{
