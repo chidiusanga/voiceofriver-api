@@ -364,10 +364,27 @@ function drawWater() {
    // REPLACED HERE TO MOVE "AWAITING WATER LEVEL DATA" DOWN
 
 wctx.save();
-const overlayY = Math.max(
-  WH * 0.65,
-  WH - 175
-);
+// const overlayY = Math.max(
+//   WH * 0.65,
+//   WH - 175
+// );
+// ---- replaced the above with the below block to place the "Water Level Sensor Offline ..." text over the gauges
+      
+let overlayY;
+
+if (
+  window.innerWidth >= 680 &&
+  window.innerWidth <= 900
+) {
+
+  overlayY = WH - 105;
+} else {
+  overlayY = Math.max(
+    WH * 0.65,
+    WH - 175
+  );
+}
+
 wctx.textAlign = 'center';
 wctx.fillStyle = '#ff6060';
 wctx.font = 'bold 18px sans-serif';
