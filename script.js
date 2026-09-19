@@ -724,7 +724,7 @@ if (
      window.innerWidth >= 680 &&
      window.innerWidth <= 900
    ) {
-     maxGaugeSize = 340;
+     maxGaugeSize = 300;
    }
 
 /* Large desktop monitors */
