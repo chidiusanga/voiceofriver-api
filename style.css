@@ -1587,53 +1587,53 @@ body,
 /* ════════════════════════════════════════════════════════
    TABLET LAYOUT (615px - 768px)
 ════════════════════════════════════════════════════════ */
-@media (min-width:615px) and (max-width:768px){
+/* ==========================================
+   TABLETS
+   iPad Mini, iPad, iPad Pro, Galaxy Tabs
+========================================== */
 
-  #infoPanel{
-    width:220px;
-  }
+@media (min-width:680px) and (max-width:900px){
+   
+.gauge-bubble{
+   width:100%;
+   }
+.gauge-label {
+   font-size: 14px;
+   }
+#gaugeOverlay{
+   gap:24px;
+   padding-top:20px;
+   }
+#infoPanel{
+   width:240px;
+   }
 
-  #tlHousing{
-    width:42px;
-    padding:5px 0;
-  }
+#tlHousing{
+   width:44px;
+   }
+.tl-bulb{
+   width:24px;
+   height:24px;
+   }
+}
 
-  .tl-bulb{
-    width:22px;
-    height:22px;
-  }
+/* ==========================================
+   PHONES
+   iPhone, Galaxy S, Pixel
+========================================== */
 
-  #sensorTitle{
-    font-size:11px;
-  }
-
-  #locationCard{
-    font-size:11px;
-    padding:8px 10px;
-  }
-
-  .range-name,
-  .range-vals{
-    font-size:9px;
-  }
-
-  #wfdStatusText{
-    font-size:10px;
-  }
-
-  #narrativeWrap{
-    font-size:12px;
-  }
-
-  .gauge-bubble{
-    width:46%;
-  }
-
-  .gauge-label{
-    font-size:11px;
-  }
+@media (min-width:360px) and (max-width:679px){
 
 }
+
+/* ==========================================
+   ULTRA-SMALL
+========================================== */
+
+@media (max-width:359px){
+
+}
+``*
 
 #mobileMenuBtn{
   display:none;
