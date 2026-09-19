@@ -379,7 +379,7 @@ if (
   window.innerWidth <= 900
 ) {
 
-  overlayY = WH - 55;
+  overlayY = WH * 0.72;
 
   titleFont  = 'bold 11px sans-serif';
   detailFont = '9px sans-serif';
@@ -398,7 +398,15 @@ if (
 }
 
 wctx.textAlign = 'center';
-wctx.fillStyle = '#ff6060';
+
+if (
+  window.innerWidth >= 680 &&
+  window.innerWidth <= 900
+) {
+  wctx.fillStyle = 'rgba(255,96,96,.75)';
+} else {
+  wctx.fillStyle = '#ff6060';
+}
 
 wctx.font = titleFont;
 
