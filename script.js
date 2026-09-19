@@ -693,9 +693,39 @@ function buildGaugeOverlay() {
   const aW = waterArea ? waterArea.clientWidth  - 52 : window.innerWidth  * 0.65;
   const aH = waterArea ? waterArea.clientHeight - 48 : window.innerHeight * 0.75;
   
-   const byWidth  = Math.floor((aW - entityKeys.length * 20) / entityKeys.length);
+   // const byWidth  = Math.floor((aW - entityKeys.length * 20) / entityKeys.length);
+   // --- Replaced the above line with the below block for gauge responsiveness to tablets/mobiles --- 
+
+let byWidth;
+
+if (
+  window.innerWidth >= 680 &&
+  window.innerWidth <= 900
+) {
+
+  // Tablet layout:
+  // gauges stacked vertically
+  byWidth = Math.floor(aW * 0.75);
+
+} else {
+
+  // Desktop + phone logic
+  byWidth = Math.floor(
+    (aW - entityKeys.length * 20) /
+    entityKeys.length
+  );
+
+}
+   
    const byHeight = Math.floor(aH * 0.78);
    let maxGaugeSize = 280;
+
+   if (
+     window.innerWidth >= 680 &&
+     window.innerWidth <= 900
+   ) {
+     maxGaugeSize = 380;
+   }
 
 /* Large desktop monitors */
 if (window.innerWidth >= 1600) {
