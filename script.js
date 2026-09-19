@@ -458,7 +458,7 @@ fishArray.forEach(f => {
   wctx.lineTo(WW,WH); wctx.closePath(); wctx.fillStyle='#0d1c0d'; wctx.fill();
   wctx.beginPath(); wctx.moveTo(0,WH);
   for (let x=0;x<=WW;x+=6) wctx.lineTo(x,WH-(bedDepth-14)+Math.sin(x*.04)*6+Math.sin(x*.09+1.2)*4);
-  wctx.lineTo(WW,WH); wctx.closePath(); wctx.fillStyle='#1b3a1b'; wctx.fill();
+  wctx.lineTo(WW,WH); wctx.closePath(); wctx.fillStyle='#112211'; wctx.fill();
   wctx.restore();
 }
 
