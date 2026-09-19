@@ -1661,6 +1661,7 @@ body,
    }
    
 #trafficLight{
+   flex: 0 0 48px;
    padding:6px 4px;
    }
 
@@ -1750,6 +1751,21 @@ body,
 #sensorUnit{
    font-size:11px;
    }
+
+#sensorBlock{
+   flex-wrap:wrap;
+}
+
+#sensorData{
+   flex:1;
+}
+
+#sensorStatus{
+   width:100%;
+   margin-top:6px;
+   text-align:center;
+   justify-content:center;
+}
 
 .gtbtn{
    width:72px;
