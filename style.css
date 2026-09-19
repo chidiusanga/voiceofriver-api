@@ -1600,6 +1600,10 @@ body,
 #gaugeOverlay{
    gap:24px;
    padding-top:40px;
+   overflow-y:auto !important;
+   overflow-x:hidden !important;
+   padding-top:50px;
+   padding-bottom:120px;
    }
 #infoPanel{
    width:240px;
@@ -1612,6 +1616,23 @@ body,
    width:24px;
    height:24px;
    }
+
+#gaugeTypeBar{
+   bottom:10px;
+   z-index:50;
+   }
+.gauge-canvas-wrap{
+  position:relative;
+}
+
+.gauge-value-tag{
+  position:absolute;
+  bottom:55px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:20;
+}
+
 }
 
 /* ==========================================
