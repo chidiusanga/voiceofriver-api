@@ -724,7 +724,7 @@ if (
      window.innerWidth >= 680 &&
      window.innerWidth <= 900
    ) {
-     maxGaugeSize = 250;
+     maxGaugeSize = 340;
    }
 
 /* Large desktop monitors */
@@ -780,7 +780,8 @@ if (!hasValidData(val)) {
 }
     bubble.appendChild(labelEl);
     bubble.appendChild(wrapEl);
-    bubble.appendChild(valTag);
+    // bubble.appendChild(valTag);
+   wrapEl.appendChild(valTag);
     overlay.appendChild(bubble);
 
     const cfg = sharedGaugeCfg(s, val);
