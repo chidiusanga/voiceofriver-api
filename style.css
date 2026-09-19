@@ -1618,7 +1618,7 @@ body,
    }
 
 #gaugeTypeBar{
-   bottom:5px;
+   bottom:10px;
    z-index:100;
    }
 .gauge-canvas-wrap{
