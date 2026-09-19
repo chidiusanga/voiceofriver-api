@@ -1645,7 +1645,7 @@ body,
    border-radius: 5px 5px 0 0;
    color: rgb(9, 112, 54);
    background-color: none;
-}
+   }
 
 }
 
@@ -1771,6 +1771,10 @@ body,
    content:"🌡️";
    font-size:16px;
    border-radius: 0 20px 20px 0;
+   }
+
+.ebtn-icon {
+    font-size: 18px;
    }
 }
 
