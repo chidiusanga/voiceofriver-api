@@ -828,8 +828,7 @@ if (!hasValidData(val)) {
    valTag.textContent = 'Sensor Offline';
    valTag.style.color = '#ff5050';
 } else {
-   valTag.textContent = formatVal(val, s);
-   valTag.style.color = '#ffffff';
+   valTag.remove();
 }
     bubble.appendChild(labelEl);
     bubble.appendChild(wrapEl);
