@@ -1675,8 +1675,16 @@ body,
    }
 
 #gaugeTypeBar{
-  display:none;
-   }
+   display:flex;
+   background:none;
+   border:none;
+   box-shadow:none;
+   backdrop-filter:none;
+}
+
+#gaugeTypeLabel{
+   display:none;
+}
 
 #gaugeOverlay{
    overflow-y:auto !important;
@@ -1740,6 +1748,24 @@ body,
 
 #sensorUnit{
    font-size:11px;
+   }
+
+.gtbtn{
+   width:38px;
+   height:30px;
+
+   font-size:0;     /* hide original text */
+   padding:0;
+   }
+
+.gtbtn[data-gauge-type="radial-full"]::before{
+   content:"⏱️";
+   font-size:16px;
+}
+
+.gtbtn[data-gauge-type="linear-vertical"]::before{
+   content:"🌡️";
+   font-size:16px;
    }
 }
 
