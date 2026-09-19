@@ -817,6 +817,22 @@ const sz = Math.max(
   )
 );
 
+
+
+
+
+console.log({
+  byWidth,
+  byHeight,
+  maxGaugeSize,
+  sz,
+  screenWidth: window.innerWidth
+});
+
+
+
+   
+
   entityKeys.forEach(key => {
     const s   = SENSORS[key];
     const val = conditionMode==='ideal' ? PRISTINE[key] : currentReadings[key];
