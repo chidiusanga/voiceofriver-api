@@ -1685,6 +1685,10 @@ body,
 #locationCard{
    font-size:10px;
    }
+
+.gauge-bubble{
+   width:100%;
+   }
 }
 
 /* ==========================================
