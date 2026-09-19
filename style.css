@@ -1590,6 +1590,9 @@ body,
 ========================================== */
 
 @media (min-width:680px) and (max-width:900px){
+#titleBar h1{
+font-size:72px;
+}
    
 .gauge-bubble{
    width:100%;
