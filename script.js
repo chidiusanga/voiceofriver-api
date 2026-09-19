@@ -371,40 +371,56 @@ wctx.save();
 // ---- replaced the above with the below block to place the "Water Level Sensor Offline ..." text over the gauges
       
 let overlayY;
+let titleFont;
+let detailFont;
 
 if (
   window.innerWidth >= 680 &&
   window.innerWidth <= 900
 ) {
 
-  overlayY = WH - 105;
+  overlayY = WH - 55;
+
+  titleFont  = 'bold 11px sans-serif';
+  detailFont = '9px sans-serif';
+
 } else {
+
   overlayY = Math.max(
     WH * 0.65,
     WH - 175
   );
+
+  titleFont  = 'bold 18px sans-serif';
+  detailFont = '13px sans-serif';
+
 }
 
 wctx.textAlign = 'center';
 wctx.fillStyle = '#ff6060';
-wctx.font = 'bold 18px sans-serif';
+
+wctx.font = titleFont;
+
 wctx.fillText(
   'Water Level Sensor Offline',
   WW / 2,
   overlayY + 20
 );
-wctx.font = '13px sans-serif';
+
+wctx.font = detailFont;
+
 wctx.fillText(
   'The Artificial Twin of the Swan is probably not on the river at the moment.',
   WW / 2,
-  overlayY + 42
+  overlayY + 38
 );
+
 wctx.fillText(
   'Displaying indeterminate river depth for now.',
   WW / 2,
-  overlayY + 60
+  overlayY + 52
 );
-
+      
 wctx.restore();
    }
 
