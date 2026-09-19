@@ -1640,6 +1640,7 @@ body,
 
 .thermometer-tag{
   bottom:7px;
+   border-radius: 5px 5px 0 0;
 }
 
 }
