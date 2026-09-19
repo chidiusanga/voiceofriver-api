@@ -1655,19 +1655,23 @@ body,
 ========================================== */
 
 @media (min-width:360px) and (max-width:679px){
-   
-   #infoPanel{
+
+#infoPanel{
    width:150px;
    }
+   
+#trafficLight{
+   padding:6px 4px;
+   }
 
-   #tlHousing{
-  width:34px;
-  padding:4px 0;
+#tlHousing{
+   width:28px;
+   padding:3px 0;
    }
 
 .tl-bulb{
-  width:18px;
-  height:18px;
+   width:14px;
+   height:14px;
    }
 
 #gaugeTypeBar{
@@ -1683,13 +1687,19 @@ body,
    }
    
 #locationCard{
-   font-size:10px;
+   font-size:9px;
+   padding:6px 8px;
    }
 
 .gauge-bubble{
    width:100%;
    }
 
+.gauge-label{
+   font-size:11px;
+   padding:2px 8px;
+   }
+   
 #scaleCol{
    width:34px;
    }
@@ -1713,11 +1723,26 @@ body,
    line-height:1.1;
    }
 
-#wfdStatusText{
-   font-size:9px;
-   line-height:1.15;
+#wfdStatusBar{
+   padding:4px 6px;
    }
-   
+
+#wfdStatusText{
+   font-size:8px;
+   line-height:1.05;
+   }
+
+#sensorTitle{
+   font-size:9px;
+   }
+
+#sensorValue{
+   font-size:16px;
+   }
+
+#sensorUnit{
+   font-size:11px;
+   }
 }
 
 /* ==========================================
