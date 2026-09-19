@@ -447,15 +447,17 @@ fishArray.forEach(f => {
   // Riverbed - three layered bands
   wctx.save();
    const bedDepth = (
-  window.innerWidth >= 680 &&  window.innerWidth <= 900) ? 70 : 18;
+  window.innerWidth >= 680 && 
+   window.innerWidth <= 900) ? 70 : 18;
+   
   wctx.beginPath(); wctx.moveTo(0,WH);
-  for (let x=0;x<=WW;x+=6) wctx.lineTo(x,WH-bedDepth+Math.sin(x*.04)*6+Math.sin(x*.09+1.2)*4;
+  for (let x=0;x<=WW;x+=6) wctx.lineTo(x,WH-bedDepth+Math.sin(x*.04)*6+Math.sin(x*.09+1.2)*4);
   wctx.lineTo(WW,WH); wctx.closePath(); wctx.fillStyle='#080f08'; wctx.fill();
   wctx.beginPath(); wctx.moveTo(0,WH);
   for (let x=0;x<=WW;x+=6) wctx.lineTo(x,WH-(bedDepth-8)+Math.sin(x*.04)*6+Math.sin(x*.09+1.2)*4);
   wctx.lineTo(WW,WH); wctx.closePath(); wctx.fillStyle='#0d1c0d'; wctx.fill();
   wctx.beginPath(); wctx.moveTo(0,WH);
-  for (let x=0;x<=WW;x+=6) wctx.lineTo(x,WH-(bedDepth-14)+Math.sin(x*.04)*6+Math.sin(x*.09+1.2)*4;
+  for (let x=0;x<=WW;x+=6) wctx.lineTo(x,WH-(bedDepth-14)+Math.sin(x*.04)*6+Math.sin(x*.09+1.2)*4);
   wctx.lineTo(WW,WH); wctx.closePath(); wctx.fillStyle='#112211'; wctx.fill();
   wctx.restore();
 }
