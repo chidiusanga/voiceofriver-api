@@ -1687,7 +1687,7 @@ body,
    }
    
 #locationCard{
-   font-size:9px;
+   font-size:10px;
    padding:6px 8px;
    }
 
@@ -1718,22 +1718,18 @@ body,
    font-size:12px;
 }
 
-#sensorTitle{
-   font-size:11px;
-   line-height:1.1;
-   }
-
 #wfdStatusBar{
    padding:4px 6px;
    }
 
 #wfdStatusText{
-   font-size:8px;
-   line-height:1.05;
+   font-size:10px;
+   line-height:1.2;
    }
 
 #sensorTitle{
-   font-size:9px;
+   font-size:10px;
+   line-height:1.1;
    }
 
 #sensorValue{
