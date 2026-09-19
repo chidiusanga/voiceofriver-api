@@ -799,6 +799,16 @@ const sz = Math.max(
     const s   = SENSORS[key];
     const val = conditionMode==='ideal' ? PRISTINE[key] : currentReadings[key];
     const st  = getStatus(key);
+     
+   let healthLabel = 'Healthy';
+   
+   if (!hasValidData(val)) {
+     healthLabel = 'Sensor Offline';
+   } else if (st === 'warn') {
+     healthLabel = 'Unhealthy';
+   } else if (st === 'bad') {
+     healthLabel = 'Dangerous';
+   }
 
     const bubble = document.createElement('div');
     bubble.className = 'gauge-bubble' + (key===activeGaugeKey?' active':'');
@@ -824,11 +834,16 @@ const sz = Math.max(
        : 'gauge-value-tag';
    
    // Display text content only if there's a data value, otherwise display "Sensor Offline..." instead of just 000.00 or NaN.
-if (!hasValidData(val)) {
-   valTag.textContent = 'Sensor Offline';
-   valTag.style.color = '#ff5050';
+valTag.textContent = healthLabel;
+
+if (healthLabel === 'Healthy') {
+   valTag.style.color = '#30e880';
+} else if (healthLabel === 'Unhealthy') {
+   valTag.style.color = '#f0c030';
+} else if (healthLabel === 'Dangerous') {
+   valTag.style.color = '#f04848';
 } else {
-   valTag.remove();
+   valTag.style.color = '#ff8080';
 }
     bubble.appendChild(labelEl);
     bubble.appendChild(wrapEl);
