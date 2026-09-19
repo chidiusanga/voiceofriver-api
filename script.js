@@ -749,13 +749,20 @@ if (
   window.innerWidth <= 900
 ) {
 
-  // Tablet layout:
-  // gauges stacked vertically
+  // Tablets
   byWidth = Math.floor(aW * 0.75);
+
+} else if (
+  window.innerWidth >= 360 &&
+  window.innerWidth < 680
+) {
+
+  // Phones
+  byWidth = Math.floor(aW * 0.82);
 
 } else {
 
-  // Desktop + phone logic
+  // Desktop
   byWidth = Math.floor(
     (aW - entityKeys.length * 20) /
     entityKeys.length
@@ -783,7 +790,7 @@ else if (
   window.innerWidth >= 360 &&
   window.innerWidth < 680
 ) {
-     maxGaugeSize = 240;
+     maxGaugeSize = 260;
       // overlayY = WH * 0.78;
       titleFont = 'bold 11px sans-serif';
       detailFont = '9px sans-serif';
