@@ -1636,11 +1636,15 @@ body,
   z-index:20;
    padding:2px 10px;
    border-radius: 5px;
+   color: rgb(9, 112, 54);
+   background-color: none;
 }
 
 .thermometer-tag{
   bottom:7px;
    border-radius: 5px 5px 0 0;
+   color: rgb(9, 112, 54);
+   background-color: none;
 }
 
 }
