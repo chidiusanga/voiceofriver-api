@@ -817,7 +817,11 @@ const sz = Math.max(
 
 
    const valTag = document.createElement('div');
-   valTag.className = 'gauge-value-tag';
+   
+   valTag.className =
+     gaugeType === 'linear-vertical'
+       ? 'gauge-value-tag thermometer-tag'
+       : 'gauge-value-tag';
    
    // Display text content only if there's a data value, otherwise display "Sensor Offline..." instead of just 000.00 or NaN.
 if (!hasValidData(val)) {
