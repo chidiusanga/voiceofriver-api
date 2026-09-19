@@ -1691,8 +1691,32 @@ body,
    }
 
 #depthRuler{
-   width:34px;
+   /* width:34px; */
    }
+
+.entity-btn{
+   min-width:60px;
+   padding:4px 2px;
+   }
+   
+.entity-btn .icon{
+   font-size:16px;
+   }
+
+.entity-btn .label{
+   font-size:10px;
+   }
+
+#sensorTitle{
+   font-size:11px;
+   line-height:1.1;
+   }
+
+#wfdStatusText{
+   font-size:9px;
+   line-height:1.15;
+   }
+   
 }
 
 /* ==========================================
