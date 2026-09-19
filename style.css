@@ -1690,22 +1690,23 @@ body,
    width:100%;
    }
 
-#depthRuler{
-   /* width:34px; */
+#scaleCol{
+   width:34px;
    }
 
-.entity-btn{
-   min-width:60px;
-   padding:4px 2px;
-   }
-   
-.entity-btn .icon{
-   font-size:16px;
-   }
+#entityBar{
+   flex-wrap:nowrap;
+}
 
-.entity-btn .label{
-   font-size:10px;
-   }
+.ebtn{
+   min-width:0;
+   padding:3px 2px;
+   font-size:8px;
+}
+
+.ebtn-icon{
+   font-size:12px;
+}
 
 #sensorTitle{
    font-size:11px;
