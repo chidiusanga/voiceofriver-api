@@ -1764,13 +1764,13 @@ body,
 .gtbtn[data-gauge-type="radial-full"]::before{
    content:"⏱️";
    font-size:16px;
-   border-radius: 20 0 0 20;
+   border-radius: 20px 0 0 20px;
 }
 
 .gtbtn[data-gauge-type="linear-vertical"]::before{
    content:"🌡️";
    font-size:16px;
-   border-radius: 0 20 20 0;
+   border-radius: 0 20px 20px 0;
    }
 }
 
