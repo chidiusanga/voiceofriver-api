@@ -1584,9 +1584,6 @@ body,
 }
 
 
-/* ════════════════════════════════════════════════════════
-   TABLET LAYOUT (615px - 768px)
-════════════════════════════════════════════════════════ */
 /* ==========================================
    TABLETS
    iPad Mini, iPad, iPad Pro, Galaxy Tabs
@@ -1602,7 +1599,7 @@ body,
    }
 #gaugeOverlay{
    gap:24px;
-   padding-top:20px;
+   padding-top:40px;
    }
 #infoPanel{
    width:240px;
