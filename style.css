@@ -1775,9 +1775,11 @@ body,
 
 .gtbtn:first-of-type {
   border-radius: 20px 0 0 20px;
+}
 
 .gtbtn:last-of-type {
   border-radius: 20px 0 0 20px;
+}
 
 .ebtn-icon {
     font-size: 18px;
