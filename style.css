@@ -1686,13 +1686,13 @@ body,
 #mobileMenuPanel{
   position:fixed;
   top:90px;
-  right:10px;
+  right:0;
   width:260px;
   display:none;
   flex-direction:column;
   background:#324217;
   border:1px solid rgba(80,140,200,.35);
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 0 12px;
   overflow:hidden;
   z-index:250;
   box-shadow:0 16px 48px rgba(0,0,0,.7);
