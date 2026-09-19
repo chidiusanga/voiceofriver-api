@@ -790,8 +790,8 @@ else if (
   window.innerWidth >= 360 &&
   window.innerWidth < 680
 ) {
-     maxGaugeSize = 300;
-      // overlayY = WH * 0.78;
+     maxGaugeSize = 260;
+      overlayY = WH * 0.78;
       titleFont = 'bold 11px sans-serif';
       detailFont = '9px sans-serif';
    }
