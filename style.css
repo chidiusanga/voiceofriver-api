@@ -1583,6 +1583,71 @@ body,
   box-shadow:none;
 }
 
+
+/* ════════════════════════════════════════════════════════
+   TABLET LAYOUT (615px - 768px)
+════════════════════════════════════════════════════════ */
+
+@media (min-width:615px) and (max-width:768px){
+
+  /* Narrow the information panel slightly */
+  #infoPanel{
+    width:220px;
+  }
+
+  /* Smaller traffic light */
+  #tlHousing{
+    width:42px;
+    padding:5px 0;
+  }
+
+  .tl-bulb{
+    width:22px;
+    height:22px;
+  }
+
+  /* Smaller sensor title */
+  #sensorTitle{
+    font-size:11px;
+  }
+
+  /* Smaller range labels */
+  .range-name,
+  .range-vals{
+    font-size:9px;
+  }
+
+  /* Smaller location card */
+  #locationCard{
+    font-size:11px;
+    padding:8px 10px;
+  }
+
+  /* Slightly smaller WFD bar */
+  #wfdStatusText{
+    font-size:10px;
+  }
+
+  /* Smaller narrative text */
+  #narrativeWrap{
+    font-size:12px;
+  }
+
+  /* Smaller OFFLINE */
+
+
+   @media (min-width:615px) and (max-width:768px){
+
+  .gauge-bubble{
+    width:46%;
+  }
+
+   .gauge-label{
+     font-size:11px;
+   }
+
+}
+
 /* ════════════════════════════════════════════════════════
    MOBILE HAMBURGER MENU
 ════════════════════════════════════════════════════════ */
