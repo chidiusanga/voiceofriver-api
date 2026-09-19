@@ -447,7 +447,7 @@ fishArray.forEach(f => {
   // Riverbed - three layered bands
   wctx.save();
    const bedDepth = (
-  window.innerWidth >= 680 && 
+  window.innerWidth >= 360 && 
    window.innerWidth <= 900) ? 70 : 18;
    
   wctx.beginPath(); wctx.moveTo(0,WH);
@@ -784,17 +784,18 @@ if (
       titleFont = 'bold 11px sans-serif';
       detailFont = '9px sans-serif';
    }
-
 /* Gauge sizing for mobile phones */
 else if (
   window.innerWidth >= 360 &&
   window.innerWidth < 680
 ) {
      maxGaugeSize = 260;
-      overlayY = WH * 0.78;
-      titleFont = 'bold 11px sans-serif';
-      detailFont = '9px sans-serif';
-   }
+
+     overlayY = WH * 0.80;
+
+     titleFont = 'bold 9px sans-serif';
+     detailFont = '8px sans-serif';
+}
    
 
 /* Large desktop monitors */
