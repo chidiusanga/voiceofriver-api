@@ -383,6 +383,7 @@ if (
 
   titleFont  = 'bold 11px sans-serif';
   detailFont = '9px sans-serif';
+   wctx.fillStyle = 'rgba(255,96,96,.75)';
 
 } else {
 
@@ -758,6 +759,9 @@ if (
      window.innerWidth <= 900
    ) {
      maxGaugeSize = 350;
+      overlayY = WH * 0.78;
+      titleFont = 'bold 11px sans-serif';
+      detailFont = '9px sans-serif';
    }
 
 /* Large desktop monitors */
