@@ -765,7 +765,7 @@ if (
 ) {
 
   // Phones
-  byWidth = Math.floor(aW * 0.82);
+  byWidth = Math.floor(aW * 0.95);
 
 } else {
 
