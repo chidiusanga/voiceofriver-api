@@ -737,6 +737,13 @@ function buildGaugeOverlay() {
   // Compute gauge size from the waterArea element (now a real layout element)
   const waterArea = document.getElementById('waterArea');
   const aW = waterArea ? waterArea.clientWidth  - 52 : window.innerWidth  * 0.65;
+
+   console.log({
+  waterAreaWidth: waterArea.clientWidth,
+  aW
+});
+
+   
   const aH = waterArea ? waterArea.clientHeight - 48 : window.innerHeight * 0.75;
   
    // const byWidth  = Math.floor((aW - entityKeys.length * 20) / entityKeys.length);
