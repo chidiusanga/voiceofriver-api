@@ -381,8 +381,8 @@ if (
 
   overlayY = WH * 0.72;
 
-  titleFont  = 'bold 11px sans-serif';
-  detailFont = '9px sans-serif';
+  titleFont  = 'bold 13px sans-serif';
+  detailFont = '11px sans-serif';
    wctx.fillStyle = 'rgba(255,96,96,.75)';
 
 } else {
