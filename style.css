@@ -1655,7 +1655,36 @@ body,
 ========================================== */
 
 @media (min-width:360px) and (max-width:679px){
+   
+   #infoPanel{
+   width:170px;
+   }
 
+   #tlHousing{
+  width:34px;
+  padding:4px 0;
+   }
+
+.tl-bulb{
+  width:18px;
+  height:18px;
+   }
+
+#gaugeTypeBar{
+  display:none;
+   }
+
+#gaugeOverlay{
+   overflow-y:auto !important;
+   overflow-x:hidden !important;
+   padding-top:25px;
+   padding-bottom:120px;
+   gap:28px;
+   }
+   
+#locationCard{
+   font-size:10px;
+   }
 }
 
 /* ==========================================
@@ -1665,7 +1694,6 @@ body,
 @media (max-width:359px){
 
 }
-``*
 
 #mobileMenuBtn{
   display:none;
