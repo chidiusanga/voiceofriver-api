@@ -1630,15 +1630,16 @@ body,
 
 .gauge-value-tag{
   position:absolute;
-  bottom:52px;
+  bottom:20px;
   left:50%;
   transform:translateX(-50%);
   z-index:20;
    padding:2px 10px;
+   border-radius: 5px;
 }
 
 .thermometer-tag{
-  bottom:35px;
+  bottom:7px;
 }
 
 }
