@@ -766,6 +766,8 @@ if (
    const byHeight = Math.floor(aH * 0.78);
    let maxGaugeSize = 280;
 
+/* Gauge sizing for tablets */ 
+
    if (
      window.innerWidth >= 680 &&
      window.innerWidth <= 900
@@ -775,6 +777,18 @@ if (
       titleFont = 'bold 11px sans-serif';
       detailFont = '9px sans-serif';
    }
+
+/* Gauge sizing for mobile phones */
+else if (
+  window.innerWidth >= 360 &&
+  window.innerWidth < 680
+) {
+     maxGaugeSize = 240;
+      // overlayY = WH * 0.78;
+      titleFont = 'bold 11px sans-serif';
+      detailFont = '9px sans-serif';
+   }
+   
 
 /* Large desktop monitors */
 if (window.innerWidth >= 1600) {
