@@ -1725,6 +1725,10 @@ html, body{
    font-size:11px;
    padding:2px 8px;
    }
+
+.gauge-value-tag {
+   bottom: 90px;
+}
    
 #scaleCol{
    width:34px;
