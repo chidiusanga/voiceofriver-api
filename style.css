@@ -1689,16 +1689,23 @@ html, body{
    height:20px;
    }
 
-#gaugeTypeBar {
+/* #gaugeTypeBar {
    display:flex;
    bottom:4px;
-   background:rgba(8,20,40,.92);
-   border:1px solid rgba(161,202,242,.35);
+   background:none;
+   border: none;
    border-radius:24px;
    backdrop-filter:blur(10px);
    box-shadow:
       0 4px 12px rgba(0,0,0,.45),
       0 0 10px rgba(80,180,255,.15);
+} */
+
+#gaugeTypeBar{
+   background:none;
+   border:none;
+   box-shadow:none;
+   backdrop-filter:none;
 }
 
 #gaugeTypeLabel{
@@ -1800,6 +1807,9 @@ html, body{
    align-items:center;
    justify-content:center;
    font-size:0;
+   background:rgba(8,20,40,.92);
+   border:1px solid rgba(161,202,242,.35);
+   box-shadow: 0 4px 12px rgba(0,0,0,.45), 0 0 10px rgba(80,180,255,.15);
 }
    
 .gtbtn[data-gauge-type="radial-full"]::before{
