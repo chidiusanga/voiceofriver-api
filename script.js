@@ -1570,6 +1570,17 @@ function drawLilyEntity(c, W, H, t) {
   }
 }
 
+/* ==========================
+   CLOSE ALL MODALS - to force Public API to close whenever any other modal is opened
+=========================== */
+
+function closeAllModals() {
+  closePublicAPI();
+  closeWFDReport();
+  closeSwanMap();
+  closeSwanChat();
+}
+
 /* ════════════════════════════════════════════════════
    ENTITY + MODE SWITCHING
 ════════════════════════════════════════════════════ */
@@ -1698,6 +1709,9 @@ function updateWFDStatusBar(sensorKey) {
 }
 
 function openWFDReport() {
+
+closeAllModals();
+   
   let panel = document.getElementById('wfdReportPanel');
   if (!panel) {
     panel = document.createElement('div');
@@ -1967,7 +1981,8 @@ function closeWFDReport() {
 let publicAPIPanelOpen = false;
 
 function openPublicAPI() {
-
+closeAllModals();
+   
   let panel =
     document.getElementById(
       'publicAPIPanel'
@@ -2070,6 +2085,8 @@ let swanMapPanelOpen = false;
 
 function openSwanMap() {
 
+closeAllModals();
+   
   let panel =
     document.getElementById(
       'swanMapPanel'
@@ -2200,6 +2217,8 @@ let swanChatPanelOpen = false;
 
 function openSwanChat() {
 
+closeAllModals();
+   
   const panel =
     document.getElementById(
       'swanChatPanel'
