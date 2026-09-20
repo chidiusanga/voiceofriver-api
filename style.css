@@ -1751,6 +1751,7 @@ html, body{
 #wfdStatusText{
    font-size:10px;
    line-height:1.2;
+   text-transform: none;
    }
 
 #sensorTitle{
@@ -1781,6 +1782,7 @@ html, body{
 
 #sensorData{
    flex:1;
+   padding: 5px;
 }
 
 .gtbtn{
