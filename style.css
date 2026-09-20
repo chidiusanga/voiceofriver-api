@@ -1754,17 +1754,19 @@ body,
 
 #sensorBlock{
    flex-wrap:wrap;
+   display:flex;
 }
 
-#sensorData{
-   flex:1;
-}
 
 #sensorStatus{
    width:100%;
    margin-top:6px;
    text-align:center;
    justify-content:center;
+}
+
+#sensorData{
+   flex:1;
 }
 
 .gtbtn{
