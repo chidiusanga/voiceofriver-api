@@ -1952,7 +1952,7 @@ html, body{
 }
 
 
- @media (max-width: 900px){
+ /* @media (max-width: 900px){
 
   #titleBar{
     height:90px;
@@ -1974,6 +1974,30 @@ html, body{
   #mobileMenuBtn{
     top:40px;
     right:12px;
+  }
+} */
+
+@media (max-width:900px){
+
+  #titleBar{
+    height:70px;
+  }
+
+  #mobileMenuBtn{
+    display:block;
+    top:8px;
+    right:12px;
+  }
+
+  #botBar{
+    display:none;
+  }
+
+  #connectionStatus{
+    top:8px;
+    left:50%;
+    right:auto;
+    transform:translateX(-50%);
   }
 }
 
