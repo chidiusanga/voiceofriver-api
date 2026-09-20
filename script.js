@@ -447,7 +447,7 @@ fishArray.forEach(f => {
   // Riverbed - three layered bands
   wctx.save();
    const bedDepth = (
-  window.innerWidth >= 360 && 
+  // window.innerWidth >= 360 && -------- Testing -------
    window.innerWidth <= 900) ? 70 : 18;
    
   wctx.beginPath(); wctx.moveTo(0,WH);
@@ -752,7 +752,7 @@ function buildGaugeOverlay() {
 let byWidth;
 
 if (
-  window.innerWidth >= 680 &&
+  window.innerWidth >= 680 && 
   window.innerWidth <= 900
 ) {
 
@@ -760,7 +760,7 @@ if (
   byWidth = Math.floor(aW * 0.75);
 
 } else if (
-  window.innerWidth >= 360 &&
+  // window.innerWidth >= 360 &&   --------- Testing ---------
   window.innerWidth < 680
 ) {
 
@@ -793,7 +793,7 @@ if (
    }
 /* Gauge sizing for mobile phones */
 else if (
-  window.innerWidth >= 360 &&
+  // window.innerWidth >= 360 && ----- Testing -----
   window.innerWidth < 680
 ) {
      maxGaugeSize = 300;
