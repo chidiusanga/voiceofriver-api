@@ -1597,7 +1597,7 @@ body,
 #mobileMenuBtn{
   display:none;
   position:absolute;
-  top:15px;
+  top:30px;
   right:12px;
   width:40px;
   height:40px;
@@ -1613,7 +1613,7 @@ body,
 
 #mobileMenuPanel{
   position:fixed;
-  top:65px;
+  top:74px;
   right:0;
   width:260px;
   display:none;
@@ -1655,12 +1655,23 @@ body,
 ========================================== */
 
 @media (min-width:680px) and (max-width:900px){
+
+#connectionStatus{
+   top: 5px;
+   right: 12px;
+}
+
+#titleBar {
+   height: 74px;
+   }
+   
 #titleBar h1{
    font-size:45px;
    }
 
 #mobileMenuBtn{
   display:block;
+   top: 30px;
    }
    
 .gauge-bubble{
