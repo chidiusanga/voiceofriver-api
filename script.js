@@ -2046,8 +2046,8 @@ function closePublicAPI() {
       'publicAPIPanel'
     );
 
-  if (panel) {
-    panel.style.display = 'none';
+ if (panel) {
+    panel.remove();
   }
 
   publicAPIPanelOpen = false;
