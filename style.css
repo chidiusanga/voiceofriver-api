@@ -1741,7 +1741,7 @@ html, body{
 }
 
 #titleBar {
-   height: 70px;
+   height: 55px;
 }
 
 .logo {
@@ -1751,7 +1751,7 @@ html, body{
 .logoMobile {
    display: flex;
   width: 70px;
-  height: 70px;
+  height: 55px;
   position:absolute;
   left: 10px;
   top: 8px;
@@ -1762,8 +1762,8 @@ html, body{
 }
 
 #titleBar h1{
-   font-size:22px;
-   margin-bottom: 36px;
+   font-size:20px;
+   margin-bottom: 15px;
    }
 
 #mobileMenuBtn{
@@ -1772,8 +1772,12 @@ html, body{
    right:12px;
 }
 
+#mobileMenuPanel{
+   top: 55px;
+   }
+
 #connectionStatus{
-   top:36px;
+   top:30px;
    left:50%;
    right:auto;
    transform:translateX(-50%);
