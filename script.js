@@ -2039,22 +2039,6 @@ panel.addEventListener('click', function(e) {
   publicAPIPanelOpen = true;
 }
 
-// function closePublicAPI() {
-
-//   const panel =
-//     document.getElementById(
-//       'publicAPIPanel'
-//     );
-
-//   if (panel) {
-//     panel.style.display = 'none';
-//   }
-
-//   publicAPIPanelOpen = false;
-// }
-
-// ------ Replaced the above with the below block to force Public API modal to give way to other modals/elements when they're clicked/loaded
-
 function closePublicAPI() {
 
   const panel =
@@ -2062,21 +2046,37 @@ function closePublicAPI() {
       'publicAPIPanel'
     );
 
-  const frame =
-    document.getElementById(
-      'publicAPIFrame'
-    );
-
-  if (frame) {
-    frame.src = 'about:blank';
-  }
-
   if (panel) {
     panel.style.display = 'none';
   }
 
   publicAPIPanelOpen = false;
 }
+
+// ------ Replaced the above with the below block to force Public API modal to give way to other modals/elements when they're clicked/loaded
+
+// function closePublicAPI() {
+
+//   const panel =
+//     document.getElementById(
+//       'publicAPIPanel'
+//     );
+
+//   const frame =
+//     document.getElementById(
+//       'publicAPIFrame'
+//     );
+
+//   if (frame) {
+//     frame.src = 'about:blank';
+//   }
+
+//   if (panel) {
+//     panel.style.display = 'none';
+//   }
+
+//   publicAPIPanelOpen = false;
+// }
 
 // ========================
 // Swan Map modal
