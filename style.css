@@ -1673,6 +1673,10 @@ html, body{
    overflow-y: visible;
 }
 
+#titleBar {
+   height: 70px;
+}
+
 .logo {
    display: none;
 }
@@ -1693,6 +1697,18 @@ html, body{
 #titleBar h1{
    font-size:22px;
    }
+
+#mobileMenuBtn{
+   top:8px;
+   right:12px;
+}
+
+#connectionStatus{
+   top:8px;
+   left:50%;
+   right:auto;
+   transform:translateX(-50%);
+}
 
 #infoPanel{
    width:150px;
