@@ -375,7 +375,7 @@ let titleFont;
 let detailFont;
 
 if (
-  window.innerWidth >= 680 &&
+  // window.innerWidth >= 680 && -------- Testing if smaller fonts for warning can cascade down from Tablets ad infinitum ---------- 
   window.innerWidth <= 900
 ) {
 
