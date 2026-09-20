@@ -1658,6 +1658,10 @@ body,
 
 @media (min-width:360px) and (max-width:679px){
 
+#main{
+   overflow-y: auto;
+}
+
 #infoPanel{
    width:150px;
    }
