@@ -1689,7 +1689,7 @@ html, body{
    height:20px;
    }
 
-#gaugeTypeBar{
+#gaugeTypeBar button {
    display:flex;
    bottom:4px;
    background:rgba(8,20,40,.92);
