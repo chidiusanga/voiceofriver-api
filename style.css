@@ -1751,7 +1751,7 @@ html, body{
 .logoMobile {
    display: flex;
   width: 70px;
-  height: 55px;
+  height: 34px;
   position:absolute;
   left: 10px;
   top: 8px;
@@ -1763,7 +1763,7 @@ html, body{
 
 #titleBar h1{
    font-size:20px;
-   margin-bottom: 15px;
+   margin-bottom: 25px;
    }
 
 #mobileMenuBtn{
