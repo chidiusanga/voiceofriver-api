@@ -1702,9 +1702,9 @@ body,
 #gaugeOverlay{
    overflow-y:auto !important;
    overflow-x:hidden !important;
-   padding-top:25px;
-   padding-bottom:120px;
-   gap:28px;
+   padding-top:10px;
+   padding-bottom:20px;
+   gap:10px;
    left: 34px;
    bottom: 0;
    }
