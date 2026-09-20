@@ -1690,6 +1690,10 @@ html, body{
   width: 100%;
 }
 
+#titleBar h1{
+   font-size:35px;
+   }
+
 #infoPanel{
    width:150px;
    overflow-y:auto;
