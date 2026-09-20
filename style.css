@@ -1669,6 +1669,9 @@ body,
    font-size:45px;
    }
 
+.logo{
+   width: 122px;
+}
 #mobileMenuBtn{
   display:block;
    top: 30px;
