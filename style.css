@@ -1590,6 +1590,65 @@ body,
 }
 
 
+/* ════════════════════════════════════════════════════════
+   MOBILE HAMBURGER MENU
+════════════════════════════════════════════════════════ */
+
+#mobileMenuBtn{
+  display:none;
+  position:absolute;
+  top:15px;
+  right:12px;
+  width:40px;
+  height:40px;
+  border:none;
+  border-radius:8px;
+  background:rgba(8,20,40,.85);
+  color:#fff;
+  font-size:24px;
+  font-weight:700;
+  cursor:pointer;
+  z-index:220;
+}
+
+#mobileMenuPanel{
+  position:fixed;
+  top:90px;
+  right:0;
+  width:260px;
+  display:none;
+  flex-direction:column;
+  background:#365f71;
+  border:1px solid rgba(80,140,200,.35);
+  border-radius: 0 0 0 12px;
+  overflow:hidden;
+  z-index:250;
+  box-shadow:0 16px 48px rgba(0,0,0,.7);
+}
+
+.mobileMenuItem{
+  border:none;
+  background:transparent;
+   color:#f4e39c;
+   font-family:var(--title-font);
+   letter-spacing:.06em;
+   text-transform:uppercase;
+  text-align:left;
+  padding:14px 16px;
+  cursor:pointer;
+  font-size:14px;
+  border-bottom:1px solid rgba(200,230,255,.12);
+}
+
+.mobileMenuItem:last-child{
+  border-bottom:none;
+}
+
+.mobileMenuItem:hover{
+  background:rgba(255,255,255,.08);
+}
+
+
 /* ==========================================
    TABLETS
    iPad Mini, iPad, iPad Pro, Galaxy Tabs
@@ -1707,10 +1766,7 @@ html, body{
    }
 
 #mobileMenuBtn{
-  display:block;
-}
-
-#mobileMenuBtn{
+   display:block;
    top:8px;
    right:12px;
 }
@@ -1907,64 +1963,6 @@ html, body{
 
 #mobileMenuBtn{
   display:none;
-}
-
-/* ════════════════════════════════════════════════════════
-   MOBILE HAMBURGER MENU
-════════════════════════════════════════════════════════ */
-
-#mobileMenuBtn{
-  display:none;
-  position:absolute;
-  top:15px;
-  right:12px;
-  width:40px;
-  height:40px;
-  border:none;
-  border-radius:8px;
-  background:rgba(8,20,40,.85);
-  color:#fff;
-  font-size:24px;
-  font-weight:700;
-  cursor:pointer;
-  z-index:220;
-}
-
-#mobileMenuPanel{
-  position:fixed;
-  top:90px;
-  right:0;
-  width:260px;
-  display:none;
-  flex-direction:column;
-  background:#365f71;
-  border:1px solid rgba(80,140,200,.35);
-  border-radius: 0 0 0 12px;
-  overflow:hidden;
-  z-index:250;
-  box-shadow:0 16px 48px rgba(0,0,0,.7);
-}
-
-.mobileMenuItem{
-  border:none;
-  background:transparent;
-   color:#f4e39c;
-   font-family:var(--title-font);
-   letter-spacing:.06em;
-   text-transform:uppercase;
-  text-align:left;
-  padding:14px 16px;
-  cursor:pointer;
-  font-size:14px;
-  border-bottom:1px solid rgba(200,230,255,.12);
-}
-
-.mobileMenuItem:last-child{
-  border-bottom:none;
-}
-
-.mobileMenuItem:hover{
-  background:rgba(255,255,255,.08);
 }
 
 
