@@ -1727,7 +1727,7 @@ html, body{
    }
 
 .gauge-value-tag {
-   bottom: 90px;
+   bottom: 0;
 }
    
 #scaleCol{
