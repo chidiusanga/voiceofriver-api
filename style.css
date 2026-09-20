@@ -1740,8 +1740,8 @@ body,
    PHONES
    iPhone, Galaxy S, Pixel
 ========================================== */
-
-@media (min-width:360px) and (max-width:679px){
+@media (max-width:679px){
+/* @media (min-width:360px) and (max-width:679px){ */
 html, body{
    overflow-y: auto;
 }
@@ -1976,9 +1976,9 @@ html, body{
    ULTRA-SMALL
 ========================================== */
 
-@media (max-width:359px){
+/* @media (max-width:359px){
 
-}
+} */
 
 
 
