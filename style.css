@@ -1657,6 +1657,10 @@ body,
 ========================================== */
 
 @media (min-width:360px) and (max-width:679px){
+#app{
+   height:auto;
+   min-height:100vh;
+   }
 
 #main{
    overflow-y: auto;
