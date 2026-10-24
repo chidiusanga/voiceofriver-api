@@ -2670,6 +2670,7 @@ function handleSwanQuestion(question) {
       q.includes('temperature currently') ||
       q.includes('hot') ||
        q.includes('heat') ||
+       q.includes('temperature now') ||
       q.includes('water temperature now')
      ) {
 
