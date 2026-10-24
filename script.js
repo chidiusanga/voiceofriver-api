@@ -22,7 +22,7 @@
 ══════════════════════════════════════════════════════════════════════ */
 const SENSORS = {
   temperature: {
-    label: 'Water Temperature', friendlyName: 'Heat', unit: '°C',
+    label: 'Water Temperature', friendlyName: 'Warmth', unit: '°C',
     min: 0, max: 50,
     // WFD: UKTAG 2008 — thermal standard for salmonid rivers (Irish lowland type)
     // High: ≤20°C (salmonid reference), Good: ≤25°C, Moderate: ≤30°C, Poor: ≤35°C
@@ -3262,7 +3262,7 @@ document.addEventListener(
   const RULER_PX    = TOTAL_DAYS * PX_PER_DAY; // total ruler width in pixels
 
   const SENSOR_LABELS = {
-    temperature:'Heat', turbidity:'Clarity', ph:'Acidity',
+    temperature:'Warmth', turbidity:'Clarity', ph:'Acidity',
     tds:'Saltiness', ec:'Electricity', level:'Depth'
   };
   const MONTH_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
