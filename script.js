@@ -2683,6 +2683,25 @@ function handleSwanQuestion(question) {
       }
   }
 
+ else if (
+      q.includes('warm') ||
+      q.includes('warmth') ||
+      q.includes('cold') ||
+      q.includes('colder') ||
+       q.includes('warmer') ||
+       q.includes('warmest') ||
+      q.includes('coldness')
+     ) {
+
+      if (hasValidData(currentReadings.temperature)) {
+          reply =
+              `The water is currently ${currentReadings.temperature.toFixed(1)}°C warm. ${interpretTemperature(currentReadings.temperature)}`;
+      } else {
+          reply =
+              'I do not currently have a live temperature reading.';
+      }
+  }
+
   else if (
       q.includes('water level') ||
       q.includes('river depth') ||
@@ -2721,6 +2740,7 @@ function handleSwanQuestion(question) {
      q.includes('live tds') ||
      q.includes('tds currently') ||
      q.includes('tds now') ||
+     q.includes('salty') ||
      q.includes('dissolved solids')) {
 
       if (hasValidData(currentReadings.tds)) {
